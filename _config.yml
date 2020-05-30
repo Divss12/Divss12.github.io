@@ -50,3 +50,7 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+- name: Jekyll Actions
+  uses: helaili/jekyll-action@2.0.3
+
