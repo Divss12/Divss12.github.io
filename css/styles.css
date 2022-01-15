@@ -10980,3 +10980,41 @@ section.resume-section .resume-section-content {
     padding-bottom: 5rem;
   }
 }
+
+.project-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.project-card {
+  padding: 20px;
+  width: 370px;
+  height: 350px;
+  border: 10px solid #343A40;
+  text-align: center;
+  margin: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.project-card:hover {
+  width: 386px;
+  height: 366px;
+  margin: 8px;
+  padding: 22px;
+  border: 11px solid #343A40;
+}
+
+.project-card:hover #img{
+  width: 260px;
+}
+
+
+.project-card:hover #txt{
+  font-size: 2.2rem;
+}
+
+
+#NOUNDERLINE {
+  text-decoration: none;
+}
