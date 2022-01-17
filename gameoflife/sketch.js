@@ -11,14 +11,13 @@ var running = false;
 var t;
 
 function drawGrid(){
-    /*
     for(let i = 50; i < Math.min(width-100, 50*gridSize); i += 50){
         line(i,0,i,height);
     }
     
     for(let j = 50; j < Math.min(height, 50*gridSize); j += 50){
         line(0,j,width-100 - (width%50),j);
-    }*/
+    }
 }
 
 
