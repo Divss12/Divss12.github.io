@@ -27,6 +27,33 @@ class Stack{
     }
 }
 
+class Queue{
+    constructor(array = []){
+        this.data = array;
+    }
+
+    enqueue(data){
+        this.data.push(data);
+        return this.data;
+    }
+
+    dequeue(){
+        return this.data.shift();
+    }
+
+    isEmpty(){
+        return this.data.length == 0;
+    }
+
+    peek(){
+        return !this.isEmpty() ? this.data[0] : undefined;
+    }
+
+    length(){
+        return this.data.length;
+    }
+}
+
 
 //Also including get random int here
 
