@@ -1,6 +1,9 @@
 var maze = [];
 var visited = [];
+var parent = [];
 var curSq = -1;
+var path = [];
+var frontier = [];
 
 var gridX = 45;
 var gridY = 25;
@@ -18,7 +21,8 @@ solveButton = new Clickable();
 
 
 var generating = false;
-var showgeneration = true;
+var solving = false;
+var showAnimation = true;
 
 function resize(width, height){
     sqSize = Math.floor(min((width-150)/gridX, (height-20)/gridY));
@@ -58,7 +62,7 @@ async function generateMazeDFS(graph, start = 0){
     while(stack.isNotEmpty()){
         current = stack.pop();
 
-        if(showgeneration){
+        if(showAnimation){
             await sleep(50);
             curSq = current;
             redraw();
@@ -101,7 +105,7 @@ async function generateMazeDFS(graph, start = 0){
         }
 
     }
-    if(showgeneration){await sleep(50);}
+    if(showAnimation){await sleep(50);}
     curSq = -1;
     redraw();
 
@@ -125,14 +129,60 @@ function convMazeToGraph(maze, w, h){
     return graph;
 }
 
-function solveBFS(maze, start = 0){
-    q = new Queue();
-    //explore start;
-    q.enqueue(start);
-    while(!q.isEmpty()){
-        let v = q.dequeue();
-        
+async function solveBFS(graph, start, goal){
+    solving = true;
+
+    //q = new Queue();
+    for(let i = 0; i < graph.length; i++){visited[i] = false}
+    for(let i = 0; i < graph.length; i++){parent[i] = -1}
+    visited[start] = true; 
+    //q.enqueue(start);
+    frontier.push(start);
+    let v = -1;
+    while(v != goal){
+
+        if(showAnimation){
+            await sleep(50);
+            redraw();
+        }
+
+        let temp = [];
+
+        for(let j = 0; j < frontier.length; j++){
+            v = frontier[j];
+            if(v == goal){
+                break;
+            }
+            for(let i = 0; i < graph[v].length; i++){
+                w = graph[v][i];
+                if(!visited[w]){
+                    visited[w] = true;
+                    temp.push(w);
+                    parent[w] = v;
+                }
+            }
+        }
+
+        frontier = temp;
     }
+
+    curSq = goal;
+    while(curSq != -1){
+        if(showAnimation){
+            await sleep(50);
+            redraw();
+        }
+        path.push(curSq);
+        curSq = parent[curSq];
+    }
+
+    solving = false;
+    loop();
+
+}
+
+function clearPath(w, h){
+    path = [];
 }
 
 function drawMaze(graph, w, h){
@@ -145,6 +195,24 @@ function drawMaze(graph, w, h){
 
     let k, lx, ly;
     for(let i = 0; i < graph.length; i++){
+
+        if(generating && !visited[i]){
+            eks = (i%w)*sqSize;
+            why = Math.floor(i/w) * sqSize;
+            fill(0);
+            square(eks+xOff, why+yOff, sqSize);
+        }
+        if(solving && visited[i] && !path.includes(i) && !frontier.includes(i)){
+
+            eks = (i%w)*sqSize;
+            why = Math.floor(i/w) * sqSize;
+            fill(64, 235, 52);
+            noStroke();
+            square(eks+xOff, why+yOff, sqSize+1);
+            stroke(0);
+        }
+
+
         for(let j = 0; j < graph[i].length; j++){
             k = graph[i][j];
             //only need to draw right and bottom
@@ -162,12 +230,6 @@ function drawMaze(graph, w, h){
                 line(lx, ly, lx+sqSize, ly);
             }
         }
-        if(!visited[i]){
-            eks = (i%w)*sqSize;
-            why = Math.floor(i/w) * sqSize;
-            fill(0);
-            square(eks+xOff, why+yOff, sqSize);
-        }
     }
 }
 
@@ -179,7 +241,31 @@ function drawcurSq(w, h){
         why = Math.floor(curSq/w) * sqSize;
         fill(235, 64, 52);
         noStroke();
-        square(eks+xOff+1, why+yOff+1, sqSize-2);
+        square(eks+xOff, why+yOff, sqSize);
+        stroke(0);
+    }
+}
+
+function drawPath(w, h){
+    for(let i = 0; i < path.length; i++){
+        eks = (path[i]%w)*sqSize;
+        why = Math.floor(path[i]/w) * sqSize;
+        fill(52, 64, 235);
+        noStroke();
+        square(eks+xOff, why+yOff, sqSize+1);
+        stroke(0);
+    }
+    
+}
+
+function drawFrontier(w, h){
+    for(let i = 0; i < frontier.length; i++){
+        console.log(i);
+        eks = (frontier[i]%w)*sqSize;
+        why = Math.floor(frontier[i]/w) * sqSize;
+        fill(235, 64, 52);
+        noStroke();
+        square(eks+xOff, why+yOff, sqSize+1);
         stroke(0);
     }
 }
@@ -188,6 +274,7 @@ function drawcurSq(w, h){
 function setup(){
     createCanvas(windowWidth, windowHeight);
     background(256);
+    //strokeWeight(2);
 
     resize(width, height);
 
@@ -236,7 +323,8 @@ function draw(){
     skipButton.draw();
     solveButton.draw();
 
-
+    drawPath(gridX, gridY);
+    drawFrontier(gridX, gridY);
     drawMaze(maze, gridX, gridY);
     drawcurSq(gridX, gridY);
 }
@@ -246,10 +334,10 @@ backButton.onPress = function(){
 }
 
 generateButton.onPress = function(){
-    if(!generating){
+    if(!generating && !solving){
         noLoop();
+        clearPath(gridX, gridY);
         maze = generateGraph(gridX, gridY);
-        generateVisited(gridX, gridY);
         generateMazeDFS(maze);
     }
 }
@@ -259,11 +347,16 @@ clearButton.onPress = function(){
 }
 
 skipButton.onPress = function(){
-    showgeneration = !showgeneration;
-    if(showgeneration){skipButton.text = "Skip Animation";}
+    showAnimation = !showAnimation;
+    if(showAnimation){skipButton.text = "Skip Animation";}
     else{skipButton.text = "Show Animation";}
 }
 
 solveButton.onPress = function(){
-    let graph = convMazeToGraph(maze);
+    if(!generating && !solving){
+        noLoop();
+        clearPath(gridX, gridY);
+        let graph = convMazeToGraph(maze, gridX, gridY);
+        solveBFS(graph, 0, graph.length-1);
+    }
 }

@@ -8,7 +8,7 @@ let game = new TicTacToe()
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	background(220)
+	background(255)
 }
 
 function windowResized(){
@@ -16,7 +16,7 @@ function windowResized(){
 }
 
 function drawMenu(){
-	background(220)
+	background(255)
 	rect(width/2-100,height/2-50,200,100,15)
 }
 
@@ -54,7 +54,7 @@ function draw() {
 function menuButtons(){
 	if(mouseX < width/2+100 && mouseX > width/2-100 && mouseY < height/2+50 && mouseY > height/2-50){
 		inMenu = false;
-		background(220)
+		background(255)
 		game = new TicTacToe()
 	}
 }
