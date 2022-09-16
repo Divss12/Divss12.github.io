@@ -11005,6 +11005,29 @@ section.resume-section .resume-section-content {
   border: 11px solid #343A40;
 }
 
+.project-card-A {
+  padding: -10px;
+  width: 370px;
+  height: 350px;
+  border: 10px solid #343A40;
+  text-align: center;
+  margin: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.project-card-A:hover {
+  width: 386px;
+  height: 366px;
+  margin: 8px;
+  padding: -10px;
+  border: 11px solid #343A40;
+}
+
+.project-card-A:hover #img{
+  width: 280px;
+}
+
 .project-card:hover #img{
   width: 260px;
 }

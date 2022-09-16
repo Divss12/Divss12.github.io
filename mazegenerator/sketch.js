@@ -335,6 +335,7 @@ backButton.onPress = function(){
 
 generateButton.onPress = function(){
     if(!generating && !solving){
+        if(!showAnimation){showAnimation = true; skipButton.text = "Skip Animation";}
         noLoop();
         clearPath(gridX, gridY);
         maze = generateGraph(gridX, gridY);
@@ -354,6 +355,7 @@ skipButton.onPress = function(){
 
 solveButton.onPress = function(){
     if(!generating && !solving){
+        if(!showAnimation){showAnimation = true; skipButton.text = "Skip Animation";}
         noLoop();
         clearPath(gridX, gridY);
         let graph = convMazeToGraph(maze, gridX, gridY);
