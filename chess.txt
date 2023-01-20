@@ -1,0 +1,13 @@
+special moves as cards
+il vaticano
+knight boost
+knook
+piece evolutions:
+	squire -> knight -> camel
+	squire -> dark-knight -> knightrider
+	
+	cleric -> bishop -> archbishop
+
+	un rook -> rook -> knook
+	
+	eager pawn -> pawn -> boost knight / antibishop / rook / queen

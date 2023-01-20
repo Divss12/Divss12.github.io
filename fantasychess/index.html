@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .chess-board {
+      display: flex;
+      flex-wrap: wrap;
+      width: 320px;
+      height: 320px;
+      font-size: 32px;
+      font-family: "Arial", sans-serif;
+    }
+
+    .chess-row {
+      width: 100%;
+      display:flex
+    }
+
+    .chess-square {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chess-square-black {
+      background-color: #555;
+      color: #fff;
+    }
+
+    .chess-square-white {
+      background-color: #fff;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+    <div id="board"></div>
+    <script src="display.js"></script> 
+</body>
+</html>
