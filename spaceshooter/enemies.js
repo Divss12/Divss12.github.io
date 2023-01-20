@@ -143,7 +143,7 @@ class Enemy {
 
                     if(this.x+17 < shipX-1){this.x++;}
                     else if (this.x+17 > shipX+1){this.x--;}
-                    else if (this.tickCounter > 150){
+                    else if (this.tickCounter > 100){
                         this.idle = false; 
                         this.tickCounter = 0;
                     }

@@ -21,8 +21,8 @@ class Background {
         }
         this.curdst.push(this.dustbgs[randRange(0,8)]);
         this.curdst.push(this.dustbgs[randRange(0,8)]);
-        this.yd.push(0);
-        this.yd.push(-704);
+        this.yd.push(-264);
+        this.yd.push(-968);
 
         //STARS
         for(var i = 0; i < 16; i++){

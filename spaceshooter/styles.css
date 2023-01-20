@@ -1,17 +1,16 @@
-
+@font-face {
+  font-family: 'font1';
+  src: url('/spaceshooter/assets/fonts/mago3.ttf');
+}
 
 body {
-  background-color: #00172B;
-
+  background-color: #141D27;
   background-image: url('/spaceshooter/assets/bg/background.png');
 
   padding: 0;
   margin: 0;
   width: 100vw;
   height: 100vh;
-
-  
-
 }
 
 
@@ -24,7 +23,6 @@ body {
 }
 
 .game-canvas {
-  padding: 0;
   image-rendering: pixelated;
   image-rendering: optimizeSpeed;             /*Older versions of FF*/
   image-rendering: -moz-crisp-edges;          /*FF 6.0+*/

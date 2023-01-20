@@ -3,7 +3,7 @@ class Ship{
         this.ctx = ctx;
 
         this.x = 176;
-        this.y = 134;
+        this.y = 212;
 
         this.downPressed = false;
         this.upPressed = false;

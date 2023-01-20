@@ -10,30 +10,33 @@ function scaleCanvas(){
     const wWidth = window.innerWidth;
     
     var scaleFactor;
-    if(wHeight * 19 > wWidth * 12){ //width constricts 
-        scaleFactor = Math.floor((wWidth-20)/41.8)/10;
+    if(wHeight * 16 > wWidth * 9){ //width constricts 
+        scaleFactor = Math.floor((wWidth-20)/46.6)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264;
-        scanvas.width = scaleFactor*66;
+        scanvas.width = scaleFactor*114;
         scanvas.height = scaleFactor*264;
     }else{ // height constricts
         scaleFactor = Math.floor((wHeight-20)/26.4)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264; 
-        scanvas.width = scaleFactor*66;
+        scanvas.width = scaleFactor*114;
         scanvas.height = scaleFactor*264;
     }
     
     ctx.webkitImageSmoothingEnabled = false;
     ctx.mozImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
+    sctx.webkitImageSmoothingEnabled = false;
+    sctx.mozImageSmoothingEnabled = false;
+    sctx.imageSmoothingEnabled = false;
     
     ctx.scale(scaleFactor, scaleFactor);
     sctx.scale(scaleFactor, scaleFactor);
 
     //temporary
     sctx.fillStyle = "#00172B";
-    sctx.fillRect(0, 0, 66, 264);
+    sctx.fillRect(0, 0, 114, 264);
 }
 
 scaleCanvas();

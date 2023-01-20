@@ -64,7 +64,7 @@ class Projectile {
     }
 
     updatePos () {
-        if(this.type == 0){this.x += 0.2*this.swerve;}
+        if(this.type == 0){this.x += 0.1*this.swerve;}
         this.y += this.speed;
     }
 
