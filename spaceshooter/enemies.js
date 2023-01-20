@@ -53,7 +53,7 @@ class EnemyManager {
 
     testing_gen(){
         this.genEnemy(1);
-        //window.setInterval(this.genEnemy.bind(this), 3000, 0);
+        window.setInterval(this.genEnemy.bind(this), 3000, 0);
     }
 }
 
