@@ -14,6 +14,7 @@ class Draw{
         this.ship.draw();
         this.enemies.draw(this.ship.getX());
 
-        window.requestAnimationFrame(this.draw.bind(this));
+        //window.requestAnimationFrame(this.draw.bind(this));
+        setTimeout(this.draw.bind(this), 10);
     }
 }

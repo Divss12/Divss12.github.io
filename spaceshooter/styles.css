@@ -2,6 +2,9 @@
 
 body {
   background-color: #00172B;
+
+  background-image: url('/assets/bg/background.png');
+
   padding: 0;
   margin: 0;
   width: 100vw;
@@ -22,11 +25,11 @@ body {
   image-rendering: -o-crisp-edges;            /*OS X & Windows Opera (12.02+)*/
   image-rendering: crisp-edges;               /*Possible future browsers*/
   -ms-interpolation-mode: nearest-neighbor;   /*IE (non standard naming)*/
-  border: 6px solid;
+  border: 6px solid #01090f;
   border-right-width: 3px;
 }
 
 .score-canvas {
-  border: 6px solid;
+  border: 6px solid #01090f;
   border-left-width: 3px;
 }
