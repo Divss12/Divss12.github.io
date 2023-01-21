@@ -35,7 +35,7 @@ function scaleCanvas(){
     sctx.scale(scaleFactor, scaleFactor);
 
     //temporary
-    sctx.fillStyle = "#00172B";
+    sctx.fillStyle = "#141D27";
     sctx.fillRect(0, 0, 114, 264);
 }
 
