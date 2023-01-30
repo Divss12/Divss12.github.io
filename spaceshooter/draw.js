@@ -6,17 +6,30 @@ class Draw{
         this.ship = ship;
         this.enemies = enemies;
         this.score = score;
+
+        this.menuPos = -270;
+        this.menu = false;
+        this.menuImg = new Image();
+        this.menuImg.src = "assets/icons/title.png"
+    }
+
+    director(){
+        this.enemies.testing_gen();
     }
 
     draw(){
         this.bg.draw();
-        this.projectiles.draw();
-        this.ship.drawProjectiles();
         this.ship.draw();
-        this.enemies.draw(this.ship.getX());
+        this.score.draw(!this.menu);
 
-        this.score.draw();
-        //window.requestAnimationFrame(this.draw.bind(this));
+        if(this.menu){
+            if(this.menuPos < 0){this.menuPos += 2.5;}
+
+            this.ctx.drawImage(this.menuImg, 0, this.menuPos);
+        }else{
+            this.projectiles.draw();
+            this.enemies.draw(this.ship.getX());
+        }
         setTimeout(this.draw.bind(this), 10);
     }
 }

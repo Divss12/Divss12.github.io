@@ -14,13 +14,13 @@ function scaleCanvas(){
         scaleFactor = Math.floor((wWidth-20)/46.6)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264;
-        scanvas.width = scaleFactor*114;
+        scanvas.width = scaleFactor*115;
         scanvas.height = scaleFactor*264;
     }else{ // height constricts
         scaleFactor = Math.floor((wHeight-20)/26.4)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264; 
-        scanvas.width = scaleFactor*114;
+        scanvas.width = scaleFactor*115;
         scanvas.height = scaleFactor*264;
     }
     
@@ -35,8 +35,8 @@ function scaleCanvas(){
     sctx.scale(scaleFactor, scaleFactor);
 
     //temporary
-    sctx.fillStyle = "#141D27";
-    sctx.fillRect(0, 0, 114, 264);
+    //sctx.fillStyle = "#141D27";
+    //sctx.fillRect(0, 0, 126, 264);
 }
 
 scaleCanvas();
