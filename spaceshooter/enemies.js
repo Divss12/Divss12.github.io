@@ -77,7 +77,7 @@ class EnemyManager {
     }
 
     testing_gen(){
-        this.score.addDialog("Greetings Captain!");
+        this.score.addDialog("This is the first playable version, there is no dmg taken!");
 
         //this.genEnemy(5);
         window.setInterval(this.genEnemy.bind(this), 4500, 5);
@@ -190,6 +190,9 @@ class Enemy {
                 this.sprite.engine.src = "assets/enemies/fighter/engine.png";
 
                 this.frame = 0;
+                
+                this.ecounter = 0;
+                this.eframe = 0;
                 this.heading = 1;
                 this.health = 8;
                 break;
@@ -462,6 +465,15 @@ class Enemy {
                         if(this.frame == 0){this.shoot(0);}
                         if(this.frame == 3){this.shoot(1);}
                     }
+                }
+
+                if(!this.destroy){
+                    if(this.ecounter == 4){
+                        this.ecounter = 0;
+                        this.eframe = (this.eframe+1)%10;
+                    }
+                    this.ctx.drawImage(this.sprite.engine, 29+64*this.eframe, 0, 6, 12, this.x+9, this.y-9, 6, 12);
+                    this.ecounter++;
                 }
                 break;
             case 4:
