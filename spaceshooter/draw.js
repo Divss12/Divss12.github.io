@@ -30,6 +30,6 @@ class Draw{
             this.projectiles.draw();
             this.enemies.draw(this.ship.getX());
         }
-        setTimeout(this.draw.bind(this), 10);
+        setTimeout(this.draw.bind(this), 12);
     }
 }

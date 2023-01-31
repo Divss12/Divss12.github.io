@@ -90,7 +90,13 @@ class Projectile {
                 this.sprite.src = "assets/enemies/dreadnought/ray.png";
                 this.frame = 0;
                 this.lifeCounter = 0;
-                break;      
+                break;
+            
+            case 5:
+                this.sprite = new Image();
+                this.sprite.src = "assets/enemies/alert/wave.png";
+                this.frame = 0;
+                break;
         }
 
         this.tickCounter = 0;
@@ -148,6 +154,14 @@ class Projectile {
                 
                 this.lifeCounter++
                 if(this.lifeCounter > 224){this.delete = true}
+                break;
+            case 5:
+                console.log("a")
+                if(this.tickCounter == 5){
+                    this.tickCounter = 0;
+                    this.frame = (this.frame+1)%6;
+                }
+                this.ctx.drawImage(this.sprite, 16+this.frame*64, 0, 34, 17, this.x, this.y, 34, 17);
                 break;
         }
 
