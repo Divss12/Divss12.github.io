@@ -35,15 +35,23 @@ class EnemyManager {
 
             case 3: //fighter
                 this.lst.push(
-                    new Enemy(this.ctx, -20, 24, 3, this.projectiles)
+                    new Enemy(this.ctx, -20, 12, 3, this.projectiles)
                 );
                 break;
-            case 4:
-
+            case 4: //scout
+                this.lst.push(
+                    new Enemy(this.ctx, 360, 24, 4, this.projectiles)
+                );
                 break;
             case 5: //alerter
                 this.lst.push(
-                    new Enemy(this.ctx, randRange(24, 304), 236, 5, this.projectiles)
+                    new Enemy(this.ctx, randRange(24, 304), 235, 5, this.projectiles)
+                );
+                break;
+            
+            case 6: //horizontal alerter
+                this.lst.push(
+                    new Enemy(this.ctx, 5, randRange(164, 236), 6, this.projectiles)
                 );
                 break;
         }
@@ -79,12 +87,14 @@ class EnemyManager {
     testing_gen(){
         this.score.addDialog("This is the first playable version, there is no dmg taken!");
 
-        //this.genEnemy(5);
+        this.genEnemy(5);
         window.setInterval(this.genEnemy.bind(this), 4500, 5);
-        window.setInterval(this.genEnemy.bind(this), 7000, 0);
-        window.setInterval(this.genEnemy.bind(this), 16000, 1);
-        window.setInterval(this.genEnemy.bind(this), 45000, 2);
-        window.setInterval(this.genEnemy.bind(this), 9000, 3);
+        window.setInterval(this.genEnemy.bind(this), 9000, 0);
+        window.setInterval(this.genEnemy.bind(this), 18000, 1);
+        window.setInterval(this.genEnemy.bind(this), 54000, 2);
+        window.setInterval(this.genEnemy.bind(this), 10000, 4);
+        window.setInterval(this.genEnemy.bind(this), 12000, 6)
+        window.setTimeout(window.setInterval, 5000, this.genEnemy.bind(this), 10000, 3);
     }
 }
 
@@ -129,6 +139,8 @@ class Enemy {
                 if(x == 352) {this.heading = -2}
                 else {this.heading = 2}
                 
+                this.w2 = 28;
+                this.h2 = 11;
                 this.health = 12;
                 break;
 
@@ -154,6 +166,8 @@ class Enemy {
                 this.ecounter = 0;
                 this.eframe = 0;
 
+                this.w2 = 18;
+                this.h2 = 20;
                 this.health = 20;
                 break;
 
@@ -174,6 +188,8 @@ class Enemy {
                 this.cycle = 0;
                 this.ecounter = 0;
                 this.eframe = 0;
+                this.w2 = 36;
+                this.h2 = 50;
                 this.health = 100;
                 break;
             
@@ -194,18 +210,53 @@ class Enemy {
                 this.ecounter = 0;
                 this.eframe = 0;
                 this.heading = 1;
+
+                this.w2 = 12;
+                this.h2 = 11;
                 this.health = 8;
                 break;
             
-            case 4:
+            case 4: //scout
+                this.sprite = {
+                    base: new Image(),
+                    weapons: new Image(),
+                    destruction: new Image(),
+                    engine: new Image(),
+                }
+                this.sprite.base.src = "assets/enemies/scout/base.png";
+                this.sprite.weapons.src = "assets/enemies/scout/weapons.png";
+                this.sprite.destruction.src = "assets/enemies/scout/destruction.png";
+                this.sprite.engine.src = "assets/enemies/scout/engine.png";
+
+                this.frame = 0;
+                
+                this.ecounter = 0;
+                this.eframe = 0;
+                this.heading = -1;
+
+                this.w2 = 11;
+                this.h2 = 11;
+                this.health = 8;
+                
 
                 break;
             
-            case 5:
+            case 5: //wave alert
                 this.sprite = {
                     base: new Image(),
                 }
                 this.sprite.base.src = "assets/enemies/alert/alert.png";
+
+                this.health = 1;
+                break;
+
+            case 6: //ray alert
+                this.sprite = {
+                    left: new Image(),
+                    right: new Image(),
+                }
+                this.sprite.left.src = "assets/enemies/alert/alertL.png"
+                this.sprite.right.src = "assets/enemies/alert/alertR.png"
 
                 this.health = 1;
                 break;
@@ -218,6 +269,8 @@ class Enemy {
     }
     
     checkCollision(projectile){
+        if(this.destroy){return false;}
+
         switch(this.type){
             case 0:
                 if(this.x-1 < projectile.x && projectile.x < this.x+57 && this.y-1 < projectile.y && projectile.y < this.y+13){
@@ -244,11 +297,14 @@ class Enemy {
                 }
                 break;
             case 4:
-
+                if(this.x-1 < projectile.x && projectile.x < this.x+23 && this.y-1 < projectile.y && projectile.y < this.y+23){
+                    this.health -= projectile.dmg;
+                    return true;
+                }
                 break;
             case 5:
+            case 6:
                 return false;
-                break;
         }
 
         return false
@@ -284,17 +340,15 @@ class Enemy {
                     }
                 }
                 break;
-            case 3:
+            case 3:            
+            case 4:
                 if(this.x > 302){this.heading = -1}
                 if(this.x < 26){this.heading = 1}
 
                 this.x += this.heading;
                 break;
-            
-            case 4:
-
-                break;
             case 5:
+            case 6:
                 break;
         }
     }
@@ -332,9 +386,13 @@ class Enemy {
                 if(gun == 1){this.projectiles.newProjectile(this.x+17, this.y+7, 2, 1, 4, 1)}
                 break;
             case 4:
+                this.projectiles.newProjectile(this.x+8, this.y+16, 1, 1, 4, 1);
                 break;
             case 5:
                 this.projectiles.newProjectile(this.x-11, 270, 5, 1, -3, 3);
+                break;
+            case 6:
+                this.projectiles.newProjectile(0, this.y, 8, 1, 0, 16);
                 break;
         }
     }
@@ -477,7 +535,26 @@ class Enemy {
                 }
                 break;
             case 4:
+                if(this.destroy){
+                    if(this.tickCounter == 5){this.tickCounter = 0; this.frame++; if(this.frame>9){this.delete = true;}}
+                    this.ctx.drawImage(this.sprite.destruction, 1+this.frame*64, 0, 64, 44, this.x-19, this.y-10, 64, 44);
+                }else{
+                    if(this.tickCounter == 10){this.tickCounter = 0; this.frame = (this.frame+1)%6; flag = true;}
+                    this.ctx.drawImage(this.sprite.weapons, 20+this.frame*64, 0, 24, 24, this.x, this.y, 24, 24);
 
+                    if(flag){
+                        if(this.frame == 2){this.shoot();}
+                    }
+                }
+
+                if(!this.destroy){
+                    if(this.ecounter == 4){
+                        this.ecounter = 0;
+                        this.eframe = (this.eframe+1)%10;
+                    }
+                    this.ctx.drawImage(this.sprite.engine, 29+64*this.eframe, 0, 6, 12, this.x+9, this.y-7, 6, 12);
+                    this.ecounter++;
+                }
                 break;
             case 5:
                 if(this.tickCounter < 50){this.ctx.drawImage(this.sprite.base, this.x, this.y);}
@@ -485,6 +562,19 @@ class Enemy {
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }else if(this.tickCounter < 300 && Math.floor(this.tickCounter/6)%2){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
+                }
+                if(this.tickCounter > 299){this.shoot(), this.delete = true;}
+                break;
+            case 6:
+                if(this.tickCounter < 50){
+                    this.ctx.drawImage(this.sprite.left, this.x, this.y);
+                    this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
+                }else if(this.tickCounter < 200 && Math.floor(this.tickCounter/6)%3){
+                    this.ctx.drawImage(this.sprite.left, this.x, this.y);
+                    this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
+                }else if(this.tickCounter < 300 && Math.floor(this.tickCounter/6)%2){
+                    this.ctx.drawImage(this.sprite.left, this.x, this.y);
+                    this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
                 }
                 if(this.tickCounter > 299){this.shoot(), this.delete = true;}
                 break;

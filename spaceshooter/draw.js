@@ -27,7 +27,7 @@ class Draw{
 
             this.ctx.drawImage(this.menuImg, 0, this.menuPos);
         }else{
-            this.projectiles.draw();
+            this.projectiles.draw(this.enemies.lst);
             this.enemies.draw(this.ship.getX());
         }
         setTimeout(this.draw.bind(this), 12);

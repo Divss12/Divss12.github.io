@@ -15,7 +15,7 @@ class Ship{
         this.i = 0;
         this.frameCount = 0;
 
-        this.bulletType = 3;
+        this.bulletType = 7;
         this.bulletSpeed = 4;
         this.bulletDmg = 4;
 
@@ -24,6 +24,7 @@ class Ship{
             left: new Image(),
             right: new Image(),
             //back: new Image()
+            cannons: new Image(),
         }
         this.sprites.center.src = "assets/ship/center.png";
         this.sprites.left.src = "assets/ship/left.png";
@@ -53,9 +54,9 @@ class Ship{
 
     shoot(gun){
         if(gun){
-            this.projectile.newProjectile(this.x-12, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
+            this.projectile.newProjectile(this.x-13, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }else{
-            this.projectile.newProjectile(this.x+10, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
+            this.projectile.newProjectile(this.x+9, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }
     }
 
