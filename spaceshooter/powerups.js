@@ -35,32 +35,26 @@ class Powerups {
         return false;
     }
 
-    draw () {
+    draw (frame) {
         if(this.active){
             if(this.checkShip()){
                 this.ship.addPwrup(this.type);
                 this.active = false;
 
                 switch(this.type){
-                    case 1: this.cd1 = 2000; break;
-                    case 2: this.cd2 = 2000; break;
+                    case 1: this.cd1 = 32000; break;
+                    case 2: this.cd2 = 32000; break;
                 }
             }
 
-            this.y += 2;
-
-            this.ticker++;
-            if(this.ticker == 4){
-                this.ticker = 0;
-                this.frame = (this.frame+1)%14;
-            }
+            this.y += 0.125*frame;
             this.ctx.drawImage(this.sprite, 0, 0, 24, 24, this.x, this.y, 24, 24);
         }
 
-        if(this.cd1 > 0){this.cd1--;}
-        if(this.cd2 > 0){this.cd2--;}
+        if(this.cd1 > 0){this.cd1 -= frame;}
+        if(this.cd2 > 0){this.cd2 -= frame;}
 
-        if(this.cd1 == 0){this.ship.rmvPwrup(1)}
-        if(this.cd2 == 0){this.ship.rmvPwrup(2)}
+        if(this.cd1 <= 0){this.ship.rmvPwrup(1)}
+        if(this.cd2 <= 0){this.ship.rmvPwrup(2)}
     }
 }

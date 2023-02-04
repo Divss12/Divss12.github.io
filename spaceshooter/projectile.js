@@ -26,9 +26,9 @@ class ProjectileManager {
         }
     }
 
-    draw(enemlst){
+    draw(frame, enemlst){
         for(var i = 0; i < this.lst.length; i++){
-            this.lst[i].draw();
+            this.lst[i].draw(frame);
 
             if(this.lst[i].delete){
                 this.lst.splice(i, 1);
@@ -37,7 +37,7 @@ class ProjectileManager {
         }
 
         for(var i = 0; i < this.alst.length; i++){
-            this.alst[i].draw(enemlst);
+            this.alst[i].draw(frame, enemlst);
 
             if(this.alst[i].delete){
                 this.alst.splice(i, 1);
@@ -56,7 +56,7 @@ class Projectile {
         this.x = x;
         this.y = y;
         this.team = team;
-        this.speed = speed;
+        this.speed = speed/16;
         this.dmg = dmg
 
         this.type = type;
@@ -67,7 +67,7 @@ class Projectile {
                 this.sprite.src = "assets/enemies/torpedoship/projectile.png";
                 this.frame = 0;
 
-                this.swerve = randRange(-3,4);
+                this.swerve = 0.00625*randRange(-3,4);
                 break;
             case 1:
                 this.sprite = new Image();
@@ -113,7 +113,7 @@ class Projectile {
                 this.frame = 0;
                 this.tick = 0;
                 this.headingVect = {x: 0, y:-1};
-                this.headingMag = 3;
+                this.headingMag = 0.1875;
                 this.cover = false;
                 break;
 
@@ -129,12 +129,12 @@ class Projectile {
         this.delete = false;
     }
 
-    updatePos (enemlst) {
+    updatePos (frame, enemlst) {
         if(this.type != 7){
-            if(this.type == 0){this.x += 0.1*this.swerve;}
+            if(this.type == 0){this.x += frame*this.swerve;}
             
-            if  (this.team == 1) {this.y += this.speed;}
-            else if(this.team==0){this.y -= this.speed;}
+            if  (this.team == 1) {this.y += frame*this.speed;}
+            else if(this.team==0){this.y -= frame*this.speed;}
         }
         else{//homing bullet code:
             let closestEnemyX = Infinity;
@@ -162,60 +162,60 @@ class Projectile {
                 if(yDiff < 50){//beeline it
                     let magn = Math.sqrt(xDiff*xDiff + yDiff*yDiff);
                     this.headingVect = {x: xDiff/magn, y: yDiff/magn};
-                    this.headingMag = 2;
+                    this.headingMag = 0.125;
                 }else{
                     let magn = Math.sqrt(xDiff*xDiff + yDiff*yDiff);
                     let newX = xDiff/(magn*3)
                     let newY = -1*Math.sqrt(1 - newX*newX);
                     this.headingVect = {x: newX, y: newY}
-                    this.headingMag = 2.5;
+                    this.headingMag = 0.15625;
                 }
             }else{
-                this.headingMag = 3;
+                this.headingMag = 0.1875;
             }
 
-            this.x += this.headingVect.x*this.headingMag;
-            this.y += this.headingVect.y*this.headingMag;
+            this.x += this.headingVect.x*this.headingMag*frame;
+            this.y += this.headingVect.y*this.headingMag*frame;
 
             this.tick++;
         }
     }
 
-    draw (enemlst) {
-        this.updatePos(enemlst);
+    draw (frame, enemlst) {
+        this.updatePos(frame, enemlst);
 
         switch(this.type){
             case 0:
-                if(this.tickCounter == 10){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 160){
+                    this.tickCounter -= 160;
                     this.frame = (this.frame+1)%3;
                 }
                 this.ctx.drawImage(this.sprite, 22-11*this.frame, 0, 6, 21, this.x, this.y, 6, 21)
                 break;
             case 1:
-                if(this.tickCounter == 5){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 80){
+                    this.tickCounter -= 80;
                     this.frame = (this.frame+1)%4;
                 }
                 this.ctx.drawImage(this.sprite, this.frame*8, 0, 7, 13, this.x, this.y, 7, 13);
                 break;
             case 2:
-                if(this.tickCounter == 3){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 48){
+                    this.tickCounter -= 48;
                     this.frame = (this.frame+1)%4;
                 }
                 this.ctx.drawImage(this.sprite, this.frame*4, 0, 3, 12, this.x, this.y, 3, 12);
                 break;
             case 3:
-                if(this.tickCounter == 5){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 80){
+                    this.tickCounter -= 80;
                     this.frame = (this.frame+1)%4;
                 }
                 this.ctx.drawImage(this.sprite, this.frame*7, 0, 6, 12, this.x, this.y, 6, 12);
                 break;
             case 4:
-                if(this.tickCounter == 7){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 112){
+                    this.tickCounter -= 112;
                     this.frame = (this.frame+1)%4;
                 }
                 
@@ -225,26 +225,26 @@ class Projectile {
                 this.ctx.drawImage(this.sprite, 18*((this.frame+3)%4) + 1, 0, 17, 38, this.x-7, this.y+107, 17, 38);
                 this.ctx.drawImage(this.sprite, 18*this.frame + 1, 0, 17, 38, this.x-7, this.y+143, 17, 38);
                 
-                this.lifeCounter++
-                if(this.lifeCounter > 224){this.delete = true}
+                this.lifeCounter += frame;
+                if(this.lifeCounter > 3584){this.delete = true}
                 break;
             case 5:
-                if(this.tickCounter == 5){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 80){
+                    this.tickCounter -= 80;
                     this.frame = (this.frame+1)%6;
                 }
                 this.ctx.drawImage(this.sprite, 16+this.frame*64, 0, 34, 17, this.x, this.y, 34, 17);
                 break;
             case 6:
-                if(this.tickCounter == 5){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 80){
+                    this.tickCounter -= 80;
                     this.frame = (this.frame+1)%16;
                 }
                 this.ctx.drawImage(this.sprite, 3+this.frame*16, 0, 10, 10, this.x, this.y, 10, 10);
                 break;
             case 7:
-                if(this.tickCounter == 5){
-                    this.tickCounter = 0;
+                if(this.tickCounter > 80){
+                    this.tickCounter -= 80;
                     this.frame = (this.frame+1)%8;
                     if(this.frame == 2){this.cover = true}
                 }
@@ -255,8 +255,8 @@ class Projectile {
                 }
                 break;
             case 8:                
-            if(this.tickCounter == 7){
-                this.tickCounter = 0;
+            if(this.tickCounter > 112){
+                this.tickCounter -= 112;
                 this.frame--;
                 if(this.frame == -1){this.frame = 3;}
             }
@@ -271,14 +271,13 @@ class Projectile {
             this.ctx.drawImage(this.sprite, 0, 18*this.frame + 1, 38, 17, 288, this.y, 38, 17);
             this.ctx.drawImage(this.sprite, 0, 18*((this.frame+1)%4) + 1, 38, 17, 324, this.y, 38, 17)
 
-            this.lifeCounter++
-            if(this.lifeCounter > 224){this.delete = true}
+            this.lifeCounter += frame
+            if(this.lifeCounter > 3584){this.delete = true}
             break;
-                break;
         }
 
         if(this.y > 300 || this.y < -20 || this.x > 375 || this.x < -20){this.delete = true}
-        this.tickCounter++;
+        this.tickCounter += frame;
         //window.requestAnimationFrame(this.draw.bind(this));
     }
 

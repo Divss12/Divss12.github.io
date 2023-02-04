@@ -75,11 +75,11 @@ class EnemyManager {
         }
     }
     
-    draw(shipX){
+    draw(frame, shipX){
         this.checkCollisions();
 
         for(var i = 0; i < this.lst.length; i++){
-            this.lst[i].draw(shipX); //call the draw method of every enemy
+            this.lst[i].draw(frame, shipX); //call the draw method of every enemy
             //and give them ship X coordinate so that they can track the player
 
             if(this.lst[i].delete){//check for enemies to be deleted
@@ -118,7 +118,6 @@ class Enemy {
         this.type = type;
 
         this.tickCounter = 0;
-        this.flash = false;
         
         
         switch (type) {
@@ -142,7 +141,7 @@ class Enemy {
                 this.ecounter = 0;
                 this.eframe = 0;
 
-                this.randomN = randRange(8,14);
+                this.randomN = randRange(128,224);
 
                 if(x == 352) {this.heading = -2}
                 else {this.heading = 2}
@@ -289,7 +288,6 @@ class Enemy {
             case 1:
                 if(this.x-1 < projectile.x && projectile.x < this.x+37 && this.y-1 < projectile.y && projectile.y < this.y+34){
                     this.health -= projectile.dmg;
-                    this.flash = true;
                     return true;
                 }
                 break;
@@ -319,7 +317,7 @@ class Enemy {
         return false
     }
     
-    updatePos(shipX){
+    updatePos(frame, shipX){
         switch(this.type) {
             case 0:
                 this.x += this.heading;
@@ -406,26 +404,26 @@ class Enemy {
         }
     }
     
-    draw(shipX){
+    draw(frame, shipX){
 
-        this.updatePos(shipX);
+        this.updatePos(frame, shipX);
 
         switch(this.type) {
             case 0:
                 if(this.destroy){
-                    if(this.tickCounter == 5){
-                        this.tickCounter = 0;
+                    if(this.tickCounter > 80){
+                        this.tickCounter -= 80;
                         this.frame++;
                     }
                     this.ctx.drawImage(this.sprite.destruction, 512 - this.frame*64, 0, 56, 50, this.x, this.y-12, 56, 50);
                 }
                 else{
                     var flag = false;
-                    if(this.tickCounter == this.randomN){
+                    if(this.tickCounter > this.randomN){
                         this.tickCounter = 0;
                         this.frame++;
                         flag = true;
-                        this.randomN = randRange(8,14);
+                        this.randomN = randRange(128,224);
                     }
                     if(this.frame < 16){
                         this.ctx.drawImage(this.sprite.weapons, 964 - 64*this.frame, 21, 56, 27, this.x, this.y, 56, 27);
@@ -445,22 +443,19 @@ class Enemy {
                         this.ctx.drawImage(this.sprite.base, this.x, this.y);
                         //this.ctx.drawImage(this.sprite.shield1, this.x-2, this.y + 17);
                     }
-                
-                    if(this.ecounter == 4){
-                        this.ecounter = 0;
+
+                    this.ecounter += frame;
+                    if(this.ecounter > 64){
+                        this.ecounter -= 64;
                         this.eframe = (this.eframe+1)%10;
                     }
                     this.ctx.drawImage(this.sprite.engine, 64*this.eframe + 4, 13, 56, 11, this.x, this.y-9, 56, 11);
-
-                    this.ecounter++;
-
-                    //if(this.frame > 17){this.destroy = true; this.frame = 0; this.tickCounter = 0;}
                 }
                 break;
             case 1:
                 if(this.destroy){
-                    if(this.tickCounter == 5){
-                        this.tickCounter = 0;
+                    if(this.tickCounter > 80){
+                        this.tickCounter -= 80;
                         this.frame++;
                         if(this.frame > 9){this.delete = true;}
                     }
@@ -469,7 +464,7 @@ class Enemy {
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }else{//weapons firing
                     var flag = false;
-                    if(this.tickCounter == 10){this.tickCounter = 0; this.frame = (this.frame+1)%6; flag = true;}
+                    if(this.tickCounter > 160){this.tickCounter -= 160; this.frame = (this.frame+1)%6; flag = true;}
                     this.ctx.drawImage(this.sprite.weapons, 64*this.frame, 0, 36, 40, this.x, this.y, 36, 40);
                     if(flag){
                         if(this.frame == 2){this.shoot(0); this.shoot(3)}
@@ -480,34 +475,29 @@ class Enemy {
                 }
 
                 if(!this.destroy){
-                    if(this.ecounter == 4){
-                        this.ecounter = 0;
+                    this.ecounter += frame;
+                    if(this.ecounter > 64){
+                        this.ecounter -= 64;
                         this.eframe = (this.eframe+1)%12;
                     }
                     this.ctx.drawImage(this.sprite.engine, 25+64*this.eframe, 8, 14, 6, this.x + 11, this.y-4, 14, 6);
-                    this.ecounter++;
                 }
-
-                /*if(this.flash){
-                    this.ctx.drawImage(this.sprite.destruction, 129, 0, 62, 64, this.x-13, this.y-14, 62, 64);
-                    this.flash = false;
-                }*/
 
                 if(this.cycle == 5){this.cycle = 0; this.idle = !this.idle}
                 break;
             case 2:
                 if(!this.destroy){
-                    if(this.ecounter == 12){
-                        this.ecounter = 0;
+                    this.ecounter += frame;
+                    if(this.ecounter > 192){
+                        this.ecounter -= 192;
                         this.eframe = (this.eframe+1)%12;
                     }
                     this.ctx.drawImage(this.sprite.engine, 28+128*this.eframe, 12, 72, 20, this.x, this.y-3, 72, 20);
-                    this.ecounter++;
                 }
 
                 if(this.destroy){
-                    if(this.tickCounter == 5){
-                        this.tickCounter = 0;
+                    if(this.tickCounter > 80){
+                        this.tickCounter -= 80;
                         this.frame++;
                         if(this.frame > 11){this.delete = true;}
                     }
@@ -516,7 +506,7 @@ class Enemy {
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }else{
                     var flag = false;
-                    if(this.tickCounter == 5){this.tickCounter = 0; this.frame = (this.frame+1)%60; flag = true;}
+                    if(this.tickCounter > 80){this.tickCounter -= 80; this.frame = (this.frame+1)%60; flag = true;}
                     this.ctx.drawImage(this.sprite.weapons, 128*this.frame + 28, 15, 72, 100, this.x, this.y, 72, 100);
 
                     if(flag){
@@ -527,10 +517,10 @@ class Enemy {
                 break;
             case 3:
                 if(this.destroy){
-                    if(this.tickCounter == 5){this.tickCounter = 0; this.frame++; if(this.frame>8){this.delete = true;}}
+                    if(this.tickCounter > 80){this.tickCounter -= 80; this.frame++; if(this.frame>8){this.delete = true;}}
                     this.ctx.drawImage(this.sprite.destruction, 1+this.frame*64, 6, 61, 56, this.x-19, this.y-15, 61, 56);
                 }else{
-                    if(this.tickCounter == 10){this.tickCounter = 0; this.frame = (this.frame+1)%6; flag = true;}
+                    if(this.tickCounter > 160){this.tickCounter -= 160; this.frame = (this.frame+1)%6; flag = true;}
                     this.ctx.drawImage(this.sprite.weapons, 20+this.frame*64, 21, 24, 22, this.x, this.y, 24, 22);
 
                     if(flag){
@@ -540,20 +530,20 @@ class Enemy {
                 }
 
                 if(!this.destroy){
-                    if(this.ecounter == 4){
-                        this.ecounter = 0;
+                    this.ecounter += frame;
+                    if(this.ecounter > 64){
+                        this.ecounter -= 64;
                         this.eframe = (this.eframe+1)%10;
                     }
                     this.ctx.drawImage(this.sprite.engine, 29+64*this.eframe, 0, 6, 12, this.x+9, this.y-9, 6, 12);
-                    this.ecounter++;
                 }
                 break;
             case 4:
                 if(this.destroy){
-                    if(this.tickCounter == 5){this.tickCounter = 0; this.frame++; if(this.frame>9){this.delete = true;}}
+                    if(this.tickCounter > 80){this.tickCounter -= 80; this.frame++; if(this.frame>9){this.delete = true;}}
                     this.ctx.drawImage(this.sprite.destruction, 1+this.frame*64, 0, 64, 44, this.x-19, this.y-10, 64, 44);
                 }else{
-                    if(this.tickCounter == 10){this.tickCounter = 0; this.frame = (this.frame+1)%6; flag = true;}
+                    if(this.tickCounter > 160){this.tickCounter -= 160; this.frame = (this.frame+1)%6; flag = true;}
                     this.ctx.drawImage(this.sprite.weapons, 20+this.frame*64, 0, 24, 24, this.x, this.y, 24, 24);
 
                     if(flag){
@@ -562,34 +552,34 @@ class Enemy {
                 }
 
                 if(!this.destroy){
-                    if(this.ecounter == 4){
-                        this.ecounter = 0;
+                    this.ecounter += frame;
+                    if(this.ecounter > 64){
+                        this.ecounter -= 64;
                         this.eframe = (this.eframe+1)%10;
                     }
                     this.ctx.drawImage(this.sprite.engine, 29+64*this.eframe, 0, 6, 12, this.x+9, this.y-7, 6, 12);
-                    this.ecounter++;
                 }
                 break;
             case 5:
-                if(this.tickCounter < 50){this.ctx.drawImage(this.sprite.base, this.x, this.y);}
-                else if(this.tickCounter < 200 && Math.floor(this.tickCounter/6)%3){
+                if(this.tickCounter < 800){this.ctx.drawImage(this.sprite.base, this.x, this.y);}
+                else if(this.tickCounter < 3200 && Math.floor(this.tickCounter/156)%3){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
-                }else if(this.tickCounter < 300 && Math.floor(this.tickCounter/6)%2){
+                }else if(this.tickCounter < 4800 && Math.floor(this.tickCounter/156)%2){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }
-                if(this.tickCounter > 299){this.shoot(), this.delete = true;}
+                if(this.tickCounter > 4799){this.shoot(), this.delete = true;}
                 break;
             case 6:
-                if(this.tickCounter < 50){
+                if(this.tickCounter < 800){
                     this.ctx.drawImage(this.sprite.left, this.x, this.y);
                     this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
-                }else if(this.tickCounter < 200 && Math.floor(this.tickCounter/6)%3){
+                }else if(this.tickCounter < 3200 && Math.floor(this.tickCounter/156)%3){
                     this.ctx.drawImage(this.sprite.left, this.x, this.y);
                     this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
-                }else if(this.tickCounter < 300 && Math.floor(this.tickCounter/6)%2){
+                }else if(this.tickCounter < 4800 && Math.floor(this.tickCounter/156)%2){
                     this.ctx.drawImage(this.sprite.left, this.x, this.y);
                     this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
-                }else if(309 < this.tickCounter){this.shoot(), this.delete = true;}
+                }else if(4960 < this.tickCounter){this.shoot(), this.delete = true;}
                 break;
         }
 
@@ -597,7 +587,8 @@ class Enemy {
         if(this.x < -100 || this.x > 367 || this.y < -100){this.delete = true;}
         if(this.health < 1 && !this.destroy){this.destroy = true; this.frame = 0; this.tickCounter = 0;
             if(this.type == 2){this.shoot(-1)}}
-        this.tickCounter++
+        
+        this.tickCounter += frame;
         //window.requestAnimationFrame(this.draw.bind(this));
     }
 }

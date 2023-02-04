@@ -12,7 +12,7 @@ initControls(ship)
 const pwrups = new Powerups(ship, ctx);
 
 
-const draw = new Draw(ctx, bg, projectiles, ship, enemies, score, pwrups);
+const draw = new Draw(ctx, sctx, bg, projectiles, ship, enemies, score, pwrups);
 initMouse(draw)
 draw.draw();
 //draw.director();

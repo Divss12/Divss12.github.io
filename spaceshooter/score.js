@@ -25,10 +25,12 @@ class Score {
         this.sprite.health.src = "assets/icons/health.png"
 
         this.distTick = 0;
+        this.storedDistFrameTicks = [0,0,0,0];
         this.distFrame = [0,0,0,0];
         this.distVal = [0,0,0,0];
         this.distChanging = [false, false, false, false];
 
+        this.storedEnemFrameTicks = [0, 0, 0, 0];
         this.enemFrame = [0,0,0,0];
         this.enemVal = [0,0,0,0];
         this.enemChanging = [false, false, false, false];
@@ -67,7 +69,7 @@ class Score {
         }
     }
 
-    drawScore () {
+    drawScore (frame) {
         //dist
         for(let i = 0; i < 4; i++){
             if(this.distChanging[i]){
@@ -77,7 +79,8 @@ class Score {
                 this.ctx.drawImage(this.sprite.nums, pre*8, 0, 7, 17-(this.distFrame[i]), 65+13*i, 41+(this.distFrame[i]), 7, 17-(this.distFrame[i]));
                 this.ctx.drawImage(this.sprite.nums, nxt*8, 13-this.distFrame[i], 7, 17, 65+13*i, 35, 7, 17);
 
-                this.distFrame[i]++;
+                this.storedDistFrameTicks[i] += frame;
+                if(this.storedDistFrameTicks[i] > 24){this.storedDistFrameTicks[i] -= 16; this.distFrame[i]++;}
                 if(this.distFrame[i] == 17){this.distFrame[i] = 0; this.distChanging[i] = false}
 
             } else {
@@ -94,7 +97,8 @@ class Score {
                 this.ctx.drawImage(this.sprite.nums, pre*8, 0, 7, 17-(this.enemFrame[i]), 65+13*i, 67+(this.enemFrame[i]), 7, 17-(this.enemFrame[i]));
                 this.ctx.drawImage(this.sprite.nums, nxt*8, 13-this.enemFrame[i], 7, 17, 65+13*i, 61, 7, 17);
 
-                this.enemFrame[i]++;
+                this.storedEnemFrameTicks[i] += frame;
+                if(this.storedEnemFrameTicks[i] > 24){this.storedEnemFrameTicks[i] -= 16; this.enemFrame[i]++}
                 if(this.enemFrame[i] == 17){this.enemFrame[i] = 0; this.enemChanging[i] = false}
 
             } else {
@@ -165,7 +169,7 @@ class Score {
         return true;
     }
 
-    drawDialogue () {
+    drawDialogue (frame) {
         if(this.dialog.length == 0){return;}
 
         this.ctx.font = "15px font1";
@@ -183,8 +187,8 @@ class Score {
         }
 
         if(!this.dialogFinished){
-            this.dialogTick++
-            if(this.dialogTick == 3){ this.dialogTick = 0;
+            this.dialogTick += frame;
+            if(this.dialogTick > 48){ this.dialogTick -= 48;
                 if(this.dialogF < this.dialog[this.dialogCurLine].length) {this.dialogF++}
                 else if(this.dialogCurLine < this.dialog.length-1) {this.dialogCurLine++; this.dialogF = 0;}
                 else{this.dialogFinished = true}
@@ -192,21 +196,21 @@ class Score {
         }
     }
 
-    draw (ticking) {
+    draw (frame, ticking) {
         this.ctx.fillStyle = "#141D27";
         this.ctx.fillRect(0, 0, 114, 264);
 
         this.drawHealth(this.health);
-        this.drawScore();
+        this.drawScore(frame);
 
         this.ctx.drawImage(this.sprite.main, 0, 0);
 
         this.drawPowerUps(this.engine, this.hsm, this.shield);      
-        this.drawDialogue();
+        this.drawDialogue(frame);
 
         if(ticking){
-            this.distTick++;        
-            if(this.distTick == 100){this.addDist(); this.distTick = 0;}
+            this.distTick += frame;        
+            if(this.distTick > 1000){this.addDist(); this.distTick = 0;}
         }
         //this.addDialog("WATCH OUT! ASTEROIDS INCOMING")
 

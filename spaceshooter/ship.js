@@ -16,8 +16,10 @@ class Ship{
         this.leftPressed = false;
         this.rightPressed = false;
 
-        this.i = 0;
-        this.frameCount = 0;
+        this.gunTick = 0;
+        this.storedGunFrames = 0;
+
+        this.shieldTick = 0;
 
         this.health = 16;
 
@@ -90,20 +92,20 @@ class Ship{
         }
     }
 
-    move(){
+    move(frame){
         if(this.upPressed && !this.downPressed){
-            if(this.y > 0){this.y -= 2+this.engineSupercharged}
+            if(this.y > 0){this.y -= (0.12+0.06*this.engineSupercharged)*frame}
         }
         else if(this.downPressed && !this.upPressed){
-            if(this.y < 264){this.y += 2+this.engineSupercharged}
+            if(this.y < 264){this.y += (0.12+0.06*this.engineSupercharged)*frame}
         }
 
         if(this.leftPressed && !this.rightPressed){
-            if(this.x > 0){this.x -= 3+this.engineSupercharged}
+            if(this.x > 0){this.x -= (0.18+0.06*this.engineSupercharged)*frame}
             return -1;
         }
         else if(this.rightPressed && !this.leftPressed){
-            if(this.x < 352){this.x += 3+this.engineSupercharged}
+            if(this.x < 352){this.x += (0.18+0.06*this.engineSupercharged)*frame}
             return 1;
         }
 
@@ -118,8 +120,13 @@ class Ship{
         }
     }
 
-    draw(){
-        let dir = this.move();
+    draw(frame, menu){
+        if(menu){
+            //add code to display during the menu here
+            return;
+        }
+
+        let dir = this.move(frame);
         switch(dir){
             case -1:
                 this.ctx.drawImage(this.sprites.left, this.x-15, this.y-10);
@@ -147,13 +154,13 @@ class Ship{
             this.ctx.drawImage(this.sprites.shield, this.lastX-16, this.lastY-18);
         }
 
-        this.frameCount++;
-        if(this.frameCount == 10){
-            this.i = (this.i+1)%4;
-            this.frameCount = 0;
+        this.storedGunFrames += frame;
+        if(this.storedGunFrames > 250){
+            this.gunTick = (this.gunTick+1)%2;
+            this.storedGunFrames -= 250;
 
-            if(this.i == 1){this.shoot(0)}
-            if(this.i == 3){this.shoot(1)}
+            if(this.gunTick == 0){this.shoot(0)}
+            if(this.gunTick == 1){this.shoot(1)}
         }
 
         this.lastX = this.x;

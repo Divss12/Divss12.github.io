@@ -51,7 +51,7 @@ class Background {
         this.yd.push(this.yd[0]-704);
     }
 
-    draw () {
+    draw (frame) {
         this.ctx.fillStyle = "#00172B";
         this.ctx.fillRect(0, 0, 352, 264);
     
@@ -61,10 +61,10 @@ class Background {
         this.ctx.drawImage(this.curbgs[0], 0, this.y[0]-88);
         this.ctx.drawImage(this.curbgs[1], 0, this.y[1]-88);
     
-        this.y[0] += 0.5;
-        this.y[1] += 0.5;
-        this.yd[0] += 1.5;
-        this.yd[1] += 1.5;
+        this.y[0] += 0.03*frame;
+        this.y[1] += 0.03*frame;
+        this.yd[0] += 0.09*frame;
+        this.yd[1] += 0.09*frame;
     
         if(this.y[0] > 352){this.newStarBG();}
         if(this.yd[0] > 704){this.newDustBG();}
