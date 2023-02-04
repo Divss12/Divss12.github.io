@@ -5,18 +5,24 @@ const ctx = canvas.getContext("2d");
 const scanvas = document.querySelector(".score-canvas");
 const sctx = scanvas.getContext("2d");
 
+var scale = 1;
+var topLeftX = 0;
+var topLeftY = 0;
+
 function scaleCanvas(){
     const wHeight = window.innerHeight;
     const wWidth = window.innerWidth;
     
     var scaleFactor;
-    if(wHeight * 16 > wWidth * 9){ //width constricts 
+    if(wHeight * 16 > wWidth * 9){ //width constricts
+        scale = (wWidth-20)/466; 
         scaleFactor = Math.floor((wWidth-20)/46.6)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264;
         scanvas.width = scaleFactor*115;
         scanvas.height = scaleFactor*264;
     }else{ // height constricts
+        scale = (wHeight-20)/264;
         scaleFactor = Math.floor((wHeight-20)/26.4)/10;
         canvas.width = scaleFactor*352;
         canvas.height = scaleFactor*264; 
@@ -34,9 +40,9 @@ function scaleCanvas(){
     ctx.scale(scaleFactor, scaleFactor);
     sctx.scale(scaleFactor, scaleFactor);
 
-    //temporary
-    //sctx.fillStyle = "#141D27";
-    //sctx.fillRect(0, 0, 126, 264);
+    var rect = canvas.getBoundingClientRect();
+    topLeftX = rect.left;
+    topLeftY = rect.top;
 }
 
 scaleCanvas();

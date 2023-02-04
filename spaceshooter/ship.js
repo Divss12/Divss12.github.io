@@ -1,11 +1,15 @@
 class Ship{
-    constructor(ctx, projectiles){
+    constructor(ctx, projectiles, score){
         this.ctx = ctx;
 
         this.projectile = projectiles;
+        this.score = score;
 
         this.x = 176;
-        this.y = 212;
+        this.y = 236;
+
+        this.lastX = 176;
+        this.lastY = 236;
 
         this.downPressed = false;
         this.upPressed = false;
@@ -15,7 +19,9 @@ class Ship{
         this.i = 0;
         this.frameCount = 0;
 
-        this.bulletType = 7;
+        this.health = 16;
+
+        this.bulletType = 3;
         this.bulletSpeed = 4;
         this.bulletDmg = 4;
 
@@ -24,28 +30,80 @@ class Ship{
             left: new Image(),
             right: new Image(),
             //back: new Image()
-            cannons: new Image(),
+            engine: new Image(),
+            enginep: new Image(),
+            shield: new Image(),
         }
         this.sprites.center.src = "assets/ship/center.png";
         this.sprites.left.src = "assets/ship/left.png";
         this.sprites.right.src = "assets/ship/right.png";
-  
+        this.sprites.engine.src = "assets/ship/engine0.png";
+        this.sprites.enginep.src = "assets/ship/engine1.png";
+        this.sprites.shield.src = "assets/ship/shield.png";
+
+        this.engineSupercharged = 0;
+        this.shield = false;
+        this.shieldHealth = 0;
+
+        this.eframe = 0;
+        this.etick = 0;
+        this.erandom = 0;
+    }
+
+    addPwrup(type){
+        switch(type){
+            case 0: //health pickup
+                this.health += 2;
+                break;
+            case 1: //supercharged engine pickup
+                this.engineSupercharged = 1;
+                this.score.engine = true;
+                break;
+            case 2: //homing bullets pickup
+                this.bulletType = 7;
+                this.bulletDmg = 3;
+                this.score.hsm = true;
+                break;
+            case 3: //energy shield pick up
+                this.shield = true;
+                this.shieldHealth = 1;
+                break;
+        }
+    }
+
+    rmvPwrup(type){
+        switch(type){
+            case 1: //supercharged engine pickup
+                this.engineSupercharged = 0;
+                this.score.engine = false;
+                break;
+            case 2: //homing bullets pickup
+                this.bulletType = 3;
+                this.bulletDmg = 4;
+                this.score.hsm = false;
+                break;
+            case 3: //energy shield pick up
+                this.shieldHealth--;
+                this.score.shield--;
+                if(this.shieldHealth == 0){this.shield = false;}
+                break;
+        }
     }
 
     move(){
         if(this.upPressed && !this.downPressed){
-            if(this.y > 0){this.y -= 2}
+            if(this.y > 0){this.y -= 2+this.engineSupercharged}
         }
         else if(this.downPressed && !this.upPressed){
-            if(this.y < 264){this.y += 2}
+            if(this.y < 264){this.y += 2+this.engineSupercharged}
         }
 
         if(this.leftPressed && !this.rightPressed){
-            if(this.x > 0){this.x-=3}
+            if(this.x > 0){this.x -= 3+this.engineSupercharged}
             return -1;
         }
         else if(this.rightPressed && !this.leftPressed){
-            if(this.x < 352){this.x+=3}
+            if(this.x < 352){this.x += 3+this.engineSupercharged}
             return 1;
         }
 
@@ -56,7 +114,7 @@ class Ship{
         if(gun){
             this.projectile.newProjectile(this.x-13, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }else{
-            this.projectile.newProjectile(this.x+9, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
+            this.projectile.newProjectile(this.x+10, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }
     }
 
@@ -73,6 +131,22 @@ class Ship{
                 this.ctx.drawImage(this.sprites.right, this.x-15, this.y-10);
         }
 
+        this.etick++;
+        if(this.etick == 7){
+            this.etick = 0;
+            this.eframe = (this.eframe+1)%4;
+            this.erandom = randRange(0,2)
+        }
+        if(this.engineSupercharged){
+            this.ctx.drawImage(this.sprites.enginep, this.eframe*8, this.erandom*14, 7, 12, this.x-3, this.y+13, 7, 12);
+        } else {
+            this.ctx.drawImage(this.sprites.engine, this.eframe*8, this.erandom*14, 7, 12, this.x-3, this.y+13, 7, 12);
+        }
+
+        if(this.shield){
+            this.ctx.drawImage(this.sprites.shield, this.lastX-16, this.lastY-18);
+        }
+
         this.frameCount++;
         if(this.frameCount == 10){
             this.i = (this.i+1)%4;
@@ -82,10 +156,16 @@ class Ship{
             if(this.i == 3){this.shoot(1)}
         }
 
+        this.lastX = this.x;
+        this.lastY = this.y;
     }
 
     getX(){
         return this.x;
+    }
+
+    getY(){
+        return this.y;
     }
 
     pressUp(){

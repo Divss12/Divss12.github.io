@@ -2,6 +2,11 @@ class Score {
     constructor (ctx) {
         this.ctx = ctx;
 
+        this.health = 8;
+        this.engine = false;
+        this.hsm = false;
+        this.shield = 0;
+
         this.sprite = {
             main: new Image(),
             nums: new Image(),
@@ -100,7 +105,7 @@ class Score {
 
     }
 
-    drawPowerUps (eng, hsm, gun, shield) {
+    drawPowerUps (eng, hsm, shield) {
         if(eng){
             this.ctx.drawImage(this.sprite.eng, 10, 159)
         } else {
@@ -109,8 +114,6 @@ class Score {
 
         if(hsm){
             this.ctx.drawImage(this.sprite.gun, 0, 12, 44, 17, 52, 149, 44, 17);
-        }else if(gun){
-            this.ctx.drawImage(this.sprite.gun, 0, 30, 44, 17, 52, 149, 44, 17)
         }else{
             this.ctx.drawImage(this.sprite.gun, 0, 0, 29, 11, 57, 149, 29, 11);
         }
@@ -193,12 +196,12 @@ class Score {
         this.ctx.fillStyle = "#141D27";
         this.ctx.fillRect(0, 0, 114, 264);
 
-        this.drawHealth(5);
+        this.drawHealth(this.health);
         this.drawScore();
 
         this.ctx.drawImage(this.sprite.main, 0, 0);
 
-        this.drawPowerUps(false, false, false, 0);      
+        this.drawPowerUps(this.engine, this.hsm, this.shield);      
         this.drawDialogue();
 
         if(ticking){

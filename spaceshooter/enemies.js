@@ -3,6 +3,7 @@ class EnemyManager {
         this.ctx = ctx;
         this.projectiles = projectiles;
         this.score = score;
+        this.enemHitCounter = 0;
         this.lst = [];
     }
     
@@ -51,7 +52,7 @@ class EnemyManager {
             
             case 6: //horizontal alerter
                 this.lst.push(
-                    new Enemy(this.ctx, 5, randRange(164, 236), 6, this.projectiles)
+                    new Enemy(this.ctx, 5, randRange(114, 236), 6, this.projectiles)
                 );
                 break;
         }
@@ -62,6 +63,13 @@ class EnemyManager {
             for(var j = 0; j < this.lst.length; j++){
                 if(this.lst[j].checkCollision(this.projectiles.alst[i])){
                     this.projectiles.alst[i].delete = true;
+                    if(this.score.shield > 0){
+                        this.enemHitCounter++;
+                        if(this.enemHitCounter == 7){
+                            this.enemHitCounter = 0;
+                            if(this.shield < 5){this.score.shield++};
+                        }
+                    }
                 }
             }
         }
@@ -93,7 +101,7 @@ class EnemyManager {
         window.setInterval(this.genEnemy.bind(this), 18000, 1);
         window.setInterval(this.genEnemy.bind(this), 54000, 2);
         window.setInterval(this.genEnemy.bind(this), 10000, 4);
-        window.setInterval(this.genEnemy.bind(this), 12000, 6)
+        window.setInterval(this.genEnemy.bind(this), 12000, 6);
         window.setTimeout(window.setInterval, 5000, this.genEnemy.bind(this), 10000, 3);
     }
 }
@@ -110,7 +118,7 @@ class Enemy {
         this.type = type;
 
         this.tickCounter = 0;
-        
+        this.flash = false;
         
         
         switch (type) {
@@ -281,6 +289,7 @@ class Enemy {
             case 1:
                 if(this.x-1 < projectile.x && projectile.x < this.x+37 && this.y-1 < projectile.y && projectile.y < this.y+34){
                     this.health -= projectile.dmg;
+                    this.flash = true;
                     return true;
                 }
                 break;
@@ -479,6 +488,11 @@ class Enemy {
                     this.ecounter++;
                 }
 
+                /*if(this.flash){
+                    this.ctx.drawImage(this.sprite.destruction, 129, 0, 62, 64, this.x-13, this.y-14, 62, 64);
+                    this.flash = false;
+                }*/
+
                 if(this.cycle == 5){this.cycle = 0; this.idle = !this.idle}
                 break;
             case 2:
@@ -575,8 +589,7 @@ class Enemy {
                 }else if(this.tickCounter < 300 && Math.floor(this.tickCounter/6)%2){
                     this.ctx.drawImage(this.sprite.left, this.x, this.y);
                     this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
-                }
-                if(this.tickCounter > 299){this.shoot(), this.delete = true;}
+                }else if(309 < this.tickCounter){this.shoot(), this.delete = true;}
                 break;
         }
 

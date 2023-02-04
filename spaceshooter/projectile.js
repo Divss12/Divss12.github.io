@@ -83,7 +83,7 @@ class Projectile {
                 break;
             case 3:
                 this.sprite = new Image();
-                this.sprite.src = "assets/ship/bullet.png";
+                this.sprite.src = "assets/ship/newbullet.png";
                 this.frame = 0;
                 break;
             case 4:
@@ -108,10 +108,13 @@ class Projectile {
             case 7:
                 this.sprite = new Image();
                 this.sprite.src = "assets/ship/spbullet.png";
+                this.spritec = new Image();
+                this.spritec.src = "assets/ship/spbulletc.png";
                 this.frame = 0;
                 this.tick = 0;
                 this.headingVect = {x: 0, y:-1};
                 this.headingMag = 3;
+                this.cover = false;
                 break;
 
             case 8:
@@ -141,9 +144,8 @@ class Projectile {
             for(var i = 0; i < enemlst.length; i++){
                 const e = enemlst[i]
 
-                if(e.type == 5){continue;}
+                if(e.type == 5 || e.type == 6){continue;}
 
-                console.log(e.w2, e.h2);
                 let xDiff = e.x + e.w2 - this.x;
                 let yDiff = e.y + e.h2 - this.y;
                 let dist = Math.sqrt(xDiff*xDiff + yDiff*yDiff);
@@ -207,9 +209,9 @@ class Projectile {
             case 3:
                 if(this.tickCounter == 5){
                     this.tickCounter = 0;
-                    this.frame = (this.frame+1)%8;
+                    this.frame = (this.frame+1)%4;
                 }
-                this.ctx.drawImage(this.sprite, this.frame*9, 0, 5, 10, this.x, this.y, 5, 10);
+                this.ctx.drawImage(this.sprite, this.frame*7, 0, 6, 12, this.x, this.y, 6, 12);
                 break;
             case 4:
                 if(this.tickCounter == 7){
@@ -244,13 +246,19 @@ class Projectile {
                 if(this.tickCounter == 5){
                     this.tickCounter = 0;
                     this.frame = (this.frame+1)%8;
+                    if(this.frame == 2){this.cover = true}
                 }
-                this.ctx.drawImage(this.sprite, this.frame*8, 0, 8, 8, this.x-2, this.y, 8, 8);
+                if(this.cover){
+                    this.ctx.drawImage(this.sprite, this.frame*8, 0, 8, 8, this.x-2, this.y, 8, 8);
+                }else{
+                    this.ctx.drawImage(this.spritec, 2+this.frame*8, 2, 4, 4, this.x, this.y, 4, 4);
+                }
                 break;
             case 8:                
             if(this.tickCounter == 7){
                 this.tickCounter = 0;
-                this.frame = (this.frame+1)%4;
+                this.frame--;
+                if(this.frame == -1){this.frame = 3;}
             }
             this.ctx.drawImage(this.sprite, 0, 18*this.frame + 1, 38, 17, 0, this.y, 38, 17);
             this.ctx.drawImage(this.sprite, 0, 18*((this.frame+1)%4) + 1, 38, 17, 36, this.y, 38, 17);

@@ -34,3 +34,13 @@ function initControls(ship){
     }
 }
 
+function initMouse(draw){
+    canvas.onmousemove = function (event) {
+        draw.mouseMove(Math.floor((event.clientX - topLeftX)/scale), Math.floor((event.clientY - topLeftY)/scale));
+    }
+
+    canvas.onclick = function (event) {
+        draw.mouseClick(Math.floor((event.clientX - topLeftX)/scale), Math.floor((event.clientY - topLeftY)/scale));
+    }
+}
+
