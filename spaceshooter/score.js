@@ -33,13 +33,14 @@ class Score {
         this.storedEnemFrameTicks = [0, 0, 0, 0];
         this.enemFrame = [0,0,0,0];
         this.enemVal = [0,0,0,0];
+        this.enemiesToNextDiff = 6;
         this.enemChanging = [false, false, false, false];
 
-        this.dialog = [];
-        this.dialogCurLine = 0;
-        this.dialogF = 0;
-        this.dialogFinished = true;
-        this.dialogTick = 0;
+        this.dialogue = [];
+        this.dialogueCurLine = 0;
+        this.dialogueF = 0;
+        this.dialogueFinished = true;
+        this.dialogueTick = 0;
     }
 
     drawHealth (h) {
@@ -61,6 +62,7 @@ class Score {
     }
     
     addEnemy() {
+        this.enemiesToNextDiff--;
         let flag = true;
         for(var i = 3; i > -1; i--){
             if(flag){this.enemVal[i]++; this.enemChanging[i] = true;}
@@ -134,34 +136,39 @@ class Score {
 
     }
 
-    addDialog (text){
-        if(!this.dialogFinished) {return false;}
+    addDialogue (text){
+        if(!this.dialogueFinished) {return false;}
 
-        this.dialog = [];
-        this.dialogCurLine = 0;
-        this.dialogF = 0;
-        this.dialogFinished = false;
-        this.dialogTick = 0;
+        this.dialogue = [];
+        this.dialogueCurLine = 0;
+        this.dialogueF = 0;
+        this.dialogueFinished = false;
+        this.dialogueTick = 0;
 
         this.ctx.font = "15px font1";
         this.ctx.fillStyle = "#fbf5ef";
         
         let flag = false;
         let p=0;
-        
+        let line = 0;
+        let w = 110;
+
         text += " ";
         while(true){
             let i = p;
             let j = p;
+
             while(true){
                 if(text.charAt(i) == " "){
-                    if(this.ctx.measureText(text.slice(p, i), 0, 0).width > 103){break;}
+                    if(this.ctx.measureText(text.slice(p, i), 0, 0).width > w){break;}
                     j = i;
                 }
                 i++;
                 if(i == text.length){flag = true; break;}
             }
-            this.dialog.push(text.slice(p,j))
+            this.dialogue.push(text.slice(p,j))
+            line++;
+            if(line > 2){w = 70}
             p = j+1;
             if(flag){break}
         }
@@ -170,30 +177,31 @@ class Score {
     }
 
     drawDialogue (frame) {
-        if(this.dialog.length == 0){return;}
+        if(this.dialogue.length == 0){return;}
 
         this.ctx.font = "15px font1";
         this.ctx.fillStyle = "#fbf5ef";
 
-        for(let i = 0; i < this.dialogCurLine+1; i++){
+        for(let i = 0; i < this.dialogueCurLine+1; i++){
             let w;
-            if(i < 3){w = 5} else {w = 45}
+            if(i < 3){w = 5} else {w = 44}
 
-            if(i == this.dialogCurLine){
-                this.ctx.fillText(this.dialog[i].slice(0, this.dialogF), w, 197+ i*10)
+            if(i == this.dialogueCurLine){
+                this.ctx.fillText(this.dialogue[i].slice(0, this.dialogueF), w, 197+ i*10)
             }else{
-                this.ctx.fillText(this.dialog[i], w, 197+ i*10);
+                this.ctx.fillText(this.dialogue[i], w, 197+ i*10);
             }
         }
 
-        if(!this.dialogFinished){
-            this.dialogTick += frame;
-            if(this.dialogTick > 48){ this.dialogTick -= 48;
-                if(this.dialogF < this.dialog[this.dialogCurLine].length) {this.dialogF++}
-                else if(this.dialogCurLine < this.dialog.length-1) {this.dialogCurLine++; this.dialogF = 0;}
-                else{this.dialogFinished = true}
+        if(!this.dialogueFinished){
+            this.dialogueTick += frame;
+            if(this.dialogueTick > 48){ this.dialogueTick -= 48;
+                if(this.dialogueF < this.dialogue[this.dialogueCurLine].length) {this.dialogueF++}
+                else if(this.dialogueCurLine < this.dialogue.length-1) {this.dialogueCurLine++; this.dialogueF = 0;}
+                else{this.dialogueFinished = true}
             }
         }
+        
     }
 
     draw (frame, ticking) {
@@ -212,7 +220,7 @@ class Score {
             this.distTick += frame;        
             if(this.distTick > 1000){this.addDist(); this.distTick = 0;}
         }
-        //this.addDialog("WATCH OUT! ASTEROIDS INCOMING")
+        //this.addDialogue("WATCH OUT! ASTEROIDS INCOMING")
 
     }
 

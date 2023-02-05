@@ -7,7 +7,7 @@ class EnemyManager {
         this.lst = [];
     }
     
-    genEnemy(type){
+    genEnemy(type, arg){
         //const type = randRange(0,5);
         switch(type){
             case 0: //torpedoShip
@@ -30,7 +30,7 @@ class EnemyManager {
 
             case 2: //dreadnought
                 this.lst.push(
-                    new Enemy(this.ctx, 176, -100, 2, this.projectiles)
+                    new Enemy(this.ctx, randRange(80,216), -100, 2, this.projectiles)
                 );
                 break;
 
@@ -52,7 +52,7 @@ class EnemyManager {
             
             case 6: //horizontal alerter
                 this.lst.push(
-                    new Enemy(this.ctx, 5, randRange(114, 236), 6, this.projectiles)
+                    new Enemy(this.ctx, 5, arg, 6, this.projectiles)
                 );
                 break;
         }
@@ -143,8 +143,8 @@ class Enemy {
 
                 this.randomN = randRange(128,224);
 
-                if(x == 352) {this.heading = -2}
-                else {this.heading = 2}
+                if(x == 352) {this.heading = -0.12}
+                else {this.heading = 0.12}
                 
                 this.w2 = 28;
                 this.h2 = 11;
@@ -320,15 +320,15 @@ class Enemy {
     updatePos(frame, shipX){
         switch(this.type) {
             case 0:
-                this.x += this.heading;
-                this.y -= 0.3;
+                this.x += frame*this.heading;
+                this.y -= 0.018*frame;
                 break;
             case 1:
                 if(this.idle){
-                    if(this.y < 10){this.y++; break;}
+                    if(this.y < 10){this.y += 0.06*frame; break;}
 
-                    if(this.x+17 < shipX-1){this.x++;}
-                    else if (this.x+17 > shipX+1){this.x--;}
+                    if(this.x+17 < shipX-1){this.x += 0.06*frame;}
+                    else if (this.x+17 > shipX+1){this.x -= 0.06*frame;}
                     else if (this.tickCounter > 100){
                         this.idle = false; 
                         this.tickCounter = 0;
@@ -337,10 +337,10 @@ class Enemy {
                 break;
             case 2:
                 if(this.idle){
-                    if(this.y < 5){this.y++; break;}
+                    if(this.y < 5){this.y += 0.06*frame; break;}
 
-                    if(this.x+36 < shipX-1){this.x += 0.5;}
-                    else if (this.x+36 > shipX+1){this.x -= 0.5;}
+                    if(this.x+36 < shipX-1){this.x += 0.03*frame;}
+                    else if (this.x+36 > shipX+1){this.x -= 0.03*frame;}
                     else if (this.tickCounter > 100){
                         this.idle = false; 
                         this.tickCounter = 0;
@@ -349,10 +349,10 @@ class Enemy {
                 break;
             case 3:            
             case 4:
-                if(this.x > 302){this.heading = -1}
-                if(this.x < 26){this.heading = 1}
+                if(this.x > 302){this.heading = -0.06}
+                if(this.x < 26){this.heading = 0.06}
 
-                this.x += this.heading;
+                this.x += this.heading*frame;
                 break;
             case 5:
             case 6:

@@ -1,33 +1,51 @@
 function initControls(ship){
     document.onkeydown = function (event) {
-        switch (event.keyCode) {
-            case 37: //Left
+        switch (event.key) {
+            case "A":
+            case "a":
+            case "ArrowLeft": //Left
                 ship.pressLeft();
                 break;
-            case 38: //Up
+            case "W":    
+            case "w":
+            case "ArrowUp": //Up
                 ship.pressUp();
                 break;
-            case 39: //Right
+            case "D":    
+            case "d":
+            case "ArrowRight": //Right
                 ship.pressRight();
                 break;
-            case 40: //Down
+            case "S":
+            case "s":
+            case "ArrowDown": //Down
                 ship.pressDown();
                 break;
+            default:
+                console.log(event.key)
         }
     };
 
     document.onkeyup = function (event) {
-        switch (event.keyCode){
-            case 37: //Left
+        switch (event.key){
+            case "A":
+            case "a":
+            case "ArrowLeft": //Left
                 ship.releaseLeft();
                 break;
-            case 38: //Up
+            case "W":
+            case "w":
+            case "ArrowUp": //Up
                 ship.releaseUp();
                 break;
-            case 39: //Right
+            case "D":
+            case "d":
+            case "ArrowRight": //Right
                 ship.releaseRight();
                 break;
-            case 40: //Down
+            case "S":    
+            case "s":
+            case "ArrowDown": //Down
                 ship.releaseDown();
                 break;
         }
