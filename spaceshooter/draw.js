@@ -65,9 +65,9 @@ class Draw{
         }
     } else {
         if(this.score.enemiesToNextDiff < 0){
-            this.score.enemiesToNextDiff = 8;
+            this.score.enemiesToNextDiff = 12;
             this.difficulty++
-            if(this.difficulty > 5){
+            if(this.difficulty > 5 && this.difficulty%2){
                 this.enemies.genEnemy(2)
             }
         }
@@ -78,15 +78,15 @@ class Draw{
         }
         if(this.enem1CD <= 0){
             this.enemies.genEnemy(1);
-            this.enem1CD += 100000/(this.difficulty+5); 
+            this.enem1CD += 125000/(this.difficulty+5); 
         }
         if(this.enem3CD <= 0){
             this.enemies.genEnemy(3);
-            this.enem3CD += 90000/(this.difficulty+4);
+            this.enem3CD += 100000/(this.difficulty+4);
         }
         if(this.enem4CD <= 0){
             this.enemies.genEnemy(4);
-            this.enem4CD += 90000/(this.difficulty+4);
+            this.enem4CD += 100000/(this.difficulty+4);
         }
         if(this.enem5CD <= 0){
             this.enemies.genEnemy(5);
