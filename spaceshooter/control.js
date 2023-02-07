@@ -62,3 +62,13 @@ function initMouse(draw){
     }
 }
 
+function initFocus(draw){
+    window.onblur = function (event){
+        draw.tabOut();
+    }
+
+    window.onfocus = function (event){
+        draw.tabIn();
+    }
+}
+

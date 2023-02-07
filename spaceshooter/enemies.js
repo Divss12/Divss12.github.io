@@ -1,8 +1,9 @@
 class EnemyManager {
-    constructor(ctx, projectiles, score){
+    constructor(ctx, projectiles, score, ship){
         this.ctx = ctx;
         this.projectiles = projectiles;
         this.score = score;
+        this.ship = ship;
         this.enemHitCounter = 0;
         this.lst = [];
     }
@@ -67,7 +68,7 @@ class EnemyManager {
                         this.enemHitCounter++;
                         if(this.enemHitCounter == 7){
                             this.enemHitCounter = 0;
-                            if(this.shield < 5){this.score.shield++};
+                            this.ship.addPwrup(3);
                         }
                     }
                 }
@@ -93,16 +94,18 @@ class EnemyManager {
     }
 
     testing_gen(){
-        this.score.addDialog("This is the first playable version, there is no dmg taken!");
-
-        this.genEnemy(5);
-        window.setInterval(this.genEnemy.bind(this), 4500, 5);
-        window.setInterval(this.genEnemy.bind(this), 9000, 0);
+        /*window.setInterval(this.genEnemy.bind(this), 9000, 0);
         window.setInterval(this.genEnemy.bind(this), 18000, 1);
         window.setInterval(this.genEnemy.bind(this), 54000, 2);
+        window.setInterval(this.genEnemy.bind(this), 12000, 3);
         window.setInterval(this.genEnemy.bind(this), 10000, 4);
-        window.setInterval(this.genEnemy.bind(this), 12000, 6);
-        window.setTimeout(window.setInterval, 5000, this.genEnemy.bind(this), 10000, 3);
+        window.setInterval(this.genEnemy.bind(this), 4500, 5);
+        window.setInterval(this.genEnemy.bind(this), 12000, 6);*/
+
+        this.genEnemy(2)
+        window.setInterval(this.genEnemy.bind(this), 20000, 2);
+
+
     }
 }
 
@@ -197,7 +200,7 @@ class Enemy {
                 this.eframe = 0;
                 this.w2 = 36;
                 this.h2 = 50;
-                this.health = 100;
+                this.health = 10000000;
                 break;
             
             case 3: //fighter 
@@ -386,7 +389,7 @@ class Enemy {
                 break;
             case 2:
                 if(gun == -1){this.projectiles.removeLaser();}
-                else{this.projectiles.newProjectile(this.x+35,this.y+99, 4, 1, 0, 16);}
+                else{this.projectiles.newProjectile(this.x+35,this.y+99, 4, 1, 0, 2);}
                 break;
             case 3:
                 if(gun == 0){this.projectiles.newProjectile(this.x+5, this.y+7, 2, 1, 4, 1)}
@@ -399,7 +402,7 @@ class Enemy {
                 this.projectiles.newProjectile(this.x-11, 270, 5, 1, -3, 3);
                 break;
             case 6:
-                this.projectiles.newProjectile(0, this.y, 8, 1, 0, 16);
+                this.projectiles.newProjectile(0, this.y, 8, 1, 0, 2);
                 break;
         }
     }

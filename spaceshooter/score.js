@@ -2,7 +2,7 @@ class Score {
     constructor (ctx) {
         this.ctx = ctx;
 
-        this.health = 8;
+        this.health = 16;
         this.engine = false;
         this.hsm = false;
         this.shield = 0;
@@ -43,12 +43,18 @@ class Score {
         this.dialogueTick = 0;
     }
 
-    drawHealth (h) {
+    drawHealth (health) {
+        var h = Math.floor(health/2)
+        var half = health%2;
         if(h>0){
             this.ctx.drawImage(this.sprite.health, 0, 0, 13, 13, 2, 20, 13, 13);
         }
         for(let i = 1; i < h; i++){
             this.ctx.drawImage(this.sprite.health, 14, 0, 13, 13, 2+14*i, 20, 13, 13);
+        }
+
+        if(half){
+            this.ctx.drawImage(this.sprite.health, 14, 0, 7, 13, 2+14*h, 20, 7, 13);
         }
     }
 

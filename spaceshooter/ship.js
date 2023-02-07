@@ -22,6 +22,7 @@ class Ship{
         this.shieldTick = 0;
 
         this.health = 16;
+        this.invulFrames = 0;
 
         this.bulletType = 3;
         this.bulletSpeed = 4;
@@ -68,7 +69,10 @@ class Ship{
                 break;
             case 3: //energy shield pick up
                 this.shield = true;
-                this.shieldHealth = 1;
+                if(this.shieldHealth < 5){
+                    this.shieldHealth += 1;
+                    this.score.shield += 1;
+                }
                 break;
         }
     }
@@ -165,6 +169,70 @@ class Ship{
 
         this.lastX = this.x;
         this.lastY = this.y;
+
+        if(this.invulFrames > 0){
+            this.invulFrames-= frame
+            this.ctx.strokeStyle = "#ac3232";
+            this.ctx.lineWidth = 3;
+            this.ctx.strokeRect(0,0,352,264);
+        }
+    }
+
+    takeDmg(dmg){
+        if(this.invulFrames > 0){return;}
+        
+        
+        this.health -= dmg;
+        this.score.health -= dmg;
+        
+
+        this.invulFrames = 1000;
+    }
+
+    checkCollisions(plst){
+        for(var i = 0; i < plst.length; i++){
+            switch(plst[i].type){
+                case 0:
+                case 1:
+                case 2:
+                    if(this.shield){
+                        if(plst[i].x+18 > this.x && this.x > plst[i].x-14
+                        && plst[i].y+35  > this.y && this.y > plst[i].y+30){
+                            console.log(plst[i].y, this.y)
+                            this.rmvPwrup(3);
+                            plst[i].delete = true;
+                        }
+                    }else if(plst[i].x+18 > this.x && this.x > plst[i].x-14
+                    && plst[i].y+8  > this.y && this.y > plst[i].y){
+                        this.takeDmg(plst[i].dmg);
+                        plst[i].delete = true;
+                    }
+                    break;
+                case 5: //big wave
+                    if(plst[i].x+46 > this.x && this.x > plst[i].x-12
+                    && plst[i].y  > this.y && this.y > plst[i].y-8){
+                        this.takeDmg(plst[i].dmg);
+                        plst[i].delete = true;
+                    }
+                    break;
+                case 4: //vertical laser
+                    if(plst[i].x+17 > this.x && this.x > plst[i].x-16){
+                        this.takeDmg(plst[i].dmg);
+                    }
+
+                    break;
+                case 8: //horizontal laser
+                    if(plst[i].y+19 > this.y && this.y > plst[i].y-7){
+                        this.takeDmg(plst[i].dmg);
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    checkEnemyCollisions(elst){
+
     }
 
     getX(){

@@ -62,50 +62,50 @@ class Projectile {
         this.type = type;
 
         switch (type){
-            case 0:
+            case 0: //TORPEDO
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/torpedoship/projectile.png";
                 this.frame = 0;
 
                 this.swerve = 0.00625*randRange(-3,4);
                 break;
-            case 1:
+            case 1: //BIG BULLET
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/frigate/bullet1.png";
                 this.frame = 1;
 
                 break;
-            case 2:
+            case 2: //SMALL BULLET
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/frigate/bullet0.png";
                 this.frame = 0;
 
                 break;
-            case 3:
+            case 3: //PLAYER BULLET
                 this.sprite = new Image();
                 this.sprite.src = "assets/ship/newbullet.png";
                 this.frame = 0;
                 break;
-            case 4:
+            case 4: //DREADNOUGHT LASER
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/dreadnought/ray.png";
                 this.frame = 0;
                 this.lifeCounter = 0;
                 break;
             
-            case 5:
+            case 5: //RAY THAT COMES FROM BEHIND
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/alert/wave.png";
                 this.frame = 0;
                 break;
             
-            case 6:
+            case 6: //unused bomb
                 this.sprite = new Image();
                 this.sprite.src = "assets/ship/bomb.png";
                 this.frame = 0;
                 break;
             
-            case 7:
+            case 7: //PLAYERS HOMING BULLET
                 this.sprite = new Image();
                 this.sprite.src = "assets/ship/spbullet.png";
                 this.spritec = new Image();
@@ -117,7 +117,7 @@ class Projectile {
                 this.cover = false;
                 break;
 
-            case 8:
+            case 8: //HORIZONTAL LASER
                 this.sprite = new Image();
                 this.sprite.src = "assets/enemies/alert/rayhorizontal.png";
                 this.frame = 0;
@@ -233,7 +233,7 @@ class Projectile {
                     this.tickCounter -= 80;
                     this.frame = (this.frame+1)%6;
                 }
-                this.ctx.drawImage(this.sprite, 16+this.frame*64, 0, 34, 17, this.x, this.y, 34, 17);
+                this.ctx.drawImage(this.sprite, 15+this.frame*64, 0, 34, 17, this.x, this.y, 34, 17);
                 break;
             case 6:
                 if(this.tickCounter > 80){
@@ -279,9 +279,5 @@ class Projectile {
         if(this.y > 300 || this.y < -20 || this.x > 375 || this.x < -20){this.delete = true}
         this.tickCounter += frame;
         //window.requestAnimationFrame(this.draw.bind(this));
-    }
-
-    delete () {
-        this.delete = true;
     }
 }

@@ -8,8 +8,10 @@ class Draw{
         this.enemies = enemies;
         this.score = score;
         this.pwrups = pwrups;
+        this.pauseAnimation = false;
 
         this.difficulty = 0;
+        this.gameOver = 0;
 
         this.menuPos = -300;
         this.menu = true;
@@ -20,10 +22,11 @@ class Draw{
         this.menuImg = new Image();
         this.playButtonImg = new Image();
         this.playButtonDownImg = new Image();
-
+        this.gameOverScreen = new Image();
         this.menuImg.src = "assets/icons/title.png"
         this.playButtonImg.src = "assets/icons/playbutton1.png"
         this.playButtonDownImg.src = "assets/icons/playbutton2.png"
+        this.gameOverScreen.src = "assets/icons/gameover.png"
 
         this.dialogueCD = 0;
         this.dialogueN = 0;
@@ -41,7 +44,6 @@ class Draw{
     }
 
     director(frame){        
-    if(isNaN(frame)){frame = 0}
 
     if(this.difficulty == 0){
         if(this.dialogueCD <= 0){
@@ -132,13 +134,31 @@ class Draw{
         }
     }
 
+    tabOut(){
+        this.pauseAnimation = true;
+    }
+
+    tabIn(){
+        this.pauseAnimation = false;
+    }
+
     draw(timestamp){
+        if(this.pauseAnimation){
+            window.requestAnimationFrame(this.draw.bind(this));
+            this.lastTimeStamp = timestamp;
+            return;
+        }
+
+        if(this.gameOver){
+            this.ctx.drawImage(this.gameOverScreen, 0, 0);
+            return;
+        }
+
         var frame = timestamp - this.lastTimeStamp;
         if(isNaN(frame)){frame = 0}
 
          
         this.bg.draw(frame);
-        this.ship.draw(frame, this.menu);
         this.score.draw(frame, !this.menu);
 
         if(this.menu){
@@ -146,7 +166,7 @@ class Draw{
                 
             if(this.buttonPress == -1){this.ctx.drawImage(this.playButtonImg, 140, this.menuPos+183);}
             else  {this.buttonPress--; this.ctx.drawImage(this.playButtonDownImg, 140, this.menuPos+183);}
-            if(this.buttonPress == 0){this.menu = false; this.director();}
+            if(this.buttonPress == 0){this.menu = false}
             
 
             this.ctx.drawImage(this.menuImg, 0, this.menuPos);
@@ -156,17 +176,23 @@ class Draw{
             this.enemies.draw(frame, this.ship.getX());
             this.pwrups.draw(frame);
 
+            this.ship.checkCollisions(this.projectiles.lst);
+            this.ship.checkEnemyCollisions(this.enemies.lst);
             
             this.director(frame);
         }
         
-        //setTimeout(this.draw.bind(this), 12);
+        this.ship.draw(frame, this.menu);
         
         if(this.displayFPS){
             var framerate = Math.round(1000/frame);
             this.sctx.font = "8px monospace"
             this.sctx.fillStyle = "#99e550"
             this.sctx.fillText("fps: " + framerate, 80, 260)
+        }
+
+        if(this.ship.health < 0){
+            this.gameOver = true;
         }
 
         this.lastTimeStamp = timestamp;
