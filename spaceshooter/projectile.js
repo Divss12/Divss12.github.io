@@ -6,6 +6,11 @@ class ProjectileManager {
         this.alst = [];
     }
 
+    clear(){
+        this.lst = [];
+        this.alst = [];
+    }
+
     newProjectile(x, y, type, team, speed, dmg){
         if(team){
             this.lst.push(

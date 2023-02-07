@@ -134,6 +134,30 @@ class Draw{
                 this.buttonPress = 15;
             }
         }
+
+        //play again
+        if(this.gameOver){
+            this.difficulty = 1;
+            this.dialogueCD = 0;
+            this.dialogueN = 0;
+
+            this.enem0CD = 5000;
+            this.enem1CD = 5000;
+            this.enem3CD = 10000;
+            this.enem4CD = 15000;
+            this.enem5CD = 0;
+            this.enem6CD = 10000;
+            this.pwrupCD = 1000;
+
+            this.gameTicks = 0;
+
+            this.enemies.clear();
+            this.projectiles.clear();
+            this.ship.clear();
+            this.score.clear();
+
+            this.gameOver = false;
+        }
     }
 
     tabOut(){

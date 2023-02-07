@@ -43,6 +43,31 @@ class Score {
         this.dialogueTick = 0;
     }
 
+    clear(){
+        this.health = 16;
+        this.engine = false;
+        this.hsm = false;
+        this.shield = 0;
+
+        this.distTick = 0;
+        this.storedDistFrameTicks = [0,0,0,0];
+        this.distFrame = [0,0,0,0];
+        this.distVal = [0,0,0,0];
+        this.distChanging = [false, false, false, false];
+
+        this.storedEnemFrameTicks = [0, 0, 0, 0];
+        this.enemFrame = [0,0,0,0];
+        this.enemVal = [0,0,0,0];
+        this.enemiesToNextDiff = 6;
+        this.enemChanging = [false, false, false, false];
+
+        this.dialogue = [];
+        this.dialogueCurLine = 0;
+        this.dialogueF = 0;
+        this.dialogueFinished = true;
+        this.dialogueTick = 0;
+    }
+
     drawHealth (health) {
         var h = Math.floor(health/2)
         var half = health%2;

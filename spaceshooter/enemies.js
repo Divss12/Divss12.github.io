@@ -7,6 +7,11 @@ class EnemyManager {
         this.enemHitCounter = 0;
         this.lst = [];
     }
+
+    clear(){
+        this.lst = [];
+        this.enemHitCounter = 0;
+    }
     
     genEnemy(type, arg){
         //const type = randRange(0,5);

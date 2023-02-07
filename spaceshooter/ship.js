@@ -60,6 +60,40 @@ class Ship{
         this.erandom = 0;
     }
 
+    clear(){
+        this.x = 176;
+        this.y = 236;
+
+        this.lastX = 176;
+        this.lastY = 236;
+
+        this.gunTick = 0;
+        this.storedGunFrames = 0;
+
+        this.shieldTick = 0;
+
+        this.health = 16;
+        this.invulFrames = 0;
+
+        this.destroyFrame = 0;
+        this.destroyTick = 0;
+        this.destroy = false;
+        this.gameOver = false;
+
+        this.bulletType = 3;
+        this.bulletSpeed = 4;
+        this.bulletDmg = 4;
+
+        this.engineSupercharged = 0;
+        this.shield = false;
+        this.shieldHealth = 0;
+
+        this.eframe = 0;
+        this.etick = 0;
+        this.erandom = 0;
+
+    }
+
     addPwrup(type){
         switch(type){
             case 0: //health pickup
