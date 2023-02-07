@@ -178,7 +178,7 @@ class Enemy {
 
                 this.w2 = 18;
                 this.h2 = 20;
-                this.health = 20;
+                this.health = 24;
                 break;
 
             case 2: //dreadnought
@@ -200,7 +200,7 @@ class Enemy {
                 this.eframe = 0;
                 this.w2 = 36;
                 this.h2 = 50;
-                this.health = 10000000;
+                this.health = 75;
                 break;
             
             case 3: //fighter 

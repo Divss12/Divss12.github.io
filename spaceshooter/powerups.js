@@ -42,8 +42,8 @@ class Powerups {
                 this.active = false;
 
                 switch(this.type){
-                    case 1: this.cd1 = 32000; break;
-                    case 2: this.cd2 = 32000; break;
+                    case 1: this.cd1 = 56000; break;
+                    case 2: this.cd2 = 56000; break;
                 }
             }
 

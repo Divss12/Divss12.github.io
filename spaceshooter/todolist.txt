@@ -1,0 +1,19 @@
+-make proper game over screen
+-make play again button
+    -make sprites
+    -enable functionality
+-work on top right buttons
+    -make hover animation
+    -make UI for settings screen
+    -enable settings functionality
+        -easy mode
+        -clear saved high scores
+        -toggle FPS display
+    -make UI for high score screen
+    -enable high score functionality
+-make mobile controls
+-sound
+    -find music and sound effects
+    -enable music and sound effects
+-come up with dialogues
+-gameplay balancing 

@@ -99,7 +99,9 @@ class Draw{
             this.enem6CD += 100000/(this.difficulty+4);
         }
         if(this.pwrupCD <= 0){
-            var type = randRange(-2,4);
+            var type;
+            if(this.score.health > 14){type = randRange(1,4)}
+            else{type = randRange(-2,4);}
             if(type<0){type=0}
             var x = randRange(100, 236)
             this.pwrups.spawnPowerUp(type, x, -20);
@@ -145,12 +147,15 @@ class Draw{
     draw(timestamp){
         if(this.pauseAnimation){
             window.requestAnimationFrame(this.draw.bind(this));
+            
             this.lastTimeStamp = timestamp;
             return;
         }
 
         if(this.gameOver){
             this.ctx.drawImage(this.gameOverScreen, 0, 0);
+            this.lastTimeStamp = timestamp;
+            window.requestAnimationFrame(this.draw.bind(this));
             return;
         }
 
@@ -158,7 +163,7 @@ class Draw{
         if(isNaN(frame)){frame = 0}
 
          
-        this.bg.draw(frame);
+        this.bg.draw(frame, this.difficulty, this.ship.destroy);
         this.score.draw(frame, !this.menu);
 
         if(this.menu){
@@ -188,12 +193,10 @@ class Draw{
             var framerate = Math.round(1000/frame);
             this.sctx.font = "8px monospace"
             this.sctx.fillStyle = "#99e550"
-            this.sctx.fillText("fps: " + framerate, 80, 260)
+            this.sctx.fillText("fps: " + framerate, 60, 260)
         }
 
-        if(this.ship.health < 0){
-            this.gameOver = true;
-        }
+        if(this.ship.gameOver){this.gameOver = true;}
 
         this.lastTimeStamp = timestamp;
         window.requestAnimationFrame(this.draw.bind(this))

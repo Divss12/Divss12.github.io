@@ -24,6 +24,11 @@ class Ship{
         this.health = 16;
         this.invulFrames = 0;
 
+        this.destroyFrame = 0;
+        this.destroyTick = 0;
+        this.destroy = false;
+        this.gameOver = false;
+
         this.bulletType = 3;
         this.bulletSpeed = 4;
         this.bulletDmg = 4;
@@ -36,6 +41,7 @@ class Ship{
             engine: new Image(),
             enginep: new Image(),
             shield: new Image(),
+            destroy: new Image(),
         }
         this.sprites.center.src = "assets/ship/center.png";
         this.sprites.left.src = "assets/ship/left.png";
@@ -43,6 +49,7 @@ class Ship{
         this.sprites.engine.src = "assets/ship/engine0.png";
         this.sprites.enginep.src = "assets/ship/engine1.png";
         this.sprites.shield.src = "assets/ship/shield.png";
+        this.sprites.destroy.src = "assets/ship/destroy.png";
 
         this.engineSupercharged = 0;
         this.shield = false;
@@ -57,6 +64,9 @@ class Ship{
         switch(type){
             case 0: //health pickup
                 this.health += 2;
+                if(this.health > 16){this.health = 16}
+                this.score.health += 2;
+                if(this.score.health > 16){this.score.health = 16}
                 break;
             case 1: //supercharged engine pickup
                 this.engineSupercharged = 1;
@@ -125,6 +135,18 @@ class Ship{
     }
 
     draw(frame, menu){
+        if(this.destroy){
+            this.y -= 0.1*frame;
+            this.destroyTick += frame;
+            if(this.destroyTick > 80){
+                this.destroyTick -= 80;
+                this.destroyFrame++;
+                if(this.destroyFrame > 10){this.gameOver = true;}
+            }
+            this.ctx.drawImage(this.sprites.destroy, 1+32*this.destroyFrame, 0, 30, 30, this.x-15, this.y-12, 30, 30);
+            return;
+        }
+
         if(menu){
             //add code to display during the menu here
             return;
@@ -176,6 +198,8 @@ class Ship{
             this.ctx.lineWidth = 3;
             this.ctx.strokeRect(0,0,352,264);
         }
+
+        if(this.health < 0){this.destroy = true;}
     }
 
     takeDmg(dmg){
