@@ -69,7 +69,7 @@ class Draw{
         if(this.score.enemiesToNextDiff < 0){
             this.score.enemiesToNextDiff = 12;
             this.difficulty++
-            if(this.difficulty > 5 && this.difficulty%2){
+            if(this.difficulty > 2 && this.difficulty%3 == 0){
                 this.enemies.genEnemy(2)
             }
         }
