@@ -1,9 +1,10 @@
 class Ship{
-    constructor(ctx, projectiles, score){
+    constructor(ctx, projectiles, score, audio){
         this.ctx = ctx;
 
         this.projectile = projectiles;
         this.score = score;
+        this.audio = audio
 
         this.x = 176;
         this.y = 236;
@@ -162,8 +163,10 @@ class Ship{
 
     shoot(gun){
         if(gun){
+            this.audio.playPew1();
             this.projectile.newProjectile(this.x-13, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }else{
+            this.audio.playPew2();
             this.projectile.newProjectile(this.x+10, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }
     }

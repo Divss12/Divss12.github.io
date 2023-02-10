@@ -60,6 +60,10 @@ function initMouse(draw){
     canvas.onclick = function (event) {
         draw.mouseClick(Math.floor((event.clientX - topLeftX)/scale), Math.floor((event.clientY - topLeftY)/scale));
     }
+
+    scanvas.onmousemove = function (event) {
+        draw.scoreMouseMove(Math.floor((event.clientX - topLeftXs)/scale), Math.floor((event.clientY - topLeftYs)/scale));
+    }
 }
 
 function initFocus(draw){

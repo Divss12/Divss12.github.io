@@ -205,7 +205,7 @@ class Enemy {
                 this.eframe = 0;
                 this.w2 = 36;
                 this.h2 = 50;
-                this.health = 75;
+                this.health = 80;
                 break;
             
             case 3: //fighter 

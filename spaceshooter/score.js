@@ -15,6 +15,7 @@ class Score {
             shield: new Image(),
             cell: new Image(),
             health: new Image(),
+            settings: new Image(),
         }
         this.sprite.main.src = "assets/icons/dashboard.png";
         this.sprite.nums.src = "assets/fonts/numbers.png";
@@ -23,11 +24,13 @@ class Score {
         this.sprite.shield.src = "assets/icons/shield.png";
         this.sprite.cell.src = "assets/icons/shieldcell.png";
         this.sprite.health.src = "assets/icons/health.png"
+        this.sprite.settings.src = "assets/icons/settings.png"
 
         this.distTick = 0;
         this.storedDistFrameTicks = [0,0,0,0];
         this.distFrame = [0,0,0,0];
         this.distVal = [0,0,0,0];
+        this.distActualVal = 0;
         this.distChanging = [false, false, false, false];
 
         this.storedEnemFrameTicks = [0, 0, 0, 0];
@@ -41,6 +44,9 @@ class Score {
         this.dialogueF = 0;
         this.dialogueFinished = true;
         this.dialogueTick = 0;
+
+        this.settingsHover = false;
+        this.settingsClick = false;
     }
 
     clear(){
@@ -84,6 +90,7 @@ class Score {
     }
 
     addDist() {
+        this.distActualVal++;
         let flag = true;
         for(var i = 3; i > -1; i--){
             if(flag){this.distVal[i]++; this.distChanging[i] = true;}
@@ -246,6 +253,12 @@ class Score {
 
         this.drawPowerUps(this.engine, this.hsm, this.shield);      
         this.drawDialogue(frame);
+
+        if(this.settingsHover){
+            this.ctx.drawImage(this.sprite.settings, 16, 0, 14, 15, 96, 1, 14, 15);
+        }else{
+            this.ctx.drawImage(this.sprite.settings, 0, 0, 14, 15, 96, 1, 14, 15);
+        }
 
         if(ticking){
             this.distTick += frame;        

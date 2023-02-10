@@ -8,6 +8,8 @@ const sctx = scanvas.getContext("2d");
 var scale = 1;
 var topLeftX = 0;
 var topLeftY = 0;
+var topLeftXs = 0;
+var topLeftYs = 0;
 
 function scaleCanvas(){
     const wHeight = window.innerHeight;
@@ -31,10 +33,8 @@ function scaleCanvas(){
     }
     
     ctx.webkitImageSmoothingEnabled = false;
-    ctx.mozImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
     sctx.webkitImageSmoothingEnabled = false;
-    sctx.mozImageSmoothingEnabled = false;
     sctx.imageSmoothingEnabled = false;
     
     ctx.scale(scaleFactor, scaleFactor);
@@ -43,6 +43,10 @@ function scaleCanvas(){
     var rect = canvas.getBoundingClientRect();
     topLeftX = rect.left;
     topLeftY = rect.top;
+
+    var srect = scanvas.getBoundingClientRect();
+    topLeftXs = srect.left;
+    topLeftYs = srect.top;
 }
 
 scaleCanvas();
