@@ -71,9 +71,9 @@ class Draw{
             if(this.score.enemiesToNextDiff < 0){
                 this.score.enemiesToNextDiff = 12;
                 this.difficulty++
-                if(this.difficulty > 3 && this.difficulty%3==1){
-                    this.enemies.genEnemy(2)
-                }
+            }
+            if(this.difficulty > 2 && this.difficulty%3 == 0){
+                this.enemies.genEnemy(2)
             }
 
             if(this.enem0CD <= 0){
@@ -122,8 +122,7 @@ class Draw{
 
         this.gameTicks += frame;
         this.dialogueCD -= frame;
-        
-    }
+        }
 
     mouseMove(x, y){
         
