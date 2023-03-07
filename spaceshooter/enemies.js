@@ -1,9 +1,11 @@
 class EnemyManager {
-    constructor(ctx, projectiles, score, ship){
+    constructor(ctx, projectiles, score, ship, audio){
         this.ctx = ctx;
         this.projectiles = projectiles;
         this.score = score;
         this.ship = ship;
+        this.audio = audio;
+
         this.enemHitCounter = 0;
         this.lst = [];
     }
@@ -20,54 +22,56 @@ class EnemyManager {
                 const a = randRange(0,2);
                 if(a == 0){
                     this.lst.push(    
-                        new Enemy(this.ctx, -56, 40, 0, this.projectiles)
+                        new Enemy(this.ctx, -56, 40, 0, this.projectiles, this.audio)
                     );
                 } else {
                     this.lst.push(    
-                        new Enemy(this.ctx, 352, 40, 0, this.projectiles)
+                        new Enemy(this.ctx, 352, 40, 0, this.projectiles, this.audio)
                     );
                 }
                 break;
             case 1: //frigate
                 this.lst.push(
-                    new Enemy(this.ctx, randRange(80, 237), -90, 1, this.projectiles)
+                    new Enemy(this.ctx, randRange(80, 237), -90, 1, this.projectiles, this.audio)
                 );
                 break;
 
             case 2: //dreadnought
                 this.lst.push(
-                    new Enemy(this.ctx, randRange(80,216), -100, 2, this.projectiles)
+                    new Enemy(this.ctx, randRange(80,216), -100, 2, this.projectiles, this.audio)
                 );
                 break;
 
             case 3: //fighter
                 this.lst.push(
-                    new Enemy(this.ctx, -20, 12, 3, this.projectiles)
+                    new Enemy(this.ctx, -20, 12, 3, this.projectiles, this.audio)
                 );
                 break;
             case 4: //scout
                 this.lst.push(
-                    new Enemy(this.ctx, 360, 24, 4, this.projectiles)
+                    new Enemy(this.ctx, 360, 24, 4, this.projectiles, this.audio)
                 );
                 break;
             case 5: //alerter
                 this.lst.push(
-                    new Enemy(this.ctx, randRange(24, 304), 235, 5, this.projectiles)
+                    new Enemy(this.ctx, randRange(24, 304), 235, 5, this.projectiles, this.audio)
                 );
                 break;
             
             case 6: //horizontal alerter
                 this.lst.push(
-                    new Enemy(this.ctx, 5, arg, 6, this.projectiles)
+                    new Enemy(this.ctx, 5, arg, 6, this.projectiles, this.audio)
                 );
                 break;
         }
     }
     
-    checkCollisions(){
+    checkCollisions(godmode){
+        var bonusdmg = 0;
+        if(godmode){bonusdmg = 3}
         for(var i = 0; i < this.projectiles.alst.length; i++){
             for(var j = 0; j < this.lst.length; j++){
-                if(this.lst[j].checkCollision(this.projectiles.alst[i])){
+                if(this.lst[j].checkCollision(this.projectiles.alst[i], bonusdmg)){
                     this.projectiles.alst[i].delete = true;
                     if(this.score.shield > 0){
                         this.enemHitCounter++;
@@ -81,8 +85,8 @@ class EnemyManager {
         }
     }
     
-    draw(frame, shipX){
-        this.checkCollisions();
+    draw(frame, shipX, godmode){
+        this.checkCollisions(godmode);
 
         for(var i = 0; i < this.lst.length; i++){
             this.lst[i].draw(frame, shipX); //call the draw method of every enemy
@@ -116,9 +120,10 @@ class EnemyManager {
 
 
 class Enemy {
-    constructor(ctx, x, y, type, projectiles){
+    constructor(ctx, x, y, type, projectiles, audio){
         this.ctx = ctx;
         this.projectiles = projectiles;
+        this.audio = audio;
     
         this.x = x;
         this.y = y;
@@ -262,6 +267,7 @@ class Enemy {
                 }
                 this.sprite.base.src = "assets/enemies/alert/alert.png";
 
+                this.audioPlayed = false;
                 this.health = 1;
                 break;
 
@@ -273,6 +279,7 @@ class Enemy {
                 this.sprite.left.src = "assets/enemies/alert/alertL.png"
                 this.sprite.right.src = "assets/enemies/alert/alertR.png"
 
+                this.audioPlayed = false;
                 this.health = 1;
                 break;
         }
@@ -283,37 +290,37 @@ class Enemy {
         this.delete = false;
     }
     
-    checkCollision(projectile){
+    checkCollision(projectile, bonusdmg){
         if(this.destroy){return false;}
 
         switch(this.type){
             case 0:
                 if(this.x-1 < projectile.x && projectile.x < this.x+57 && this.y-1 < projectile.y && projectile.y < this.y+13){
-                    this.health -= projectile.dmg;
+                    this.health -= projectile.dmg+bonusdmg;
                     return true;
                 }
                 break;
             case 1:
                 if(this.x-1 < projectile.x && projectile.x < this.x+37 && this.y-1 < projectile.y && projectile.y < this.y+34){
-                    this.health -= projectile.dmg;
+                    this.health -= projectile.dmg+bonusdmg;
                     return true;
                 }
                 break;
             case 2:
                 if(this.x-1 < projectile.x && projectile.x < this.x+72 && this.y-1 < projectile.y && projectile.y < this.y+80){
-                    this.health -= projectile.dmg;
+                    this.health -= projectile.dmg+bonusdmg;
                     return true;
                 }
                 break;
             case 3:
                 if(this.x-1 < projectile.x && projectile.x < this.x+25 && this.y-1 < projectile.y && projectile.y < this.y+23){
-                    this.health -= projectile.dmg;
+                    this.health -= projectile.dmg+bonusdmg;
                     return true;
                 }
                 break;
             case 4:
                 if(this.x-1 < projectile.x && projectile.x < this.x+23 && this.y-1 < projectile.y && projectile.y < this.y+23){
-                    this.health -= projectile.dmg;
+                    this.health -= projectile.dmg+bonusdmg;
                     return true;
                 }
                 break;
@@ -575,6 +582,7 @@ class Enemy {
                 }else if(this.tickCounter < 4800 && Math.floor(this.tickCounter/156)%2){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }
+                if(this.tickCounter > 3200 && this.audioPlayed == false){this.audioPlayed = false; this.audio.playBeeps1();}
                 if(this.tickCounter > 4799){this.shoot(), this.delete = true;}
                 break;
             case 6:

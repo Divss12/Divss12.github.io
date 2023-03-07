@@ -12,6 +12,9 @@ class Draw{
 
         this.pauseAnimation = false;
 
+        this.settingsOpen = false;
+        this.hiscoreOpen = false;
+
         this.difficulty = 0;
         this.gameOver = 0;
 
@@ -19,16 +22,28 @@ class Draw{
         this.menu = true;
         this.buttonPress = -1;
 
+        this.musicVolume = 99;
+        this.sfxVolume = 99;
+        this.godmode = false;
         this.displayFPS = true;
+        this.mobileControls = false
 
         this.menuImg = new Image();
         this.playButtonImg = new Image();
         this.playButtonDownImg = new Image();
         this.gameOverScreen = new Image();
+        this.settingsMenu = new Image();
+        this.onoff = new Image();
+        this.nums = new Image();
+        this.hiscorescreen = new Image();
         this.menuImg.src = "assets/icons/title.png"
         this.playButtonImg.src = "assets/icons/playbutton1.png"
         this.playButtonDownImg.src = "assets/icons/playbutton2.png"
         this.gameOverScreen.src = "assets/icons/gameover.png"
+        this.settingsMenu.src = "assets/icons/settingspage.png"
+        this.onoff.src = "assets/icons/onoff.png"
+        this.nums.src = "assets/fonts/numbers.png"
+        this.hiscorescreen.src = "assets/icons/hiscorescreen.png"
 
         this.dialogueCD = 0;
         this.dialogueN = 0;
@@ -43,6 +58,28 @@ class Draw{
 
         this.lastTimeStamp = 0;
         this.gameTicks = 0;
+    }
+
+    importSettings(){
+        this.musicVolume = window.localStorage.getItem("musicvolume") ?? 99;
+        this.sfxVolume = window.localStorage.getItem("sfxvolume") ?? 99;
+        this.godmode = (window.localStorage.getItem("godmode") === 'true');
+        this.displayFPS = (window.localStorage.getItem("displayfps") === 'true');
+        this.mobileControls = (window.localStorage.getItem("mobilecontrols") === 'true');
+        this.score.audioMuted = (window.localStorage.getItem("audiomuted") === 'true');
+    
+        if(this.score.audioMuted){
+            this.audio.setMute(true);
+        }
+    }
+
+    exportSettings(){
+        window.localStorage.setItem("musicvolume", this.musicVolume);
+        window.localStorage.setItem("sfxvolume", this.sfxVolume);
+        window.localStorage.setItem("godmode", this.godmode);
+        window.localStorage.setItem("displayfps", this.displayFPS);
+        window.localStorage.setItem("mobilecontrols", this.mobileControls);
+        window.localStorage.setItem("audiomuted", this.score.audioMuted);
     }
 
     director(frame){        
@@ -71,9 +108,10 @@ class Draw{
             if(this.score.enemiesToNextDiff < 0){
                 this.score.enemiesToNextDiff = 12;
                 this.difficulty++
-            }
-            if(this.difficulty > 2 && this.difficulty%3 == 0){
-                this.enemies.genEnemy(2)
+
+                if(this.difficulty > 2 && this.difficulty%3 == 0){
+                    this.enemies.genEnemy(2)
+                }
             }
 
             if(this.enem0CD <= 0){
@@ -130,7 +168,7 @@ class Draw{
 
     mouseClick(x, y){
         //play button;
-        if(this.menu && this.menuPos >= 0){
+        if(this.menu && this.menuPos >= 0 && !this.settingsOpen && !this.hiscoreOpen){
             if(140<x && x<212 && 183<y && y<219){
                 this.buttonPress = 15;
             }
@@ -159,43 +197,160 @@ class Draw{
 
             this.gameOver = false;
         }
+
+        if(this.settingsOpen){
+            if(198 < x&&x < 205 && 71 < y&&y < 82 && this.musicVolume > 0){
+                this.musicVolume--;
+                //this.audio.
+            }else if(225 < x&&x < 232 && 71 < y&&y < 82 && this.musicVolume < 99){
+                this.musicVolume++;
+            }else if(198 < x&&x < 205 && 87 < y&&y < 98 && this.sfxVolume > 0){
+                this.sfxVolume--;
+            }else if(225 < x&&x < 232 && 87 < y&&y < 98 && this.sfxVolume < 99){
+                this.sfxVolume++;
+            }
+            if(199 < x&&x < 218 && 102 < y&&y < 114){this.godmode = !this.godmode}
+            if(199 < x&&x < 218 && 118 < y&&y < 130){this.displayFPS = !this.displayFPS}
+            if(199 < x&&x < 218 && 150 < y&&y < 162){this.mobileControls = !this.mobile}
+
+            this.exportSettings();
+        }
+
+        if(this.hiscoreOpen){
+            if(162 < x&&x < 190 && 191 < y&&y < 203){
+                this.hiscoreOpen = false;
+                this.score.hiscoreDown = false;
+            }
+        }
     }
 
     scoreMouseMove(x, y){
         if(96 < x&&x < 110 && 1 < y&&y < 16){
             this.score.settingsHover = true;
-        }
-        else{
+        }else{
             this.score.settingsHover = false;
+        }
+
+        if(79 < x&&x < 93 && 1 < y&&y < 16){
+            this.score.audioHover = true;
+        }else{
+            this.score.audioHover = false;
+        }
+
+        if(62 < x&&x < 76 && 1 < y&&y < 16){
+            this.score.hiscoreHover = true;
+        }else{
+            this.score.hiscoreHover = false;
+        }
+    }
+
+    scoreMouseClick(x, y){
+        if(96 < x&&x < 110 && 1 < y&&y < 16){
+            this.score.settingsOpen = !this.score.settingsOpen;
+            this.settingsOpen = !this.settingsOpen;
+
+            if(this.settingsOpen){this.hiscoreOpen = false; this.score.hiscoreDown = false;}
+        }
+
+        if(79 < x&&x < 93 && 1 < y&&y < 16){
+            
+            this.score.audioMuted = !this.score.audioMuted;
+            this.audio.setMute(this.score.audioMuted);
+            this.exportSettings();
+        }
+
+        if(62 < x&&x < 76 && 1 < y&&y < 16){
+            this.score.hiscoreDown = !this.score.hiscoreDown;
+            this.hiscoreOpen = !this.hiscoreOpen;
+
+            if(this.hiscoreOpen){this.settingsOpen = false; this.score.settingsOpen = false;}
         }
     }
 
     tabOut(){
         this.pauseAnimation = true;
+        this.audio.setMute(true);
     }
 
     tabIn(){
         this.pauseAnimation = false;
+        this.audio.setMute(this.score.audioMuted);
     }
 
     draw(timestamp){
-        if(this.pauseAnimation){
-            window.requestAnimationFrame(this.draw.bind(this));
+
+        var frame = timestamp - this.lastTimeStamp;
+        if(isNaN(frame)){frame = 0}
+
+        if(this.hiscoreOpen){
+            this.bg.draw(frame, this.difficulty, this.gameOver);
+            this.score.draw(frame, false);
+            this.ctx.drawImage(this.hiscorescreen, 0, 0);
+
+            //hiscore distance covered;
+            this.ctx.font = "32px font1"
+            this.ctx.fillStyle = "#bab7b3"
+            this.ctx.fillText(hiscore, 270, 118);
             
+            this.ctx.fillStyle = "#fbf5ef"
+            this.ctx.fillText(hiscore, 270, 117);
+
+            //hiscore enemies killed;
+            this.ctx.fillStyle = "#bab7b3"
+            this.ctx.fillText(hienemies, 270, 150);
+            
+            this.ctx.fillStyle = "#fbf5ef"
+            this.ctx.fillText(hienemies, 270, 149);
+
+            this.lastTimeStamp = timestamp
+            window.requestAnimationFrame(this.draw.bind(this));
+            return;            
+        }
+
+        if(this.settingsOpen){
+            this.bg.draw(frame, this.difficulty, this.gameOver);
+            this.ctx.drawImage(this.settingsMenu, 0, 0);
+            this.score.draw(frame, false);
+
+            //musicVolume
+            this.ctx.drawImage(this.nums, 8*Math.floor(this.musicVolume/10), 0, 7, 13, 207, 69, 7, 13);
+            this.ctx.drawImage(this.nums, 8*(this.musicVolume%10), 0, 7, 13, 216, 69, 7, 13);
+
+            //sfxVolume
+            this.ctx.drawImage(this.nums, 8*Math.floor(this.sfxVolume/10), 0, 7, 13, 207, 86, 7, 13);
+            this.ctx.drawImage(this.nums, 8*(this.sfxVolume%10), 0, 7, 13, 216, 86, 7, 13);
+
+            //godmode
+            if(this.godmode){this.ctx.drawImage(this.onoff, 0, 0, 16, 8, 200, 104, 16, 8)}
+            else{this.ctx.drawImage(this.onoff, 16, 0, 18, 8, 200, 104, 18, 8)}
+
+            //fps display
+            if(this.displayFPS){this.ctx.drawImage(this.onoff, 0, 0, 16, 8, 200, 120, 16, 8)}
+            else{this.ctx.drawImage(this.onoff, 16, 0, 18, 8, 200, 120, 18, 8)}
+
+            //mobile controls
+            if(this.mobileControls){this.ctx.drawImage(this.onoff, 0, 0, 16, 8, 200, 152, 16, 8)}
+            else{this.ctx.drawImage(this.onoff, 16, 0, 18, 8, 200, 152, 18, 8)}
+
+            this.lastTimeStamp = timestamp
+            window.requestAnimationFrame(this.draw.bind(this));
+            return;
+        }
+
+        if(this.pauseAnimation){
             this.lastTimeStamp = timestamp;
+            window.requestAnimationFrame(this.draw.bind(this));
             return;
         }
 
         if(this.gameOver){
+            this.bg.draw(frame, 0, true)
+            this.score.draw(frame, false)
             this.ctx.drawImage(this.gameOverScreen, 0, 0);
             this.lastTimeStamp = timestamp;
             window.requestAnimationFrame(this.draw.bind(this));
             return;
         }
-
-        var frame = timestamp - this.lastTimeStamp;
-        if(isNaN(frame)){frame = 0}
-
          
         this.bg.draw(frame, this.difficulty, this.ship.destroy);
         this.score.draw(frame, !this.menu);
@@ -212,11 +367,11 @@ class Draw{
             
         }else{
             this.projectiles.draw(frame, this.enemies.lst);
-            this.enemies.draw(frame, this.ship.getX());
+            this.enemies.draw(frame, this.ship.getX(), this.godmode);
             this.pwrups.draw(frame);
 
-            this.ship.checkCollisions(this.projectiles.lst);
-            this.ship.checkEnemyCollisions(this.enemies.lst);
+            this.ship.checkCollisions(this.projectiles.lst, this.godmode);
+            this.ship.checkEnemyCollisions(this.enemies.lst, this.godmode);
             
             this.director(frame);
         }
@@ -232,14 +387,22 @@ class Draw{
 
         if(this.ship.gameOver){
             this.gameOver = true;
-            var hiscore = window.localStorage.getItem('hiscore');
+
+            hiscore = window.localStorage.getItem('hiscore');
             if(hiscore === null){hiscore = 0}
             if(this.score.distActualVal > hiscore){
                 window.localStorage.removeItem('hiscore');
                 window.localStorage.setItem('hiscore', this.score.distActualVal)
+                hiscore = this.score.distActualVal;
             }
 
-            console.log('hiscore = ', window.localStorage.getItem('hiscore'));
+            hienemies = window.localStorage.getItem('hienemies');
+            if(hienemies === null){hienemies = 0}
+            if(this.score.enemActualVal > hienemies){
+                window.localStorage.removeItem('hienemies');
+                window.localStorage.setItem('hienemies', this.score.enemActualVal)
+                hienemies = this.score.enemActualVal;
+            }
         }
 
 

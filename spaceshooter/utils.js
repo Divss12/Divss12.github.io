@@ -52,6 +52,17 @@ function scaleCanvas(){
 scaleCanvas();
 window.onresize = scaleCanvas;
 
+var hiscore = window.localStorage.getItem('hiscore');
+var hienemies = window.localStorage.getItem('hienemies');
+
+if(hiscore === null){
+    hiscore = 0;
+    window.localStorage.setItem('hiscore', 0);
+}
+if(hienemies === null){
+    hienemies = 0;
+    window.localStorage.setItem('hienemies', 0);
+}
 
 // let canvasWidth = canvas.width;
 // let canvasHeight = canvas.height;

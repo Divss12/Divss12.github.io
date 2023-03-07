@@ -16,6 +16,8 @@ class Score {
             cell: new Image(),
             health: new Image(),
             settings: new Image(),
+            audio: new Image(),
+            hiscore: new Image(),
         }
         this.sprite.main.src = "assets/icons/dashboard.png";
         this.sprite.nums.src = "assets/fonts/numbers.png";
@@ -23,8 +25,10 @@ class Score {
         this.sprite.gun.src = "assets/icons/cannon.png";
         this.sprite.shield.src = "assets/icons/shield.png";
         this.sprite.cell.src = "assets/icons/shieldcell.png";
-        this.sprite.health.src = "assets/icons/health.png"
-        this.sprite.settings.src = "assets/icons/settings.png"
+        this.sprite.health.src = "assets/icons/health.png";
+        this.sprite.settings.src = "assets/icons/settings.png";
+        this.sprite.audio.src = "assets/icons/audio.png";   
+        this.sprite.hiscore.src = "assets/icons/hiscore.png";
 
         this.distTick = 0;
         this.storedDistFrameTicks = [0,0,0,0];
@@ -36,6 +40,7 @@ class Score {
         this.storedEnemFrameTicks = [0, 0, 0, 0];
         this.enemFrame = [0,0,0,0];
         this.enemVal = [0,0,0,0];
+        this.enemActualVal = 0;
         this.enemiesToNextDiff = 6;
         this.enemChanging = [false, false, false, false];
 
@@ -46,7 +51,11 @@ class Score {
         this.dialogueTick = 0;
 
         this.settingsHover = false;
-        this.settingsClick = false;
+        this.settingsOpen = false;
+        this.audioHover = false;
+        this.audioMuted = false;
+        this.hiscoreHover = false;
+        this.hiscoreDown = false;
     }
 
     clear(){
@@ -100,6 +109,7 @@ class Score {
     }
     
     addEnemy() {
+        this.enemActualVal++;
         this.enemiesToNextDiff--;
         let flag = true;
         for(var i = 3; i > -1; i--){
@@ -254,10 +264,30 @@ class Score {
         this.drawPowerUps(this.engine, this.hsm, this.shield);      
         this.drawDialogue(frame);
 
-        if(this.settingsHover){
+        if(this.settingsHover && this.settingsOpen){
+            this.ctx.drawImage(this.sprite.settings, 48, 0, 14, 15, 96, 1, 14, 15);
+        }else if(this.settingsHover && !this.settingsOpen){
+            this.ctx.drawImage(this.sprite.settings, 32, 0, 14, 15, 96, 1, 14, 15);
+        }else if(!this.settingsHover && this.settingsOpen){
             this.ctx.drawImage(this.sprite.settings, 16, 0, 14, 15, 96, 1, 14, 15);
         }else{
             this.ctx.drawImage(this.sprite.settings, 0, 0, 14, 15, 96, 1, 14, 15);
+        }
+
+        if(this.audioHover && this.audioMuted){
+            this.ctx.drawImage(this.sprite.audio, 48, 0, 14, 15, 79, 1, 14, 15);
+        }else if(this.audioHover && !this.audioMuted){
+            this.ctx.drawImage(this.sprite.audio, 32, 0, 14, 15, 79, 1, 14, 15);
+        }else if(!this.audioHover && this.audioMuted){
+            this.ctx.drawImage(this.sprite.audio, 16, 0, 14, 15, 79, 1, 14, 15);
+        }else{
+            this.ctx.drawImage(this.sprite.audio, 0, 0, 14, 15, 79, 1, 14, 15);
+        }
+
+        if(this.hiscoreHover || this.hiscoreDown){
+            this.ctx.drawImage(this.sprite.hiscore, 16, 0, 14, 15, 62, 1, 14, 15);
+        }else{
+            this.ctx.drawImage(this.sprite.hiscore, 0, 0, 14, 15, 62, 1, 14, 15);    
         }
 
         if(ticking){

@@ -1,10 +1,10 @@
 class Ship{
     constructor(ctx, projectiles, score, audio){
         this.ctx = ctx;
+        this.audio = audio;
 
         this.projectile = projectiles;
         this.score = score;
-        this.audio = audio
 
         this.x = 176;
         this.y = 236;
@@ -163,10 +163,8 @@ class Ship{
 
     shoot(gun){
         if(gun){
-            this.audio.playPew1();
             this.projectile.newProjectile(this.x-13, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }else{
-            this.audio.playPew2();
             this.projectile.newProjectile(this.x+10, this.y, this.bulletType, 0, this.bulletSpeed, this.bulletDmg);
         }
     }
@@ -239,18 +237,24 @@ class Ship{
         if(this.health < 0){this.destroy = true;}
     }
 
-    takeDmg(dmg){
+    takeDmg(dmg, godmode){
         if(this.invulFrames > 0){return;}
         
-        
-        this.health -= dmg;
-        this.score.health -= dmg;
+        this.audio.playHit();
         
 
-        this.invulFrames = 1000;
+        if(godmode){
+            this.health -= dmg/1.5;
+            this.score.health -= dmg/1.5;
+            this.invulFrames = 1350;
+        }else{
+            this.health -= dmg;
+            this.score.health -= dmg;
+            this.invulFrames = 1000;
+        }
     }
 
-    checkCollisions(plst){
+    checkCollisions(plst, godmode){
         for(var i = 0; i < plst.length; i++){
             switch(plst[i].type){
                 case 0:
@@ -265,26 +269,26 @@ class Ship{
                         }
                     }else if(plst[i].x+18 > this.x && this.x > plst[i].x-14
                     && plst[i].y+8  > this.y && this.y > plst[i].y){
-                        this.takeDmg(plst[i].dmg);
+                        this.takeDmg(plst[i].dmg, godmode);
                         plst[i].delete = true;
                     }
                     break;
                 case 5: //big wave
                     if(plst[i].x+46 > this.x && this.x > plst[i].x-12
                     && plst[i].y  > this.y && this.y > plst[i].y-8){
-                        this.takeDmg(plst[i].dmg);
+                        this.takeDmg(plst[i].dmg, godmode);
                         plst[i].delete = true;
                     }
                     break;
                 case 4: //vertical laser
                     if(plst[i].x+17 > this.x && this.x > plst[i].x-16){
-                        this.takeDmg(plst[i].dmg);
+                        this.takeDmg(plst[i].dmg, godmode);
                     }
 
                     break;
                 case 8: //horizontal laser
                     if(plst[i].y+19 > this.y && this.y > plst[i].y-7){
-                        this.takeDmg(plst[i].dmg);
+                        this.takeDmg(plst[i].dmg, godmode);
                     }
 
                     break;
@@ -293,7 +297,9 @@ class Ship{
     }
 
     checkEnemyCollisions(elst){
-
+        for(var i = 0; i < elst.length; i++){
+            if()
+        }
     }
 
     getX(){

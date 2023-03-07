@@ -5,9 +5,9 @@
     .chess-board {
       display: flex;
       flex-wrap: wrap;
-      width: 320px;
-      height: 320px;
-      font-size: 32px;
+      width: 640px;
+      height: 640px;
+      font-size: 64px;
       font-family: "Arial", sans-serif;
     }
 
@@ -17,26 +17,35 @@
     }
 
     .chess-square {
-      width: 40px;
-      height: 40px;
+      width: 80px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .chess-square-black {
-      background-color: #555;
+      background-color: #D18B47;
       color: #fff;
     }
 
     .chess-square-white {
-      background-color: #fff;
+      background-color: #FFCE9E;
       color: #555;
     }
   </style>
 </head>
 <body>
+    <input id="peer_id" type="text"></input>
+    <button id="connect_button" onclick="connect()">Connect</button>
+    <div id="top-mp"></div>
     <div id="board"></div>
-    <script src="display.js"></script> 
+    <div id="bottom-mp"></div>
+
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="chess.js"></script>
+    <script src="display.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
