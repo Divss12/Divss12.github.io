@@ -2,14 +2,21 @@ var peerId = null;
 var connected = false;
 var peer = null; // own peer object
 var conn = null;
+var myId = null;
 
 function init() {
-    peer = new Peer();
+
+    peer = new Peer(randomStr());
     
     peer.on('open', function(id){
         peerId = id;
         console.log(id)
-        //
+        document.getElementById("letter1").innerHTML = id[0]
+        document.getElementById("letter2").innerHTML = id[1]
+        document.getElementById("letter3").innerHTML = id[2]
+        document.getElementById("letter4").innerHTML = id[3]
+        document.getElementById("letter5").innerHTML = id[4]
+        myId = id;
     });
     peer.on('connection', function(c) {
         if(connected){c.close();}
@@ -30,8 +37,8 @@ function init() {
 
 function connect(){
     if(conn){conn.close();}
-    var id = document.getElementById("peer_id").value
-    conn = peer.connect(id);
+    var id = document.getElementById("input-form").value
+    conn = peer.connect(id.toUpperCase());
     initConnection(false);
 }
 
@@ -58,4 +65,3 @@ function initGame(black){
         chess.move(start, end, true)
     })
 }
-

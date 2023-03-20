@@ -3,7 +3,7 @@
 class Chess{
     constructor(conn, black){
         this.c = conn;
-        this.black = black
+        this.black = black??false
 
         this.board = [
             ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -16,19 +16,38 @@ class Chess{
             ["R", "N", "B", "Q", "K", "B", "N", "R"]
         ]
 
-        this.whitePoints = 0;
-        this.blackPoints = 0;
+        this.whitePoints = -1;
+        this.blackPoints = -1;
+        this.topBar1 = document.getElementById("player-1-movepoints0")
+        this.topBar2 = document.getElementById("player-1-movepoints1")
+        this.botBar1 = document.getElementById("player-2-movepoints0")
+        this.botBar2 = document.getElementById("player-2-movepoints1")
         
         this.graveyard = [];
 
-        this.moveList = []
-        this.captureList = []
     }
 
     start(){
+        setInterval(this.fillBars.bind(this), 1500)
     }
 
-    
+    fillBars(){
+        if(this.blackPoints < 10){this.blackPoints++}
+        if(this.whitePoints < 10){this.whitePoints++}
+
+        if(this.black){
+            this.botBar1.style.width = `${Math.min(100, (this.blackPoints+1) * 10)}%`; 
+            this.botBar2.style.width = `${this.blackPoints * 10}%`; 
+            this.topBar1.style.width = `${Math.min(100, (this.whitePoints+1) * 10)}%`;
+            this.topBar2.style.width = `${this.whitePoints * 10}%`;
+        }else{
+            this.botBar1.style.width = `${Math.min(100, (this.whitePoints+1) * 10)}%`; 
+            this.botBar2.style.width = `${this.whitePoints * 10}%`; 
+            this.topBar1.style.width = `${Math.min(100, (this.blackPoints+1) * 10)}%`;
+            this.topBar2.style.width = `${this.blackPoints * 10}%`;
+        }
+
+    }
 
     findRookMoves(x, y){
         var moveList = []
@@ -62,28 +81,28 @@ class Chess{
     findRookCaptures(x, y, w){
         var captureList = []
         for(var i = 1; i < x+1; i++){
-            if(isLower(this.board[x-i][y]) == w){
+            if(isLower(this.board[x-i][y])  == w && this.board[x-i][y] !== "o"){
                 captureList.push({x: x-i, y: y});
                 break;
             }
         }
         //find horizontal right
         for(var i = 1; i < 8-x; i++){
-            if(isLower(this.board[x+i][y]) == w){
+            if(isLower(this.board[x+i][y])  == w && this.board[x+i][y] !== "o"){
                 captureList.push({x: x+i, y: y})
                 break;
             }
         }
         //find vertical up
         for(var i = 1; i < y+1; i++){
-            if(isLower(this.board[x][y-i]) == w){
+            if(isLower(this.board[x][y-i])  == w && this.board[x][y-i] !== "o"){
                 captureList.push({x: x, y: y-i})
                 break;
             }
         }
         //find vertical down
         for(var i = 1; i < 8-y; i++){
-            if(isLower(this.board[x][y+i]) == w){
+            if(isLower(this.board[x][y+i])  == w && this.board[x][y+i] !== "o"){
                 captureList.push({x: x, y: y+i})
                 break;
             }
@@ -131,7 +150,7 @@ class Chess{
         //find up and left
         m = Math.min(x, y) + 1;
         for(var i = 1; i < m; i++){
-            if(isLower(this.board[x-i][y-i]) == w){
+            if(isLower(this.board[x-i][y-i])  == w && this.board[x-i][y-i] !== "o"){
                 captureList.push({x: x-i, y: y-i})
                 break;
             }
@@ -139,7 +158,7 @@ class Chess{
         //find up and right
         m = Math.min(7-x, y) + 1;
         for(var i = 1; i < m; i++){
-            if(isLower(this.board[x+i][y-i]) == w){
+            if(isLower(this.board[x+i][y-i])  == w && this.board[x+i][y-i] !== "o"){
                 captureList.push({x: x+i, y: y-i})
                 break;
             }
@@ -147,7 +166,7 @@ class Chess{
         //find down and right
         m = Math.min(7-x, 7-y) + 1;
         for(var i = 1; i < m; i++){
-            if(isLower(this.board[x+i][y+i]) == w){
+            if(isLower(this.board[x+i][y+i])  == w && this.board[x+i][y+i] !== "o"){
                 captureList.push({x: x+i, y: y+i})
                 break;
             }
@@ -155,7 +174,7 @@ class Chess{
         //find down and left
         m = Math.min(x, 7-y) + 1;
         for(var i = 1; i < m; i++){
-            if(isLower(this.board[x-i][y+i]) == w){
+            if(isLower(this.board[x-i][y+i])  == w && this.board[x-i][y+i] !== "o"){
                 captureList.push({x: x-i, y: y+i})
                 break;
             }
@@ -198,26 +217,24 @@ class Chess{
                 if(x>0 && y>1){if(this.board[x-1][y-2] == "o"){moveList.push({x: x-1, y: y-2})}}
                 if(x>0 && y<6){if(this.board[x-1][y+2] == "o"){moveList.push({x: x-1, y: y+2})}}
                 var w = !isLower(this.board[x][y]);
-                if(x<6 && y<7){if(isLower(this.board[x+2][y+1]) == w){captureList.push({x: x+2, y: y+1})}} 
-                if(x<6 && y>0){if(isLower(this.board[x+2][y-1]) == w){captureList.push({x: x+2, y: y-1})}}
-                if(x>1 && y>0){if(isLower(this.board[x-2][y-1]) == w){captureList.push({x: x-2, y: y-1})}}
-                if(x>1 && y<7){if(isLower(this.board[x-2][y+1]) == w){captureList.push({x: x-2, y: y+1})}}
-                if(x<7 && y>1){if(isLower(this.board[x+1][y-2]) == w){captureList.push({x: x+1, y: y+2})}}
-                if(x<7 && y<6){if(isLower(this.board[x+1][y+2]) == w){captureList.push({x: x+1, y: y-2})}}
-                if(x>0 && y>1){if(isLower(this.board[x-1][y-2]) == w){captureList.push({x: x-1, y: y-2})}}
-                if(x>0 && y<6){if(isLower(this.board[x-1][y+2]) == w){captureList.push({x: x-1, y: y+2})}}
+                if(x<6 && y<7){if(isLower(this.board[x+2][y+1]) == w && this.board[x+2][y+1] !== "o"){captureList.push({x: x+2, y: y+1})}} 
+                if(x<6 && y>0){if(isLower(this.board[x+2][y-1]) == w && this.board[x+2][y-1] !== "o"){captureList.push({x: x+2, y: y-1})}}
+                if(x>1 && y>0){if(isLower(this.board[x-2][y-1]) == w && this.board[x-2][y-1] !== "o"){captureList.push({x: x-2, y: y-1})}}
+                if(x>1 && y<7){if(isLower(this.board[x-2][y+1]) == w && this.board[x-2][y+1] !== "o"){captureList.push({x: x-2, y: y+1})}}
+                if(x<7 && y>1){if(isLower(this.board[x+1][y-2]) == w && this.board[x+1][y-2] !== "o"){captureList.push({x: x+1, y: y+2})}}
+                if(x<7 && y<6){if(isLower(this.board[x+1][y+2]) == w && this.board[x+1][y+2] !== "o"){captureList.push({x: x+1, y: y-2})}}
+                if(x>0 && y>1){if(isLower(this.board[x-1][y-2]) == w && this.board[x-1][y-2] !== "o"){captureList.push({x: x-1, y: y-2})}}
+                if(x>0 && y<6){if(isLower(this.board[x-1][y+2]) == w && this.board[x-1][y+2] !== "o"){captureList.push({x: x-1, y: y+2})}}
                 break;
             case "p": //no double move
                 if(this.board[x+1][y] === "o"){moveList.push({x: x+1, y: y})}
-                if(!isLower(this.board[x+1][y-1])){captureList.push({x: x+1, y: y-1})}
-                if(!isLower(this.board[x+1][y+1])){captureList.push({x: x+1, y: y+1})}
+                if(y>0){if(!isLower(this.board[x+1][y-1]) && this.board[x+1][y-1] !== "o"){captureList.push({x: x+1, y: y-1})}}
+                if(y<7){if(!isLower(this.board[x+1][y+1]) && this.board[x+1][y+1] !== "o"){captureList.push({x: x+1, y: y+1})}}
                 break;
             case "P":
-                console.log(this.board[x][y])
-                console.log(this.board[x-1][y])
-                if(this.board[x-1][y] === "o"){moveList.push({x: x-1, y: y}); console.log("hi")}
-                if(isLower(this.board[x-1][y-1])){captureList.push({x: x-1, y: y-1})}
-                if(isLower(this.board[x-1][y+1])){captureList.push({x: x-1, y: y+1})}
+                if(this.board[x-1][y] === "o"){moveList.push({x: x-1, y: y})}
+                if(y>0){if(isLower(this.board[x-1][y-1]) && this.board[x-1][y-1] !== "o"){captureList.push({x: x-1, y: y-1})}}
+                if(y<7){if(isLower(this.board[x-1][y+1]) && this.board[x-1][y+1] !== "o"){captureList.push({x: x-1, y: y+1})}}
                 break;
             case "q":
                 moveList = this.findBishopMoves(x,y);
@@ -242,14 +259,14 @@ class Chess{
                 if(x>0 && y<7){if(this.board[x-1][y+1] == "o"){moveList.push({x: x-1, y: y+1})}}
                 if(x>0 && y>0){if(this.board[x-1][y-1] == "o"){moveList.push({x: x-1, y: y-1})}}
                 var w = !isLower(this.board[x][y])
-                if(y<7){if(isLower(this.board[x][y+1]) == w){captureList.push({x: x, y: y+1})}}
-                if(y>0){if(isLower(this.board[x][y-1]) == w){captureList.push({x: x, y: y-1})}}
-                if(x<7){if(isLower(this.board[x+1][y]) == w){captureList.push({x: x+1, y: y})}}
-                if(x>0){if(isLower(this.board[x-1][y]) == w){captureList.push({x: x-1, y: y})}}
-                if(x<7 && y<7){if(isLower(this.board[x+1][y+1]) == w){captureList.push({x: x+1, y: y+1})}}
-                if(x<7 && y>0){if(isLower(this.board[x+1][y-1]) == w){captureList.push({x: x+1, y: y-1})}}
-                if(x>0 && y<7){if(isLower(this.board[x-1][y+1]) == w){captureList.push({x: x-1, y: y+1})}}
-                if(x>0 && y>0){if(isLower(this.board[x-1][y-1]) == w){captureList.push({x: x-1, y: y-1})}}
+                if(y<7){if(isLower(this.board[x][y+1]) == w && this.board[x][y+1] !== "o"){captureList.push({x: x, y: y+1})}}
+                if(y>0){if(isLower(this.board[x][y-1]) == w && this.board[x][y-1] !== "o"){captureList.push({x: x, y: y-1})}}
+                if(x<7){if(isLower(this.board[x+1][y]) == w && this.board[x+1][y] !== "o"){captureList.push({x: x+1, y: y})}}
+                if(x>0){if(isLower(this.board[x-1][y]) == w && this.board[x-1][y] !== "o"){captureList.push({x: x-1, y: y})}}
+                if(x<7 && y<7){if(isLower(this.board[x+1][y+1]) == w && this.board[x+1][y+1] !== "o"){captureList.push({x: x+1, y: y+1})}}
+                if(x<7 && y>0){if(isLower(this.board[x+1][y-1]) == w && this.board[x+1][y-1] !== "o"){captureList.push({x: x+1, y: y-1})}}
+                if(x>0 && y<7){if(isLower(this.board[x-1][y+1]) == w && this.board[x-1][y+1] !== "o"){captureList.push({x: x-1, y: y+1})}}
+                if(x>0 && y>0){if(isLower(this.board[x-1][y-1]) == w && this.board[x-1][y-1] !== "o"){captureList.push({x: x-1, y: y-1})}}
                 break;
         }
 
@@ -264,6 +281,11 @@ class Chess{
 
         var moves, captures;
         [moves, captures] = this.findMoves(sx, sy);
+
+        if(sx == ex && sy == ey){
+            this.display(this.board, this.black, moves, captures);
+            return;
+        }
 
         var flag = false;
         for(var i = 0; i < moves.length; i++){
@@ -285,20 +307,55 @@ class Chess{
 
             var startPiece = this.board[sx][sy]
             var endPiece = this.board[ex][ey]
-
             if(startPiece == "o"){return}
-            if(endPiece != "o"){if(isLower(startPiece) == isLower(endPiece)){return}} 
-        
-            this.board[ex][ey] = startPiece;
-            this.board[sx][sy] = "o";
+            if(endPiece != "o"){if(isLower(startPiece) == isLower(endPiece)){return}}
 
+            if(this.subPoints(startPiece)){
+                this.board[ex][ey] = startPiece;
+                this.board[sx][sy] = "o";
+            }
             this.display(this.board, this.black)
         }
     }
 
+    subPoints(piece){
+        var cost = 0;
+        switch(piece){
+            case "p":
+            case "P": cost = 2; break;
+            case "r":
+            case "R":
+            case "k":
+            case "K": cost = 4; break;
+            case "b":
+            case "B":
+            case "n":
+            case "N": cost = 3; break;
+            case "q":
+            case "Q": cost = 5; break;
+        }
 
+        if(isLower(piece)){
+            if(this.blackPoints < cost){return false}
+            this.blackPoints -= cost
+            this.botBar1.style.width = `${this.blackPoints * 10}%`;  
+            this.botBar2.style.width = `${this.blackPoints * 10}%`;  
+        }else{
+            if(this.whitePoints < cost){return false}
+            this.whitePoints -= cost
+            this.botBar1.style.width = `${this.whitePoints * 10}%`; 
+            this.botBar2.style.width = `${this.whitePoints * 10}%`; 
+        }
+        return true;
+    }
+
+    showMoves(x,y){
+        var moves, captures;
+        [moves, captures] = this.findMoves(x,y);
+        this.display(this.board, this.black, moves, captures)
+    }
     
-    display(board, flip) {
+    display(board, flip, moves=[], captures=[]) {
         document.getElementById('board').innerHTML = ""
 
         // Create a container element for the board
@@ -339,6 +396,18 @@ class Chess{
                     img.addEventListener("dragstart", event => {
                         event.dataTransfer.setData("text/plain", event.target.id)
                     })
+
+                    img.addEventListener("click", event => {
+                        if(flip){this.showMoves(7-i,j)}
+                        else{this.showMoves(i,j)}
+                    })
+                    img.addEventListener("dragover", event => {event.preventDefault();});
+                    img.addEventListener("drop", event => {
+                        let startSq = event.dataTransfer.getData("text/plain");
+                        let endSq = event.target.id;
+                        this.move(startSq, endSq, false);
+                    })
+
                     squareElement.appendChild(img);
                 }
                 squareElement.addEventListener("dragover", event => {event.preventDefault();});
@@ -357,9 +426,32 @@ class Chess{
         }
 
         document.getElementById('board').appendChild(container);
+
+        for(var i = 0; i < moves.length; i++){
+            const mSquare = document.getElementById(""+moves[i].x+moves[i].y);
+            const img = document.createElement("img");
+            img.id = mSquare.id;
+            img.src = "assets/o.svg"
+            img.setAttribute("width", "64px")
+            img.setAttribute("height", "64px")
+            img.addEventListener("dragover", event => {event.preventDefault();});
+            img.addEventListener("drop", event => {
+                let startSq = event.dataTransfer.getData("text/plain");
+                let endSq = event.target.id;
+                this.move(startSq, endSq, false);
+            })
+
+            mSquare.appendChild(img);
+        }
+
+        for(var j = 0; j < captures.length; j++){
+            console.log(captures[j].x, captures[j].y)
+        }
     }
 }
 
 
 let chess = new Chess();
-chess.display(chess.board)
+chess.display(chess.board, false)
+//temp
+chess.start();

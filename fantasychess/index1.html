@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/42392986ee.js" crossorigin="anonymous"></script>  
+</head>
+<body>
+    <div>
+      <div class="connection-box">
+        <div class="id-container">
+          <div class="id-grid">
+            <div class="id-letter" id = "letter1"></div>
+            <div class="id-letter" id = "letter2"></div>
+            <div class="id-letter" id = "letter3"></div>
+            <div class="id-letter" id = "letter4"></div>
+            <div class="id-letter" id = "letter5"></div>
+          </div>
+          <button id="copy-button" onclick="buttoncopy()"><i class="fa-sharp fa-solid fa-copy"></i></button>
+          <p id="copymsg"></p>
+        </div>
+        <div class="flex-container">
+          <!--<input id="peer_id" type="text"></input>-->
+          <div id="lobby-code">
+            <div class = code-grid>
+              <div class="code-letter" id="letter-1"></div>
+              <div class="code-letter" id="letter-2"></div>
+              <div class="code-letter" id="letter-3"></div>
+              <div class="code-letter" id="letter-4"></div>
+              <div class="code-letter" id="letter-5"></div>
+            </div>
+            <button onclick="pasteFromClipboard()">Paste</button>
+          </div>
+          <button id="connect_button" onclick="connect()">Connect</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-container">
+      <div class="board-bars">
+        <div class="move-points">
+          <div class = "fill-splash" id = "player-1-movepoints0"></div>
+          <div class = "fill" id = "player-1-movepoints1"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        
+        <div class="board" id="board"></div>
+
+        <div class="move-points">
+          <div class = "fill-splash" id = "player-2-movepoints0"></div>
+          <div class = "fill" id = "player-2-movepoints1"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="graveyard"></div>
+
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="chess.js"></script>
+    <script src="display.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

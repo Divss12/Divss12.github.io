@@ -297,9 +297,7 @@ class Ship{
     }
 
     checkEnemyCollisions(elst){
-        for(var i = 0; i < elst.length; i++){
-            if()
-        }
+
     }
 
     getX(){

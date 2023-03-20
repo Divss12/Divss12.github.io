@@ -1,0 +1,11 @@
+1. Make the move system/controls
+    - Every piece of own colour:
+        - on click       -> select the piece
+                         -> show its available moves
+        - on drag start  -> select the piece
+                         -> show its available moves
+        - on drag end    -> move piece to end square if its valid move
+                         -> give error beep/ feedback if its not
+    - Every enemy piece and empty square
+        -on click        -> move selected piece if its valid move
+                         -> reset selected piece if its not  

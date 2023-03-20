@@ -1,0 +1,276 @@
+:root {
+    --dark-sq: #8CA2AD;
+    --light-sq: #DEE3E6;
+    --splash: #c6d1d6;
+    --bg0: #312E2B;
+    --bg1: #272522;
+    --text: #f7f3f5;
+}
+
+*, html {
+    margin:0;
+    padding:0;  
+}
+
+.container {
+    background-color: var(--bg0);
+    display: flex;
+    justify-content: space-between;
+}
+
+.container > div {
+    background-color: var(--bg1);
+    font-size: 30px;
+}
+
+.connection {
+  padding: 15px;
+  height: 180px;
+  border-bottom-right-radius: 10px;
+}
+
+.game-container {
+    height: 100vh;
+    padding: 110px;
+    padding-top: 50px;
+}
+
+.extra {
+  width: 500px;
+}
+
+.chess-board {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.chess-row {
+    width: 100%;
+    display:flex
+}
+
+.chess-square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chess-square-black {
+    background-color: var(--dark-sq);
+}
+
+.chess-square-white {
+    background-color: var(--light-sq);
+}
+
+.board {
+  width: 640px;
+  margin: auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.move-points {
+    width: 640px;
+    height: 27px;
+    background-color: var(--light-sq);
+    position: relative;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+  
+.line {
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background-color: var(--bg0);
+    z-index: 2; /* set a higher z-index value than the other element */
+}
+  
+  .line:nth-child(3) {
+    left: 10%;
+  }
+  
+  .line:nth-child(4) {
+    left: 20%;
+  }
+  
+  .line:nth-child(5) {
+    left: 30%;
+  }
+  
+  .line:nth-child(6) {
+    left: 40%;
+  }
+  
+  .line:nth-child(7) {
+    left: 50%;
+  }
+  
+  .line:nth-child(8) {
+    left: 60%;
+  }
+  
+  .line:nth-child(9) {
+    left: 70%;
+  }
+  
+  .line:nth-child(10) {
+    left: 80%;
+  }
+  
+  .line:nth-child(11) {
+    left: 90%;
+  }
+
+.fill-splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 0; /* set a lower z-index value than the lines */
+    background-color: var(--splash);
+    width: 0;
+    transition: width 1.5s linear;
+    border-radius: 5px;
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1; /* set a lower z-index value than the lines */
+  background-color: var(--dark-sq);
+  width: 0;
+  transition: width 0.5s ease;
+  border-radius: 5px;
+}
+
+.connection-grid {
+  display: grid;
+  grid-template-columns: 60px auto 60px;
+  column-gap: 15px;
+  row-gap: 15px;
+  padding: 30px;
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.connection-grid > button {
+  background-color: var(--bg0);
+  border: none;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.id-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.id-text > p {
+  color: var(--text);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  text-indent: -7px;
+}
+
+.id-letter {
+  background-color: var(--bg0);
+  color: var(--text);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.code-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.code-letter {
+  background-color: var(--bg0);
+  color: var(--text);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.code-input {
+  background-color: var(--bg0);
+  border: 0px solid black;
+  color: var(--text); 
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 230px;
+  letter-spacing: 24.75px;
+  text-indent: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.code-input:focus {
+  outline: none;
+}
+
+.line0{
+  position: absolute;
+  background: var(--bg1);
+  width: 5px;
+  height: 49px;
+  top: 111px;
+}
+
+.line0:nth-child(7){
+  left: 162px;
+}
+
+.line0:nth-child(8){
+  left: 209px;
+}
+
+.line0:nth-child(9){
+  left: 256px;
+}
+
+.line0:nth-child(6){
+  left: 303px;
+}
+
+@media only screen and (orientation: portrait) {
+    .container {
+      background-color: var(--bg0);
+  }
+}

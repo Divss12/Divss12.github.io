@@ -1,47 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    .chess-board {
-      display: flex;
-      flex-wrap: wrap;
-      width: 640px;
-      height: 640px;
-      font-size: 64px;
-      font-family: "Arial", sans-serif;
-    }
-
-    .chess-row {
-      width: 100%;
-      display:flex
-    }
-
-    .chess-square {
-      width: 80px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .chess-square-black {
-      background-color: #D18B47;
-      color: #fff;
-    }
-
-    .chess-square-white {
-      background-color: #FFCE9E;
-      color: #555;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">  
+  <script src="https://kit.fontawesome.com/42392986ee.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <input id="peer_id" type="text"></input>
-    <button id="connect_button" onclick="connect()">Connect</button>
-    <div id="top-mp"></div>
-    <div id="board"></div>
-    <div id="bottom-mp"></div>
+    <div class="container">
+        <div class="connection">
+          <div class="connection-grid">
+            <div class="id-text"><p>ID:</p></div>
+            <div class="id-grid">
+              <div class="id-letter" id = "letter1">_</div>
+              <div class="id-letter" id = "letter2">_</div>
+              <div class="id-letter" id = "letter3">_</div>
+              <div class="id-letter" id = "letter4">_</div>
+              <div class="id-letter" id = "letter5">_</div>
+            </div>
+            <button class="copy-button" onclick="buttonCopy()"><i class="fa-sharp fa-solid fa-copy"></i></button>
+            <button class="paste-button" onclick="buttonPaste()"><i class="fa-solid fa-paste"></i></button>
+            <input class="code-input" id = "input-form" type="text" maxlength="5"></input>
+            <div class="line0"></div>
+            <div class="line0"></div>
+            <div class="line0"></div>
+            <div class="line0"></div>
+            <button onclick="connect()"><i class="fa-solid fa-play"></i></button>
 
+          </div>
+          
+        </div>
+        <div class="game-container">
+            <div class="move-points">
+                <div class = "fill-splash" id = "player-1-movepoints0"></div>
+                <div class = "fill" id = "player-1-movepoints1"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+              
+              <div class="board" id="board"></div>
+      
+              <div class="move-points">
+                <div class = "fill-splash" id = "player-2-movepoints0"></div>
+                <div class = "fill" id = "player-2-movepoints1"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+        </div>
+        <div class="extra"></div>
+    </div>
+    
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <script src="utils.js"></script>
     <script src="chess.js"></script>
