@@ -53,6 +53,10 @@ function initConnection(black){
 
 init();
 
+function subtract(){
+    chess.subPoints("r");
+}
+
 function initGame(black){
     chess = new Chess(conn, black);
     chess.display(chess.board, black);

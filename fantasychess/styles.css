@@ -12,6 +12,13 @@
     padding:0;  
 }
 
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 .container {
     background-color: var(--bg0);
     display: flex;
@@ -83,12 +90,26 @@
     border-radius: 5px;
 }
   
+.shade{
+  position: absolute;
+  width: 100%;
+  display: block;
+  height: 13px;
+  background-color: var(--splash);
+  opacity: 0.4;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  z-index: 2;
+  margin: 0px;
+  padding: 0px;
+}
+
 .line {
     position: absolute;
     width: 5px;
     height: 100%;
     background-color: var(--bg0);
-    z-index: 2; /* set a higher z-index value than the other element */
+    z-index: 3; /* set a higher z-index value than the other element */
 }
   
   .line:nth-child(3) {

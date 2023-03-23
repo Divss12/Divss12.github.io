@@ -1,9 +1,9 @@
 
 
 class Chess{
-    constructor(conn, black){
+    constructor(conn, isblack){
         this.c = conn;
-        this.black = black??false
+        this.isblack = isblack??false
 
         this.board = [
             ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -28,14 +28,25 @@ class Chess{
     }
 
     start(){
-        setInterval(this.fillBars.bind(this), 1500)
+        setInterval(this.addPoints.bind(this), 1500)
     }
 
-    fillBars(){
+    addPoints(){
         if(this.blackPoints < 10){this.blackPoints++}
         if(this.whitePoints < 10){this.whitePoints++}
 
-        if(this.black){
+        this.updateBars(true);
+    }
+
+    updateBars(anim){
+        if(!anim){
+            this.botBar1.style.transition = "none"
+            this.botBar2.style.transition = "none"
+            this.topBar1.style.transition = "none"
+            this.topBar2.style.transition = "none"
+        }
+
+        if(this.isblack){
             this.botBar1.style.width = `${Math.min(100, (this.blackPoints+1) * 10)}%`; 
             this.botBar2.style.width = `${this.blackPoints * 10}%`; 
             this.topBar1.style.width = `${Math.min(100, (this.whitePoints+1) * 10)}%`;
@@ -47,6 +58,18 @@ class Chess{
             this.topBar2.style.width = `${this.blackPoints * 10}%`;
         }
 
+        if(!anim){
+            setTimeout(this.resetAnim.bind(this), 10)
+        }
+
+
+    }
+
+    resetAnim(){
+        this.botBar2.style.transition = "width 0.5s ease"
+        this.botBar1.style.transition = "width 1.5s linear"
+        this.topBar2.style.transition = "width 0.5s ease"
+        this.topBar1.style.transition = "width 1.5s linear"
     }
 
     findRookMoves(x, y){
@@ -283,7 +306,7 @@ class Chess{
         [moves, captures] = this.findMoves(sx, sy);
 
         if(sx == ex && sy == ey){
-            this.display(this.board, this.black, moves, captures);
+            this.display(this.board, this.isblack, moves, captures);
             return;
         }
 
@@ -309,12 +332,13 @@ class Chess{
             var endPiece = this.board[ex][ey]
             if(startPiece == "o"){return}
             if(endPiece != "o"){if(isLower(startPiece) == isLower(endPiece)){return}}
+            //if(isLower(startPiece))
 
             if(this.subPoints(startPiece)){
                 this.board[ex][ey] = startPiece;
                 this.board[sx][sy] = "o";
             }
-            this.display(this.board, this.black)
+            this.display(this.board, this.isblack)
         }
     }
 
@@ -335,17 +359,14 @@ class Chess{
             case "Q": cost = 5; break;
         }
 
-        if(isLower(piece)){
+        if(isLower(piece) == this.isblack){
             if(this.blackPoints < cost){return false}
             this.blackPoints -= cost
-            this.botBar1.style.width = `${this.blackPoints * 10}%`;  
-            this.botBar2.style.width = `${this.blackPoints * 10}%`;  
         }else{
             if(this.whitePoints < cost){return false}
             this.whitePoints -= cost
-            this.botBar1.style.width = `${this.whitePoints * 10}%`; 
-            this.botBar2.style.width = `${this.whitePoints * 10}%`; 
         }
+        this.updateBars(false);
         return true;
     }
 

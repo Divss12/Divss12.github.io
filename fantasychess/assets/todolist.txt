@@ -8,4 +8,7 @@
                          -> give error beep/ feedback if its not
     - Every enemy piece and empty square
         -on click        -> move selected piece if its valid move
-                         -> reset selected piece if its not  
+                         -> reset selected piece if its not valid move
+    - EVERY SQUARE and piece
+        -on right click  -> reset selected piece and arrows
+        -on mb right drag-> draw arrow 
