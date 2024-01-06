@@ -132,6 +132,7 @@ class Enemy {
 
         this.tickCounter = 0;
         
+        this.audioPlayed = false;
         
         switch (type) {
             case 0: //torpedoship
@@ -267,7 +268,7 @@ class Enemy {
                 }
                 this.sprite.base.src = "assets/enemies/alert/alert.png";
 
-                this.audioPlayed = false;
+                
                 this.health = 1;
                 break;
 
@@ -279,7 +280,7 @@ class Enemy {
                 this.sprite.left.src = "assets/enemies/alert/alertL.png"
                 this.sprite.right.src = "assets/enemies/alert/alertR.png"
 
-                this.audioPlayed = false;
+                
                 this.health = 1;
                 break;
         }
@@ -582,7 +583,7 @@ class Enemy {
                 }else if(this.tickCounter < 4800 && Math.floor(this.tickCounter/156)%2){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }
-                if(this.tickCounter > 3200 && this.audioPlayed == false){this.audioPlayed = false; this.audio.playBeeps1();}
+                if(this.tickCounter > 3200 && this.audioPlayed == false){this.audioPlayed = true; this.audio.playBeeps1();}
                 if(this.tickCounter > 4799){this.shoot(), this.delete = true;}
                 break;
             case 6:
@@ -595,14 +596,18 @@ class Enemy {
                 }else if(this.tickCounter < 4800 && Math.floor(this.tickCounter/156)%2){
                     this.ctx.drawImage(this.sprite.left, this.x, this.y);
                     this.ctx.drawImage(this.sprite.right, this.x+329, this.y);
-                }else if(4960 < this.tickCounter){this.shoot(), this.delete = true;}
+                }else if(4960 < this.tickCounter){this.shoot(), this.delete = true; this.audio.playLaser()}
+
+                if(this.tickCounter > 3200 && this.audioPlayed == false){this.audioPlayed = true; this.audio.playBeeps2();}
                 break;
         }
 
 
         if(this.x < -100 || this.x > 367 || this.y < -100){this.delete = true;}
         if(this.health < 1 && !this.destroy){this.destroy = true; this.frame = 0; this.tickCounter = 0;
-            if(this.type == 2){this.shoot(-1)}}
+            if(this.type == 2){this.shoot(-1)}
+            if(!this.audioPlayed){this.audioPlayed = true; this.audio.playBeeboop()}
+        }
         
         this.tickCounter += frame;
         //window.requestAnimationFrame(this.draw.bind(this));

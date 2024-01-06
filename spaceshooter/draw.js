@@ -25,7 +25,7 @@ class Draw{
         this.musicVolume = 99;
         this.sfxVolume = 99;
         this.godmode = false;
-        this.displayFPS = true;
+        this.displayFPS = false;
         this.mobileControls = false
 
         this.menuImg = new Image();

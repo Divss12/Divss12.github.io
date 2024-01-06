@@ -11,6 +11,8 @@ class Powerups {
 
         this.sprite = new Image();
         this.sprite.src = "assets/pickups/pickup.png";
+        this.spriteheart = new Image();
+        this.spriteheart.src = "assets/pickups/heart.png";
 
         this.frame = 0;
         this.ticker = 0;
@@ -48,7 +50,8 @@ class Powerups {
             }
 
             this.y += 0.125*frame;
-            this.ctx.drawImage(this.sprite, 0, 0, 24, 24, this.x, this.y, 24, 24);
+            if(this.type == 0){this.ctx.drawImage(this.spriteheart, 0, 0, 24, 24, this.x, this.y, 24, 24);}
+            else{this.ctx.drawImage(this.sprite, 0, 0, 24, 24, this.x, this.y, 24, 24);}
         }
 
         if(this.cd1 > 0){this.cd1 -= frame;}

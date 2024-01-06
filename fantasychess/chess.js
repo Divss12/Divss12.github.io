@@ -358,7 +358,7 @@ class Chess{
             case "q":
             case "Q": cost = 5; break;
         }
-
+                                                       
         if(isLower(piece) == this.isblack){
             if(this.blackPoints < cost){return false}
             this.blackPoints -= cost
@@ -366,7 +366,7 @@ class Chess{
             if(this.whitePoints < cost){return false}
             this.whitePoints -= cost
         }
-        this.updateBars(false);
+        this.updateBars(false);                                                                           
         return true;
     }
 

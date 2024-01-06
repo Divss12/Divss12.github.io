@@ -5,6 +5,7 @@
 -enable enemy collisions
 
 -make mobile controls
+
 -sound
     -find music and sound effects
     -enable music and sound effects

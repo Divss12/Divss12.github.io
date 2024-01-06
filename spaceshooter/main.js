@@ -5,7 +5,7 @@ const audio = new AudioManager();
 
 
 
-const score = new Score(sctx);
+const score = new Score(sctx, audio);
 
 const projectiles = new ProjectileManager(ctx)
 

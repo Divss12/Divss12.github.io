@@ -1,6 +1,8 @@
 class Score {
-    constructor (ctx) {
+    constructor (ctx, audio) {
         this.ctx = ctx;
+
+        this.audio = audio;
 
         this.health = 16;
         this.engine = false;
@@ -109,6 +111,8 @@ class Score {
     }
     
     addEnemy() {
+       // this.audio.playBeeboop();
+
         this.enemActualVal++;
         this.enemiesToNextDiff--;
         let flag = true;

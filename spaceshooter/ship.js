@@ -6,7 +6,7 @@ class Ship{
         this.projectile = projectiles;
         this.score = score;
 
-        this.x = 176;
+        this.x = 177;
         this.y = 236;
 
         this.lastX = 176;
@@ -104,15 +104,18 @@ class Ship{
                 if(this.score.health > 16){this.score.health = 16}
                 break;
             case 1: //supercharged engine pickup
+                this.audio.playPowerup();
                 this.engineSupercharged = 1;
                 this.score.engine = true;
                 break;
             case 2: //homing bullets pickup
+                this.audio.playPowerup();
                 this.bulletType = 7;
                 this.bulletDmg = 3;
                 this.score.hsm = true;
                 break;
             case 3: //energy shield pick up
+                if(this.shieldHealth == 0){this.audio.playPowerup();}
                 this.shield = true;
                 if(this.shieldHealth < 5){
                     this.shieldHealth += 1;
@@ -234,7 +237,10 @@ class Ship{
             this.ctx.strokeRect(0,0,352,264);
         }
 
-        if(this.health < 0){this.destroy = true;}
+        if(this.health < 0){
+            if(!this.destroy){this.audio.playLoss()}
+            this.destroy = true;
+        }
     }
 
     takeDmg(dmg, godmode){
