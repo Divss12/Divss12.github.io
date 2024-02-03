@@ -10983,7 +10983,14 @@ section.resume-section .resume-section-content {
 
 .project-container{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (orientation: portrait) {
+  .project-container{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-card {

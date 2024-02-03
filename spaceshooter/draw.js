@@ -1,7 +1,9 @@
 class Draw{
-    constructor(ctx, sctx, bg, projectiles, ship, enemies, score, pwrups, audio){
+    constructor(ctx, sctx, ctxl, ctxr, bg, projectiles, ship, enemies, score, pwrups, audio){
         this.ctx = ctx;
         this.sctx = sctx;
+        this.ctxl = ctxl;
+        this.ctxr = ctxr;
         this.bg = bg;
         this.projectiles = projectiles;
         this.ship = ship;
@@ -36,14 +38,18 @@ class Draw{
         this.onoff = new Image();
         this.nums = new Image();
         this.hiscorescreen = new Image();
-        this.menuImg.src = "assets/icons/title.png"
-        this.playButtonImg.src = "assets/icons/playbutton1.png"
-        this.playButtonDownImg.src = "assets/icons/playbutton2.png"
-        this.gameOverScreen.src = "assets/icons/gameover.png"
-        this.settingsMenu.src = "assets/icons/settingspage.png"
-        this.onoff.src = "assets/icons/onoff.png"
-        this.nums.src = "assets/fonts/numbers.png"
-        this.hiscorescreen.src = "assets/icons/hiscorescreen.png"
+        this.mobileControlsL = new Image();
+        this.mobileControlsR = new Image();
+        this.menuImg.src = "assets/icons/title.png";
+        this.playButtonImg.src = "assets/icons/playbutton1.png";
+        this.playButtonDownImg.src = "assets/icons/playbutton2.png";
+        this.gameOverScreen.src = "assets/icons/gameover.png";
+        this.settingsMenu.src = "assets/icons/settingspage.png";
+        this.onoff.src = "assets/icons/onoff.png";
+        this.nums.src = "assets/fonts/numbers.png";
+        this.hiscorescreen.src = "assets/icons/hiscorescreen.png";
+        this.mobileControlsL.src = "assets/icons/mobilebuttons0.png";
+        this.mobileControlsR.src = "assets/icons/mobilebuttons1.png";
 
         this.dialogueCD = 0;
         this.dialogueN = 0;
@@ -71,6 +77,9 @@ class Draw{
         if(this.score.audioMuted){
             this.audio.setMute(true);
         }
+
+        isMobileControls = this.mobileControls;
+        scaleCanvas();
     }
 
     exportSettings(){
@@ -105,6 +114,7 @@ class Draw{
                 }
             }
         } else {
+            
             if(this.score.enemiesToNextDiff < 0){
                 this.score.enemiesToNextDiff = 12;
                 this.difficulty++
@@ -211,7 +221,11 @@ class Draw{
             }
             if(199 < x&&x < 218 && 102 < y&&y < 114){this.godmode = !this.godmode}
             if(199 < x&&x < 218 && 118 < y&&y < 130){this.displayFPS = !this.displayFPS}
-            if(199 < x&&x < 218 && 150 < y&&y < 162){this.mobileControls = !this.mobile}
+            if(199 < x&&x < 218 && 150 < y&&y < 162){
+                this.mobileControls = !this.mobileControls
+                isMobileControls = this.mobileControls;
+                scaleCanvas();
+            }
 
             this.exportSettings();
         }
@@ -267,6 +281,65 @@ class Draw{
         }
     }
 
+    contLTouches(touches){
+        //console.log(touches)
+        var lPressed = false;
+        var uPressed = false;
+        var dPressed = false;
+
+        for (let i = 0; i < touches.length; i++) {
+            
+            let touchX = Math.floor((touches[i].clientX - topLeftXl)/scale)
+            let touchY = Math.floor((touches[i].clientY - topLeftYl)/scale)
+
+            if(75 < touchY && touchY < 175){
+                lPressed = true;
+            }
+            if(touchY < 75){
+                uPressed = true;
+            }
+            if(touchY > 175){
+                dPressed = true;
+            }
+        }
+
+        if(lPressed){this.ship.pressLeft()}
+        else{this.ship.releaseLeft()}
+        if(uPressed){this.ship.pressUp()}
+        else{this.ship.releaseUp()}
+        if(dPressed){this.ship.pressDown()}
+        else{this.ship.releaseDown()}
+    }
+
+    contRTouches(touches){
+        var rPressed = false;
+        var uPressed = false;
+        var dPressed = false;
+
+        for (let i = 0; i < touches.length; i++) {
+            
+            let touchX = Math.floor((touches[i].clientX - topLeftXr)/scale)
+            let touchY = Math.floor((touches[i].clientY - topLeftYr)/scale)
+
+            if(75 < touchY && touchY < 175){
+                rPressed = true;
+            }
+            if(touchY < 75){
+                uPressed = true;
+            }
+            if(touchY > 175){
+                dPressed = true;
+            }
+        }
+
+        if(rPressed){this.ship.pressRight()}
+        else{this.ship.releaseRight()}
+        if(uPressed){this.ship.pressUp()}
+        else{this.ship.releaseUp()}
+        if(dPressed){this.ship.pressDown()}
+        else{this.ship.releaseDown()}
+    }
+
     tabOut(){
         this.pauseAnimation = true;
         this.audio.setMute(true);
@@ -275,12 +348,22 @@ class Draw{
     tabIn(){
         this.pauseAnimation = false;
         this.audio.setMute(this.score.audioMuted);
+        this.audio.unpause();
+    }
+
+    drawMobileControls(frame){
+        this.ctxl.drawImage(this.mobileControlsL, 0, 0);
+        this.ctxr.drawImage(this.mobileControlsR, 0, 0);
     }
 
     draw(timestamp){
 
         var frame = timestamp - this.lastTimeStamp;
         if(isNaN(frame)){frame = 0}
+
+        if(isMobileControls){
+            this.drawMobileControls(frame);
+        }
 
         if(this.hiscoreOpen){
             this.bg.draw(frame, this.difficulty, this.gameOver);
@@ -380,7 +463,7 @@ class Draw{
         
         if(this.displayFPS){
             var framerate = Math.round(1000/frame);
-            this.sctx.font = "8px monospace"
+            this.sctx.font = "15px font1"
             this.sctx.fillStyle = "#99e550"
             this.sctx.fillText("fps: " + framerate, 60, 260)
         }

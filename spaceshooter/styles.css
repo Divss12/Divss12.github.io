@@ -11,6 +11,8 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+
+  touch-action: manipulation;
 }
 
 
@@ -20,8 +22,29 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
+  touch-action: manipulation;
+}
+/*
+@media only screen and (orientation:portrait){
+  .game-container {  
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+}
+@media only screen and (orientation:landscape){
+  .game-container {  
+     -webkit-transform: rotate(0deg);
+     -moz-transform: rotate(0deg);
+     -o-transform: rotate(0deg);
+     -ms-transform: rotate(0deg);
+     transform: rotate(0deg);
+  }
+}
+*/
 .game-canvas {
   image-rendering: pixelated;
   image-rendering: optimizeSpeed;             /*Older versions of FF*/
@@ -44,4 +67,26 @@ body {
   -ms-interpolation-mode: nearest-neighbor;   /*IE (non standard naming)*/
   border: 12px solid #141D27;
   border-left-width: 6px;
+}
+
+.control-canvas-l {
+  image-rendering: pixelated;
+  image-rendering: optimizeSpeed;             /*Older versions of FF*/
+  image-rendering: -moz-crisp-edges;          /*FF 6.0+*/
+  image-rendering: -webkit-optimize-contrast; /*Webkit (non standard naming)*/
+  image-rendering: -o-crisp-edges;            /*OS X & Windows Opera (12.02+)*/
+  image-rendering: crisp-edges;               /*Possible future browsers*/
+  -ms-interpolation-mode: nearest-neighbor;   /*IE (non standard naming)*/
+  touch-action: manipulation;
+}
+
+.control-canvas-r {
+  image-rendering: pixelated;
+  image-rendering: optimizeSpeed;             /*Older versions of FF*/
+  image-rendering: -moz-crisp-edges;          /*FF 6.0+*/
+  image-rendering: -webkit-optimize-contrast; /*Webkit (non standard naming)*/
+  image-rendering: -o-crisp-edges;            /*OS X & Windows Opera (12.02+)*/
+  image-rendering: crisp-edges;               /*Possible future browsers*/
+  -ms-interpolation-mode: nearest-neighbor;   /*IE (non standard naming)*/
+  touch-action: manipulation;
 }

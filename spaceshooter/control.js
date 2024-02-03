@@ -68,6 +68,39 @@ function initMouse(draw){
     scanvas.onclick = function (event) {
         draw.scoreMouseClick(Math.floor((event.clientX - topLeftXs)/scale), Math.floor((event.clientY - topLeftYs)/scale));
     }
+
+    ccanvasl.ontouchstart = function (event) {
+        draw.contLTouches(event.touches)
+    }
+
+    ccanvasl.ontouchend = function (event) {
+        draw.contLTouches(event.touches)
+    }
+    
+    ccanvasl.ontouchmove = function (event) {
+        draw.contLTouches(event.touches)
+    }
+
+    ccanvasl.ontouchcancel = function (event) {
+        draw.contLTouches(event.touches)
+    }
+
+    ccanvasr.ontouchstart = function (event) {
+        draw.contRTouches(event.touches)
+    }
+
+    ccanvasr.ontouchend = function (event) {
+        draw.contRTouches(event.touches)
+    }
+    
+    ccanvasr.ontouchmove = function (event) {
+        draw.contRTouches(event.touches)
+    }
+
+    ccanvasr.ontouchcancel = function (event) {
+        draw.contRTouches(event.touches)
+    }
+    
 }
 
 function initFocus(draw){

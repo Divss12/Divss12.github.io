@@ -73,6 +73,7 @@ class EnemyManager {
             for(var j = 0; j < this.lst.length; j++){
                 if(this.lst[j].checkCollision(this.projectiles.alst[i], bonusdmg)){
                     this.projectiles.alst[i].delete = true;
+                    this.audio.playHit();
                     if(this.score.shield > 0){
                         this.enemHitCounter++;
                         if(this.enemHitCounter == 7){
@@ -521,13 +522,17 @@ class Enemy {
                 }else if(this.idle){
                     this.ctx.drawImage(this.sprite.base, this.x, this.y);
                 }else{
+                    if(!this.audioPlayed){
+                        this.audioPlayed = true;
+                        this.audio.playDreadnought();
+                    }
                     var flag = false;
                     if(this.tickCounter > 80){this.tickCounter -= 80; this.frame = (this.frame+1)%60; flag = true;}
                     this.ctx.drawImage(this.sprite.weapons, 128*this.frame + 28, 15, 72, 100, this.x, this.y, 72, 100);
 
                     if(flag){
                         if(this.frame == 12){this.shoot(1);}
-                        if(this.frame == 59){this.idle = !this.idle;}
+                        if(this.frame == 59){this.idle = !this.idle; this.audioPlayed = false;}
                     }
                 }
                 break;

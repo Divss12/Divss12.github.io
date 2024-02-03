@@ -1,0 +1,95 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<link href="styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+
+<body lang=EN-SG style='word-wrap:break-word'>
+
+<a href="../#game" class="btn"><i class="fa fa-home"></i></a>
+
+<div class=WordSection1>
+
+<div style='border:none;border-bottom:solid #FF7A00 6.0pt;padding:0cm 0cm 0cm 0cm'>
+
+<p class=MsoTitle><span lang=EN-US>An Exploration in Pathfinding Algorithms and
+Embedded Programming in Robotics: Multi-Disciplinary Project</span></p>
+
+</div>
+
+<h1>
+	<span lang=EN-US style='font-size:12.0pt;line-height:110%'>March 2022 | Divyansh Bhutra</span>
+</h1>
+
+<img width=912 height=684 src="assets/image001.jpg" align=center hspace=12 alt="">
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>What does it take for a robotic car to see,
+move around and think? And how are these abilities used in conjunction to
+navigate an arena while avoiding obstacles? In this blog post, I will walk you
+through a project where I programmed a robotic car to do these things: from
+embedded programming allowing a microprocessor board to take the input from
+infrared sensors and facilitate movement using motors, to using a pathfinding
+algorithm to navigate the arena.</span></p>
+
+<h1><span lang=EN-US>The Problem</span></h1>
+
+<p class=MsoNormal><span lang=EN-US>We were provided with a robot car with a
+STMicroelectronics Board, motors, IR distance sensors, a RaspberryPi and a camera
+(some assembly of the components was required.) The goal? To have the robot
+navigate an arena full of obstacles, scanning images with its camera and
+reporting those images back to our android app. The second goal was a speed
+test: to have the robot go around a large obstacle and make it back to its
+starting location. Both competitions tested for speed and for accuracy.</span></p>
+
+<img width=373 height=206 src="assets/image002.png" align=center hspace=12 alt="">
+<img width=443 height=206 src="assets/image003.png" align=center hspace=12 alt="">
+
+<h1><span lang=EN-US>STM Part</span></h1>
+
+<p class=MsoNormal><span lang=EN-US>The first order of business was to assemble
+the robot. The RaspberryPi, infrared sensors and camera were screwed onto the robot.
+We soldered the wires required to ensure they wouldn’t fall off, and then we
+got to programming. First, we established a way for the RaspberryPi to
+communicate with the STM board using UART and with the android app using Bluetooth.
+Then we worked with the team to come up with a protocol to pass messages
+between these 3 components. Then we programmed a set of discrete movements the
+robot could take, which chained together would be how the robot would navigate
+the arena. We also configured the IR sensor as a failsafe to ensure the robot
+would stop if it’s about to crash into an obstacle.</span></p>
+
+<h1><span lang=EN-US>Pathfinding Algorithm</span></h1>
+
+<p class=MsoNormal><span lang=EN-US>As we would know the locations of the obstacles
+beforehand, we simply had to devise an algorithm for the robot to navigate the
+entire arena as quick as possible. To do this, we broke down the problem into
+graph-search problem. By dividing the arena into a 20x20 grid in which the
+robot could be in any square in 4 possible orientations (North, South, East,
+West); we can create a graph with 1600 nodes. Edges between these nodes represent
+the different movements our robot could take changing its orientation and location.
+After reducing the problem to a known problem (graph search), we were able to
+simply apply Dijkstra’s algorithm and have the robot find its path around the
+obstacles.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>These are the 2 main parts I dealt with, my
+team worked on other parts of the project. You can find more information in the youtube video below!</span></p>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bo8HKAsPngQ?si=q1aU6HiKTUnt7slB" referrerpolicy="no-referrer-when-downgrade" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

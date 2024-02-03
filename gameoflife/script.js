@@ -68,5 +68,5 @@ function drawGrid(n, m, grid) {
     return table;
   }
 
-const table = drawGrid(gridHeight, gridWidth, grid);
-document.body.appendChild(table);
+//const table = drawGrid(gridHeight, gridWidth, grid);
+//document.body.appendChild(table);

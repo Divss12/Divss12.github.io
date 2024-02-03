@@ -6,7 +6,9 @@ class AudioManager {
         this.lasers = new Audio("assets/audio/lasers.wav");
         this.loss = new Audio("assets/audio/loss.wav");
         this.pwrup = new Audio("assets/audio/pwrup.wav");
-        this.beeboop = new Audio("assets/audio/beeboop.wav")
+        this.beeboop = new Audio("assets/audio/beeboop.wav");
+        this.dreadnought = new Audio("assets/audio/dreadnought.wav");
+        this.bhit = new Audio("assets/audio/bullethit.wav")
 
         this.soundMuted = false;
         this.music = new Audio("assets/audio/music.ogg");
@@ -53,6 +55,18 @@ class AudioManager {
         }
     }
 
+    playDreadnought(){
+        if(!this.soundMuted){
+            this.dreadnought.play();
+        }
+    }
+
+    playHit(){
+        if(!this.soundMuted){
+            this.bhit.play();
+        }
+    }
+
     playLoss(){
         if(!this.soundMuted){
             //stop all other audio NOTE: should it be stop instead?;
@@ -62,14 +76,15 @@ class AudioManager {
             this.lasers.pause();
             this.pwrup.pause();
             this.beeboop.pause();
+            this.dreadnought.pause();
             this.loss.play();
         }
     }
 
     setMute(bool){
         this.soundMuted = bool;
-        this.music.muted = bool;
-        //this.music.muted = true;
+        //this.music.muted = bool;
+        this.music.muted = true;
         if(bool){
             this.hit.pause();
             this.beeps1.pause();
@@ -77,7 +92,12 @@ class AudioManager {
             this.lasers.pause();
             this.pwrup.pause();
             this.beeboop.pause();
+            this.dreadnought.pause();
         }
+    }
+
+    unpause(){
+        //TODO
     }
 }
 

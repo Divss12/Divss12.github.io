@@ -17,7 +17,7 @@ initControls(ship)
 const pwrups = new Powerups(ship, ctx);
 
 
-const draw = new Draw(ctx, sctx, bg, projectiles, ship, enemies, score, pwrups, audio);
+const draw = new Draw(ctx, sctx, ctxl, ctxr, bg, projectiles, ship, enemies, score, pwrups, audio);
 initMouse(draw)
 initFocus(draw)
 draw.importSettings();
