@@ -1,0 +1,16 @@
+.btn {
+    position:fixed;
+    left:10px;
+    top:10px; 
+    background-color: darkgrey; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 30px 32px; /* Some padding */
+    font-size: 32px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: gray;
+  } 

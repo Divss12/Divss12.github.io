@@ -1,7 +1,432 @@
-<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">@import url(https://themes.googleusercontent.com/fonts/css?kit=YDAoLskQQ5MOAgvHUQCcLVIGZoPcmzM3evOREq3mXSoW57NJoHlxmjxIa3ntBA_Q);ol{margin:0;padding:0}table td,table th{padding:0}.c11{margin-left:-0.8pt;padding-top:10pt;padding-bottom:0pt;line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left;margin-right:-0.8pt}.c19{margin-left:-72pt;padding-top:20pt;padding-bottom:10pt;line-height:1.15;orphans:2;widows:2;text-align:center;margin-right:-72pt}.c13{color:#d44415;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:36pt;font-family:"Yanone Kaffeesatz";font-style:normal}.c1{color:#434343;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:16pt;font-family:"Calibri";font-style:normal}.c0{color:#666666;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Calibri";font-style:normal}.c4{color:#d44415;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Calibri";font-style:normal}.c8{color:#434343;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:42pt;font-family:"Yanone Kaffeesatz";font-style:normal}.c7{padding-top:24pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c3{padding-top:10pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c5{padding-top:10pt;padding-bottom:10pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c17{padding-top:10pt;padding-bottom:10pt;line-height:1.15;orphans:2;widows:2;text-align:center}.c14{padding-top:16pt;padding-bottom:0pt;line-height:1.0;page-break-after:avoid;text-align:left}.c9{padding-top:10pt;padding-bottom:0pt;line-height:1.15;text-align:left}.c2{padding-top:0pt;padding-bottom:0pt;line-height:1.0;text-align:left}.c18{padding-top:10pt;padding-bottom:0pt;line-height:1.15;text-align:center}.c12{margin-left:-0.8pt;orphans:2;widows:2;margin-right:-0.8pt}.c16{font-size:18pt;font-family:"Yellowtail";color:#000000;font-weight:400}.c10{background-color:#ffffff;max-width:468pt;padding:0pt 72pt 50.4pt 72pt;margin:auto}.c6{height:12pt}.c15{color:#d44415}.title{padding-top:0pt;color:#5e2b97;font-size:36pt;padding-bottom:0pt;font-family:"Yanone Kaffeesatz";line-height:1.0;orphans:2;widows:2;text-align:left}.subtitle{padding-top:10pt;color:#ec7b00;font-size:12pt;padding-bottom:0pt;font-family:"Calibri";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}li{color:#666666;font-size:12pt;font-family:"Calibri"}p{margin:0;color:#666666;font-size:12pt;font-family:"Calibri"}h1{padding-top:16pt;color:#434343;font-size:42pt;padding-bottom:0pt;font-family:"Yanone Kaffeesatz";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:24pt;color:#434343;font-weight:700;font-size:16pt;padding-bottom:0pt;font-family:"Calibri";line-height:1.15;orphans:2;widows:2;text-align:left}h3{padding-top:10pt;color:#b7b7b7;font-size:10pt;padding-bottom:0pt;font-family:"Calibri";line-height:1.0;text-align:left}h4{padding-top:10pt;color:#ec7b00;font-size:12pt;padding-bottom:0pt;font-family:"Calibri";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:8pt;color:#666666;font-size:11pt;padding-bottom:0pt;font-family:"Trebuchet MS";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:8pt;color:#666666;font-size:11pt;padding-bottom:0pt;font-family:"Trebuchet MS";line-height:1.15;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}</style>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <style type="text/css">
+        @import url(https://themes.googleusercontent.com/fonts/css?kit=YDAoLskQQ5MOAgvHUQCcLVIGZoPcmzM3evOREq3mXSoW57NJoHlxmjxIa3ntBA_Q);
+
+        ol {
+            margin: 0;
+            padding: 0
+        }
+
+        table td,
+        table th {
+            padding: 0
+        }
+
+        .c11 {
+            margin-left: -0.8pt;
+            padding-top: 10pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            margin-right: -0.8pt
+        }
+
+        .c19 {
+            margin-left: -72pt;
+            padding-top: 20pt;
+            padding-bottom: 10pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center;
+            margin-right: -72pt
+        }
+
+        .c13 {
+            color: #d44415;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 36pt;
+            font-family: "Yanone Kaffeesatz";
+            font-style: normal
+        }
+
+        .c1 {
+            color: #434343;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 16pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        .c0 {
+            color: #666666;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        .c4 {
+            color: #d44415;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        .c8 {
+            color: #434343;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 42pt;
+            font-family: "Yanone Kaffeesatz";
+            font-style: normal
+        }
+
+        .c7 {
+            padding-top: 24pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c3 {
+            padding-top: 10pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c5 {
+            padding-top: 10pt;
+            padding-bottom: 10pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c17 {
+            padding-top: 10pt;
+            padding-bottom: 10pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        .c14 {
+            padding-top: 16pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            page-break-after: avoid;
+            text-align: left
+        }
+
+        .c9 {
+            padding-top: 10pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            text-align: left
+        }
+
+        .c2 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            text-align: left
+        }
+
+        .c18 {
+            padding-top: 10pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            text-align: center
+        }
+
+        .c12 {
+            margin-left: -0.8pt;
+            orphans: 2;
+            widows: 2;
+            margin-right: -0.8pt
+        }
+
+        .c16 {
+            font-size: 18pt;
+            font-family: "Yellowtail";
+            color: #000000;
+            font-weight: 400
+        }
+
+        .c10 {
+            background-color: #ffffff;
+            max-width: 468pt;
+            padding: 0pt 72pt 50.4pt 72pt;
+            margin: auto
+        }
+
+        .c6 {
+            height: 12pt
+        }
+
+        .c15 {
+            color: #d44415
+        }
+
+        .title {
+            padding-top: 0pt;
+            color: #5e2b97;
+            font-size: 36pt;
+            padding-bottom: 0pt;
+            font-family: "Yanone Kaffeesatz";
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .subtitle {
+            padding-top: 10pt;
+            color: #ec7b00;
+            font-size: 12pt;
+            padding-bottom: 0pt;
+            font-family: "Calibri";
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        li {
+            color: #666666;
+            font-size: 12pt;
+            font-family: "Calibri"
+        }
+
+        p {
+            margin: 0;
+            color: #666666;
+            font-size: 12pt;
+            font-family: "Calibri"
+        }
+
+        h1 {
+            padding-top: 16pt;
+            color: #434343;
+            font-size: 42pt;
+            padding-bottom: 0pt;
+            font-family: "Yanone Kaffeesatz";
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h2 {
+            padding-top: 24pt;
+            color: #434343;
+            font-weight: 700;
+            font-size: 16pt;
+            padding-bottom: 0pt;
+            font-family: "Calibri";
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h3 {
+            padding-top: 10pt;
+            color: #b7b7b7;
+            font-size: 10pt;
+            padding-bottom: 0pt;
+            font-family: "Calibri";
+            line-height: 1.0;
+            text-align: left
+        }
+
+        h4 {
+            padding-top: 10pt;
+            color: #ec7b00;
+            font-size: 12pt;
+            padding-bottom: 0pt;
+            font-family: "Calibri";
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h5 {
+            padding-top: 8pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 0pt;
+            font-family: "Trebuchet MS";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h6 {
+            padding-top: 8pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 0pt;
+            font-family: "Trebuchet MS";
+            line-height: 1.15;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
     <link href="styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head><body class="c10 doc-content">
+</head>
+
+<body class="c10 doc-content">
     <a href="../#game" class="btn"><i class="fa fa-home"></i></a>
     <div class="c10-doc-content">
-    <div><p class="c3 c6"><span class="c0"></span></p><p class="c3 c6"><span class="c0"></span></p><p class="c3"><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 5.33px;"><img alt="" src="images/image1.png" style="width: 624.00px; height: 5.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="horizontal line"></span></p></div><p class="c2 c12 title" id="h.uwtpzkmp9874"><span class="c16">Divyansh Bhutra</span><span class="c16"><br></span><span class="c15">MULTI-DISCIPLINARY PROJECT BLOG</span></p><p class="c11 subtitle" id="h.qi2yc3xrk7l0"><span class="c4">December, 2022</span></p><h1 class="c12 c14" id="h.t48vj9f6fmak"><span>An Exploration in Pathfinding Algorithms and Embedded Programming </span></h1><h2 class="c19" id="h.o8jg7s1roq8t"><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 616.34px; height: 360.83px;"><img alt="" src="images/image3.jpg" style="width: 616.34px; height: 464.15px; margin-left: 0.00px; margin-top: -37.78px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span></h2><h2 class="c7" id="h.ig8tuaoprp0y"><span class="c1">Introduction</span></h2><p class="c3"><span>In the second semester of 2022, I took NTU SCSE&rsquo;s most infamous course &ndash; the Multi-Disciplinary Project. If you don&rsquo;t know what this course is, it&rsquo;s a fierce competition between 50 teams of 8 to get their robot a spot on the leaderboard, being judged on accuracy and speed of movement while avoiding obstacles; as well as &nbsp;scanning and accurately classifying images placed on the obstacles using computer vision techniques. Whew &ndash; it&rsquo;s a lot of work that tests your ability to work as a team and encompasses various techniques of computer science and leaves a lot of room to show your creative thinking and problem-solving skills. Read on below to see the various innovative ideas that I applied in this competition.</span></p><h2 class="c7" id="h.hbysr2ckqkp7"><span class="c1">Problem Statement</span></h2><p class="c3"><span class="c0">So what exactly does the competition entail and what tools are we given to tackle the problem? Well there are actually 2 competitions with 2 leaderboards. We are given a robot with wheels, motors and a servo motor for turning; but it&rsquo;s up to us to place the various sensors, camera and any other peripherals. Oh, and we have to write all the code to control the motors and program an android app to communicate and control the robot and set up communications between the RaspberryPi and STMicroelectronics controller board. </span></p><p class="c3 c6"><span class="c0"></span></p><h2 class="c2" id="h.xx8sk6aj4ctf"><span>Competition 1: Image Recognition and Obstacle Avoidance Task</span></h2><p class="c9"><span class="c0">In the first task, the robot has to navigate a randomized 2m &times; 2m arena with 5 obstacles whose positions are given to the robot using the android application. The robot must then be the fastest to navigate to the arena while avoiding the obstacles and scanning the obstacles and reporting back to the android app the symbol on the obstacle.</span></p><p class="c18"><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 392.09px; height: 368.50px;"><img alt="" src="images/image2.png" style="width: 392.09px; height: 368.50px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 387.50px; height: 180.29px;"><img alt="" src="images/image4.png" style="width: 387.50px; height: 180.29px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span></p><p class="c18 c6"><span class="c0"></span></p><h2 class="c2" id="h.y1wdbpng9vfi"><span class="c1">Competition 2: Speed and Accuracy Task</span></h2><p class="c9"><span class="c0">The second task had the robot loop around an obstacle and make it back to its starting location in the fastest time without hitting the obstacle.</span></p><p class="c18"><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 328.50px; height: 324.23px;"><img alt="" src="images/image6.png" style="width: 328.50px; height: 324.23px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 373.00px; height: 206.00px;"><img alt="" src="images/image5.png" style="width: 373.00px; height: 206.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span></p><h2 class="c7" id="h.s1nhmnh2wl88"><span class="c1">Main Ideas</span></h2><p class="c3"><span class="c0">We tackled this project by breaking up the problem into smaller pieces and figuring out how to solve those pieces. I was mainly involved in setting up the peripherals, STM programming and creating the pathfinding algorithm. Below I have written about my thought process in coming up with innovative solutions as a part of this project.</span></p><h2 class="c7" id="h.yxzanno3olrv"><span class="c1">Setting up the Peripherals</span></h2><p class="c3"><span class="c0">One innovation we came up with was to attach the camera facing the right of the robot. Our idea was that the robot would scan the symbol on the obstacle as its driving past, without having to stop and reverse out.</span></p><p class="c3"><span class="c0">We also used the IR sensor to enable the robot to detect if it was going to crash, just as a failsafe. Lastly, we wired up the rest of the components (RaspberryPi for communication, some resistors to complete the IR sensor circuit) and gave our robot a memorable face using Blu Tack. If there was a cuteness competition, our team would surely place first!</span></p><h2 class="c7" id="h.fb2qjflw2q2"><span class="c1">Microcontroller Programming</span></h2><p class="c3"><span class="c0">The heart of the robot was a STMicroelectronics controller board which we had to write code for in embedded C. We used Pulse-Width Modulation for controlling the motors, and their speed was further maintained by using a PID controller making use of the hall-effect encoders attached to the wheels. We also set up a communication protocol with the RaspberryPi using UART, and a way to troubleshoot the robot using a tiny LCD display that it came with. </span></p><p class="c3"><span class="c0">We then wrote code to interpret the IR sensor data and programmed the failsafes to prevent the robot from crashing into any obstacles.</span></p><p class="c3"><span class="c0">After the basics were complete, we wrote functions for a discrete set of movements the robot could take. Things like move forward/backward 10cm; turn right on the spot etc. Using these discrete commands, the robot could be commanded to take a series of movements which would (hopefully) allow the robot to navigate the entire arena successfully.</span></p><h2 class="c7" id="h.t4gnyvybg7dv"><span class="c1">Pathfinding Algorithm</span></h2><p class="c5"><span class="c0">The other part of the project that I was involved with was programming the pathfinding algorithm. I tackled this by dividing the arena into a 20&times;20 grid, with each square representing a 10cm&times;10cm square in real life. Since the robot is bigger than 10cm in both width and length, this is an acceptable level of granularity. Then, I imagined the robot being able to have 4 different orientations in each grid square (North, East, South, West) for a total of 1600 possible states the robot could be in. </span></p><p class="c17"><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 600px; height: 595px;"><img alt="" src="images/image7.png" style="width: 600.00px; height: 595.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title=""></span></p><p class="c5"><span>The idea was to have each of these states represented by a cell in a graph. The graph&rsquo;s edges would represent the various discrete movements we programmed for the robot; i.e. if the robot was facing north at square (1, 1), after taking a right turn it would end up at (3, 3) facing east. Then, it was just a matter of removing those edges that would make the robot crash into an obstacle, and then the problem became very easy to solve </span><span class="c0">&ndash; we had reduced it to a problem with a known solution; graph search.</span></p><p class="c5"><span>A simple application of Dijkstra&rsquo;s algorithm allowed us to figure out the best way to get from point A to point B while avoiding obstacles; but the problem of figuring which order to visit the different obstacles in wasn&rsquo;t as simple to solve. It is essentially the famous traveling salesman problem, and since there were going to be a maximum of 6 obstacles, we chose to solve this problem using simple brute-force.</span></p><h2 class="c7" id="h.qgcroo5m5mhx"><span class="c1">Other Stuff + YouTube Video</span></h2><p class="c3"><span class="c0">The other parts of this project included programming the RaspberryPi for image recognition, creating the android app, making the video documenting the project, etc.</span></p><p class="c3"><span class="c0">Please watch the video below to find out more! (If the embedding doesn&rsquo;t work, you should be able to watch it on YouTube)</span></p><p class="c3 c6"><span class="c0"></span></p><iframe width="560" height="315" src="https://www.youtube.com/embed/bo8HKAsPngQ?si=K1LZmH-mvPCmvrvG" title="YouTube video player" style="margin: auto"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><p class="c3 c6"><span class="c0"></span></p></div></body></html>
+        <div>
+            <p class="c3 c6"><span class="c0"></span></p>
+            <p class="c3 c6"><span class="c0"></span></p>
+            <p class="c3"><span
+                    style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 5.33px;"><img
+                        alt="" src="images/image1.png"
+                        style="width: 624.00px; height: 5.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                        title="horizontal line"></span></p>
+        </div>
+        <p class="c2 c12 title" id="h.uwtpzkmp9874"><span class="c16">Divyansh Bhutra</span><span
+                class="c16"><br></span><span class="c15">MULTI-DISCIPLINARY PROJECT BLOG</span></p>
+        <p class="c11 subtitle" id="h.qi2yc3xrk7l0"><span class="c4">December, 2022</span></p>
+        <h1 class="c12 c14" id="h.t48vj9f6fmak"><span>An Exploration in Pathfinding Algorithms and Embedded Programming
+            </span></h1>
+        <h2 class="c19" id="h.o8jg7s1roq8t"><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 616.34px; height: 360.83px;"><img
+                    alt="" src="images/image3.jpg"
+                    style="width: 616.34px; height: 464.15px; margin-left: 0.00px; margin-top: -37.78px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span></h2>
+        <h2 class="c7" id="h.ig8tuaoprp0y"><span class="c1">Introduction</span></h2>
+        <p class="c3"><span>In the second semester of 2022, I took NTU SCSE&rsquo;s most infamous course &ndash; the
+                Multi-Disciplinary Project. If you don&rsquo;t know what this course is, it&rsquo;s a fierce competition
+                between 50 teams of 8 to get their robot a spot on the leaderboard, being judged on accuracy and speed
+                of movement while avoiding obstacles; as well as &nbsp;scanning and accurately classifying images placed
+                on the obstacles using computer vision techniques. Whew &ndash; it&rsquo;s a lot of work that tests your
+                ability to work as a team and encompasses various techniques of computer science and leaves a lot of
+                room to show your creative thinking and problem-solving skills. Read on below to see the various
+                innovative ideas that I applied in this competition.</span></p>
+        <h2 class="c7" id="h.hbysr2ckqkp7"><span class="c1">Problem Statement</span></h2>
+        <p class="c3"><span class="c0">So what exactly does the competition entail and what tools are we given to tackle
+                the problem? Well there are actually 2 competitions with 2 leaderboards. We are given a robot with
+                wheels, motors and a servo motor for turning; but it&rsquo;s up to us to place the various sensors,
+                camera and any other peripherals. Oh, and we have to write all the code to control the motors and
+                program an android app to communicate and control the robot and set up communications between the
+                RaspberryPi and STMicroelectronics controller board. </span></p>
+        <p class="c3 c6"><span class="c0"></span></p>
+        <h2 class="c2" id="h.xx8sk6aj4ctf"><span>Competition 1: Image Recognition and Obstacle Avoidance Task</span>
+        </h2>
+        <p class="c9"><span class="c0">In the first task, the robot has to navigate a randomized 2m &times; 2m arena
+                with 5 obstacles whose positions are given to the robot using the android application. The robot must
+                then be the fastest to navigate to the arena while avoiding the obstacles and scanning the obstacles and
+                reporting back to the android app the symbol on the obstacle.</span></p>
+        <p class="c18"><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 392.09px; height: 368.50px;"><img
+                    alt="" src="images/image2.png"
+                    style="width: 392.09px; height: 368.50px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 387.50px; height: 180.29px;"><img
+                    alt="" src="images/image4.png"
+                    style="width: 387.50px; height: 180.29px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span></p>
+        <p class="c18 c6"><span class="c0"></span></p>
+        <h2 class="c2" id="h.y1wdbpng9vfi"><span class="c1">Competition 2: Speed and Accuracy Task</span></h2>
+        <p class="c9"><span class="c0">The second task had the robot loop around an obstacle and make it back to its
+                starting location in the fastest time without hitting the obstacle.</span></p>
+        <p class="c18"><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 328.50px; height: 324.23px;"><img
+                    alt="" src="images/image6.png"
+                    style="width: 328.50px; height: 324.23px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 373.00px; height: 206.00px;"><img
+                    alt="" src="images/image5.png"
+                    style="width: 373.00px; height: 206.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span></p>
+        <h2 class="c7" id="h.s1nhmnh2wl88"><span class="c1">Main Ideas</span></h2>
+        <p class="c3"><span class="c0">We tackled this project by breaking up the problem into smaller pieces and
+                figuring out how to solve those pieces. I was mainly involved in setting up the peripherals, STM
+                programming and creating the pathfinding algorithm. Below I have written about my thought process in
+                coming up with innovative solutions as a part of this project.</span></p>
+        <h2 class="c7" id="h.yxzanno3olrv"><span class="c1">Setting up the Peripherals</span></h2>
+        <p class="c3"><span class="c0">One innovation we came up with was to attach the camera facing the right of the
+                robot. Our idea was that the robot would scan the symbol on the obstacle as its driving past, without
+                having to stop and reverse out.</span></p>
+        <p class="c3"><span class="c0">We also used the IR sensor to enable the robot to detect if it was going to
+                crash, just as a failsafe. Lastly, we wired up the rest of the components (RaspberryPi for
+                communication, some resistors to complete the IR sensor circuit) and gave our robot a memorable face
+                using Blu Tack. If there was a cuteness competition, our team would surely place first!</span></p>
+        <h2 class="c7" id="h.fb2qjflw2q2"><span class="c1">Microcontroller Programming</span></h2>
+        <p class="c3"><span class="c0">The heart of the robot was a STMicroelectronics controller board which we had to
+                write code for in embedded C. We used Pulse-Width Modulation for controlling the motors, and their speed
+                was further maintained by using a PID controller making use of the hall-effect encoders attached to the
+                wheels. We also set up a communication protocol with the RaspberryPi using UART, and a way to
+                troubleshoot the robot using a tiny LCD display that it came with. </span></p>
+        <p class="c3"><span class="c0">We then wrote code to interpret the IR sensor data and programmed the failsafes
+                to prevent the robot from crashing into any obstacles.</span></p>
+        <p class="c3"><span class="c0">After the basics were complete, we wrote functions for a discrete set of
+                movements the robot could take. Things like move forward/backward 10cm; turn right on the spot etc.
+                Using these discrete commands, the robot could be commanded to take a series of movements which would
+                (hopefully) allow the robot to navigate the entire arena successfully.</span></p>
+        <h2 class="c7" id="h.t4gnyvybg7dv"><span class="c1">Pathfinding Algorithm</span></h2>
+        <p class="c5"><span class="c0">The other part of the project that I was involved with was programming the
+                pathfinding algorithm. I tackled this by dividing the arena into a 20&times;20 grid, with each square
+                representing a 10cm&times;10cm square in real life. Since the robot is bigger than 10cm in both width
+                and length, this is an acceptable level of granularity. Then, I imagined the robot being able to have 4
+                different orientations in each grid square (North, East, South, West) for a total of 1600 possible
+                states the robot could be in. </span></p>
+        <p class="c17"><span
+                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 600px; height: 595px;"><img
+                    alt="" src="images/image7.png"
+                    style="width: 600.00px; height: 595.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                    title=""></span></p>
+        <p class="c5"><span>The idea was to have each of these states represented by a cell in a graph. The
+                graph&rsquo;s edges would represent the various discrete movements we programmed for the robot; i.e. if
+                the robot was facing north at square (1, 1), after taking a right turn it would end up at (3, 3) facing
+                east. Then, it was just a matter of removing those edges that would make the robot crash into an
+                obstacle, and then the problem became very easy to solve </span><span class="c0">&ndash; we had reduced
+                it to a problem with a known solution; graph search.</span></p>
+        <p class="c5"><span>A simple application of Dijkstra&rsquo;s algorithm allowed us to figure out the best way to
+                get from point A to point B while avoiding obstacles; but the problem of figuring which order to visit
+                the different obstacles in wasn&rsquo;t as simple to solve. It is essentially the famous traveling
+                salesman problem, and since there were going to be a maximum of 6 obstacles, we chose to solve this
+                problem using simple brute-force.</span></p>
+        <h2 class="c7" id="h.qgcroo5m5mhx"><span class="c1">Other Stuff + YouTube Video</span></h2>
+        <p class="c3"><span class="c0">The other parts of this project included programming the RaspberryPi for image
+                recognition, creating the android app, making the video documenting the project, etc.</span></p>
+        <p class="c3"><span class="c0">Please watch the video below to find out more! (If the embedding doesn&rsquo;t
+                work, you should be able to watch it on YouTube)</span></p>
+        <p class="c3 c6"><span class="c0"></span></p><iframe width="560" height="315"
+            src="https://www.youtube.com/embed/bo8HKAsPngQ?si=K1LZmH-mvPCmvrvG" title="YouTube video player"
+            style="margin: auto" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        <p class="c3 c6"><span class="c0"></span></p>
+    </div>
+</body>
+
+</html>
