@@ -10982,7 +10982,7 @@ section.resume-section .resume-section-content {
 }
 
 .project-container{
-  margin-top: 70px;
+  margin-top: 50px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
